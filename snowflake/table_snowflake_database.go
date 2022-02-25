@@ -49,7 +49,6 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 	logger := plugin.Logger(ctx)
 	logger.Error("aws_region.listSnowflakeDatabases", "api.error", "nil")
 	db, err := connect(ctx, d)
-	defer db.Close()
 	if err != nil {
 		logger.Error("aws_region.listAwsRegions", "connnection.error", err)
 		return nil, err
@@ -76,7 +75,7 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 		}
 
 		d.StreamListItem(ctx, Database{CreatedOn, Name, IsDefault, IsCurrent, Origin, Owner, Comment, Options, RetentionTime})
-
 	}
+	defer db.Close()
 	return nil, nil
 }
