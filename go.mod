@@ -4,7 +4,6 @@ go 1.17
 
 require (
 	github.com/snowflakedb/gosnowflake v1.6.7
-	github.com/turbot/steampipe-plugin-sdk v1.8.3
 	github.com/turbot/steampipe-plugin-sdk/v2 v2.0.3
 )
 
