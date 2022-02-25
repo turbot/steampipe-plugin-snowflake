@@ -2,7 +2,7 @@ package snowflake
 
 import (
 	"context"
-	"time"
+	"database/sql"
 
 	"github.com/turbot/steampipe-plugin-sdk/v2/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v2/plugin"
@@ -32,15 +32,15 @@ func tableDatabase(_ context.Context) *plugin.Table {
 }
 
 type Database struct {
-	CreatedOn     time.Time `json:"created_on"`
-	Name          string    `json:"name"`
-	IsDefault     string    `json:"is_default"`
-	IsCurrent     string    `json:"is_current"`
-	Origin        string    `json:"origin"`
-	Owner         string    `json:"owner"`
-	Comment       string    `json:"comment"`
-	Options       string    `json:"options"`
-	RetentionTime string    `json:"retention_time"`
+	CreatedOn     sql.NullString `json:"created_on"`
+	Name          sql.NullString `json:"name"`
+	IsDefault     sql.NullString `json:"is_default"`
+	IsCurrent     sql.NullString `json:"is_current"`
+	Origin        sql.NullString `json:"origin"`
+	Owner         sql.NullString `json:"owner"`
+	Comment       sql.NullString `json:"comment"`
+	Options       sql.NullString `json:"options"`
+	RetentionTime sql.NullString `json:"retention_time"`
 }
 
 //// LIST FUNCTION
@@ -59,15 +59,15 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 	}
 
 	for rows.Next() {
-		var CreatedOn time.Time
-		var Name string
-		var IsDefault string
-		var IsCurrent string
-		var Origin string
-		var Owner string
-		var Comment string
-		var Options string
-		var RetentionTime string
+		var CreatedOn sql.NullString
+		var Name sql.NullString
+		var IsDefault sql.NullString
+		var IsCurrent sql.NullString
+		var Origin sql.NullString
+		var Owner sql.NullString
+		var Comment sql.NullString
+		var Options sql.NullString
+		var RetentionTime sql.NullString
 
 		err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &Origin, &Owner, &Comment, &Options, &RetentionTime)
 		if err != nil {

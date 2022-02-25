@@ -2,7 +2,7 @@ package snowflake
 
 import (
 	"context"
-	"time"
+	"database/sql"
 
 	"github.com/turbot/steampipe-plugin-sdk/v2/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v2/plugin"
@@ -33,16 +33,16 @@ func tableRole(_ context.Context) *plugin.Table {
 }
 
 type Role struct {
-	CreatedOn       time.Time `json:"created_on"`
-	Name            string    `json:"name"`
-	IsDefault       string    `json:"is_default"`
-	IsCurrent       string    `json:"is_current"`
-	IsInherited     string    `json:"is_inherited"`
-	AssignedToUsers int64     `json:"assigned_to_users"`
-	GrantedToRoles  int64     `json:"granted_to_roles"`
-	GrantedRoles    int64     `json:"granted_roles"`
-	Owner           string    `json:"owner"`
-	Comment         string    `json:"comment"`
+	CreatedOn       sql.NullTime   `json:"created_on"`
+	Name            sql.NullString `json:"name"`
+	IsDefault       sql.NullString `json:"is_default"`
+	IsCurrent       sql.NullString `json:"is_current"`
+	IsInherited     sql.NullString `json:"is_inherited"`
+	AssignedToUsers sql.NullInt64  `json:"assigned_to_users"`
+	GrantedToRoles  sql.NullInt64  `json:"granted_to_roles"`
+	GrantedRoles    sql.NullInt64  `json:"granted_roles"`
+	Owner           sql.NullString `json:"owner"`
+	Comment         sql.NullString `json:"comment"`
 }
 
 //// LIST FUNCTION
@@ -61,16 +61,16 @@ func listSnowflakeRole(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 	}
 
 	for rows.Next() {
-		var CreatedOn time.Time
-		var Name string
-		var IsDefault string
-		var IsCurrent string
-		var IsInherited string
-		var AssignedToUsers int64
-		var GrantedToRoles int64
-		var GrantedRoles int64
-		var Owner string
-		var Comment string
+		var CreatedOn sql.NullTime
+		var Name sql.NullString
+		var IsDefault sql.NullString
+		var IsCurrent sql.NullString
+		var IsInherited sql.NullString
+		var AssignedToUsers sql.NullInt64
+		var GrantedToRoles sql.NullInt64
+		var GrantedRoles sql.NullInt64
+		var Owner sql.NullString
+		var Comment sql.NullString
 
 		err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &IsInherited, &AssignedToUsers, &GrantedToRoles, &GrantedRoles, &Owner, &Comment)
 		if err != nil {

@@ -19,10 +19,7 @@ const pluginName = "steampipe-plugin-aws"
 func Plugin(ctx context.Context) *plugin.Plugin {
 	p := &plugin.Plugin{
 		Name:             pluginName,
-		DefaultTransform: transform.FromCamel(),
-		// DefaultGetConfig: &plugin.GetConfig{
-		// 	ShouldIgnoreError: isNotFoundError([]string{"ResourceNotFoundException", "NoSuchEntity"}),
-		// },
+		DefaultTransform: transform.FromGo().Transform(valueFromNullable),
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
 			Schema:      ConfigSchema,
@@ -30,6 +27,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		TableMap: map[string]*plugin.Table{
 			"snowflake_database": tableDatabase(ctx),
 			"snowflake_role":     tableRole(ctx),
+			"snowflake_user":     tableUser(ctx),
 		},
 	}
 

@@ -3,11 +3,8 @@ module github.com/turbot/steampipe-plugin-snowflake
 go 1.17
 
 require (
-	github.com/aws/aws-sdk-go v1.42.25
-	github.com/gocarina/gocsv v0.0.0-20201208093247-67c824bc04d4
-	github.com/golang/protobuf v1.5.2
-	github.com/ttacon/chalk v0.0.0-20160626202418-22c06c80ed31
-	github.com/turbot/go-kit v0.3.0
+	github.com/snowflakedb/gosnowflake v1.6.7
+	github.com/turbot/steampipe-plugin-sdk v1.8.3
 	github.com/turbot/steampipe-plugin-sdk/v2 v2.0.3
 )
 
@@ -40,6 +37,7 @@ require (
 	github.com/gertd/go-pluralize v0.1.7 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/golang/glog v1.0.0 // indirect
+	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/flatbuffers v2.0.6+incompatible // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/go-hclog v0.15.0 // indirect
@@ -64,9 +62,9 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sethvargo/go-retry v0.1.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
-	github.com/snowflakedb/gosnowflake v1.6.7 // indirect
 	github.com/stevenle/topsort v0.0.0-20130922064739-8130c1d7596b // indirect
 	github.com/tkrajina/go-reflector v0.5.4 // indirect
+	github.com/turbot/go-kit v0.3.0 // indirect
 	github.com/zclconf/go-cty v1.8.2 // indirect
 	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
