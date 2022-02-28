@@ -3,9 +3,11 @@ package snowflake
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"github.com/turbot/steampipe-plugin-sdk/v2/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v2/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v2/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -24,6 +26,8 @@ func tableNetworkPolicy(_ context.Context) *plugin.Table {
 			{Name: "comment", Type: proto.ColumnType_STRING, Description: ""},
 			{Name: "entries_in_allowed_ip_list", Type: proto.ColumnType_INT, Description: ""},
 			{Name: "entries_in_blocked_ip_list", Type: proto.ColumnType_INT, Description: ""},
+			{Name: "allowed_ip_list", Type: proto.ColumnType_STRING, Hydrate: DescribeNetworkPolicy, Transform: transform.FromField("ALLOWED_IP_LIST"), Description: ""},
+			{Name: "blocked_ip_list", Type: proto.ColumnType_STRING, Hydrate: DescribeNetworkPolicy, Transform: transform.FromField("BLOCKED_IP_LIST"), Description: ""},
 		},
 	}
 }
@@ -40,10 +44,9 @@ type NetworkPolicy struct {
 
 func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	logger := plugin.Logger(ctx)
-	logger.Error("aws_region.listSnowflakeNetworkPolicies", "api.error", "nil")
 	db, err := connect(ctx, d)
 	if err != nil {
-		logger.Error("aws_region.listSnowflakeNetworkPolicies", "connnection.error", err)
+		logger.Error("snowflake_network_policy.listSnowflakeNetworkPolicies", "connnection.error", err)
 		return nil, err
 	}
 	rows, err := db.QueryContext(ctx, "SHOW NETWORK POLICIES")
@@ -85,4 +88,42 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 
 	defer db.Close()
 	return nil, nil
+}
+
+func DescribeNetworkPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	var policyName string
+	if h.Item != nil {
+		policyName = h.Item.(NetworkPolicy).Name.String
+	} else {
+		policyName = d.KeyColumnQualString("name")
+	}
+
+	plugin.Logger(ctx).Info("snowflake_network_policy.DescribeNetworkPolicy", "POLICY NAME", policyName)
+
+	if policyName == "" {
+		return nil, nil
+	}
+
+	db, err := connect(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("snowflake_network_policy.DescribeNetworkPolicy", "connnection.error", err)
+		return nil, err
+	}
+	rows, err := db.QueryContext(ctx, fmt.Sprintf("DESCRIBE NETWORK POLICY %s", policyName))
+	if err != nil {
+		return nil, err
+	}
+	networkIPlist := map[string]string{}
+	for rows.Next() {
+		var name sql.NullString
+		var value sql.NullString
+
+		err = rows.Scan(&name, &value)
+		if err != nil {
+			return nil, err
+		}
+		plugin.Logger(ctx).Error("snowflake_network_policy.DescribeNetworkPolicy", name.String, value.String)
+		networkIPlist[name.String] = value.String
+	}
+	return networkIPlist, nil
 }
