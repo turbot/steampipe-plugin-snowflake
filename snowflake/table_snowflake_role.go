@@ -79,6 +79,28 @@ func listSnowflakeRole(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 
 		d.StreamListItem(ctx, Role{CreatedOn, Name, IsDefault, IsCurrent, IsInherited, AssignedToUsers, GrantedToRoles, GrantedRoles, Owner, Comment})
 	}
+
+	for rows.NextResultSet() {
+		for rows.Next() {
+			var CreatedOn sql.NullTime
+			var Name sql.NullString
+			var IsDefault sql.NullString
+			var IsCurrent sql.NullString
+			var IsInherited sql.NullString
+			var AssignedToUsers sql.NullInt64
+			var GrantedToRoles sql.NullInt64
+			var GrantedRoles sql.NullInt64
+			var Owner sql.NullString
+			var Comment sql.NullString
+
+			err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &IsInherited, &AssignedToUsers, &GrantedToRoles, &GrantedRoles, &Owner, &Comment)
+			if err != nil {
+				return nil, err
+			}
+
+			d.StreamListItem(ctx, Role{CreatedOn, Name, IsDefault, IsCurrent, IsInherited, AssignedToUsers, GrantedToRoles, GrantedRoles, Owner, Comment})
+		}
+	}
 	defer db.Close()
 	return nil, nil
 }

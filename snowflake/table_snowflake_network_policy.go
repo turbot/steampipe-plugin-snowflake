@@ -65,6 +65,24 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 
 		d.StreamListItem(ctx, NetworkPolicy{Name, CreatedOn, Comment, EntriesInAllowedIPList, EntriesInBlockedIPList})
 	}
+
+	for rows.NextResultSet() {
+		for rows.Next() {
+			var Name sql.NullString
+			var CreatedOn sql.NullTime
+			var Comment sql.NullString
+			var EntriesInAllowedIPList sql.NullInt64
+			var EntriesInBlockedIPList sql.NullInt64
+
+			err = rows.Scan(&CreatedOn, &Name, &Comment, &EntriesInAllowedIPList, &EntriesInBlockedIPList)
+			if err != nil {
+				return nil, err
+			}
+
+			d.StreamListItem(ctx, NetworkPolicy{Name, CreatedOn, Comment, EntriesInAllowedIPList, EntriesInBlockedIPList})
+		}
+	}
+
 	defer db.Close()
 	return nil, nil
 }

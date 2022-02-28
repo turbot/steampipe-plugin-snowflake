@@ -76,6 +76,26 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 
 		d.StreamListItem(ctx, Database{CreatedOn, Name, IsDefault, IsCurrent, Origin, Owner, Comment, Options, RetentionTime})
 	}
-	defer db.Close()
+
+	for rows.NextResultSet() {
+		for rows.Next() {
+			var CreatedOn sql.NullString
+			var Name sql.NullString
+			var IsDefault sql.NullString
+			var IsCurrent sql.NullString
+			var Origin sql.NullString
+			var Owner sql.NullString
+			var Comment sql.NullString
+			var Options sql.NullString
+			var RetentionTime sql.NullString
+
+			err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &Origin, &Owner, &Comment, &Options, &RetentionTime)
+			if err != nil {
+				return nil, err
+			}
+
+			d.StreamListItem(ctx, Database{CreatedOn, Name, IsDefault, IsCurrent, Origin, Owner, Comment, Options, RetentionTime})
+		}
+	}
 	return nil, nil
 }

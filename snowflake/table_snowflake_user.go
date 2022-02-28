@@ -128,6 +128,44 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 
 		d.StreamListItem(ctx, User{Name, CreatedOn, LoginName, DisplayName, FirstName, LastName, Email, MinsToUnlock, DaysToExpiry, Comment, Disabled, MustChangePassword, SnowflakeLock, DefaultWarehouse, DefaultNamespace, DefaultRole, DefaultSecondaryRoles, ExtAuthnDuo, ExtAuthnUid, MinsToBypassMFA, Owner, LastSuccessLogin, ExpiresAtTime, LockedUntilTime, HasPassword, HasRSAPublicKey})
 	}
+
+	for rows.NextResultSet() {
+		for rows.Next() {
+			var Name sql.NullString
+			var CreatedOn sql.NullTime
+			var LoginName sql.NullString
+			var DisplayName sql.NullString
+			var FirstName sql.NullString
+			var LastName sql.NullString
+			var Email sql.NullString
+			var MinsToUnlock sql.NullString
+			var DaysToExpiry sql.NullString
+			var Comment sql.NullString
+			var Disabled sql.NullString
+			var MustChangePassword sql.NullString
+			var SnowflakeLock sql.NullString
+			var DefaultWarehouse sql.NullString
+			var DefaultNamespace sql.NullString
+			var DefaultRole sql.NullString
+			var DefaultSecondaryRoles sql.NullString
+			var ExtAuthnDuo sql.NullString
+			var ExtAuthnUid sql.NullString
+			var MinsToBypassMFA sql.NullString
+			var Owner sql.NullString
+			var LastSuccessLogin sql.NullTime
+			var ExpiresAtTime sql.NullTime
+			var LockedUntilTime sql.NullTime
+			var HasPassword sql.NullString
+			var HasRSAPublicKey sql.NullString
+
+			err = rows.Scan(&Name, &CreatedOn, &LoginName, &DisplayName, &FirstName, &LastName, &Email, &MinsToUnlock, &DaysToExpiry, &Comment, &Disabled, &MustChangePassword, &SnowflakeLock, &DefaultWarehouse, &DefaultNamespace, &DefaultRole, &DefaultSecondaryRoles, &ExtAuthnDuo, &ExtAuthnUid, &MinsToBypassMFA, &Owner, &LastSuccessLogin, &ExpiresAtTime, &LockedUntilTime, &HasPassword, &HasRSAPublicKey)
+			if err != nil {
+				return nil, err
+			}
+
+			d.StreamListItem(ctx, User{Name, CreatedOn, LoginName, DisplayName, FirstName, LastName, Email, MinsToUnlock, DaysToExpiry, Comment, Disabled, MustChangePassword, SnowflakeLock, DefaultWarehouse, DefaultNamespace, DefaultRole, DefaultSecondaryRoles, ExtAuthnDuo, ExtAuthnUid, MinsToBypassMFA, Owner, LastSuccessLogin, ExpiresAtTime, LockedUntilTime, HasPassword, HasRSAPublicKey})
+		}
+	}
 	defer db.Close()
 	return nil, nil
 }
