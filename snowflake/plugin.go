@@ -25,9 +25,10 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			Schema:      ConfigSchema,
 		},
 		TableMap: map[string]*plugin.Table{
-			"snowflake_database": tableDatabase(ctx),
-			"snowflake_role":     tableRole(ctx),
-			"snowflake_user":     tableUser(ctx),
+			"snowflake_database":       tableDatabase(ctx),
+			"snowflake_network_policy": tableNetworkPolicy(ctx),
+			"snowflake_role":           tableRole(ctx),
+			"snowflake_user":           tableUser(ctx),
 		},
 	}
 
