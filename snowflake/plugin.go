@@ -29,6 +29,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"snowflake_network_policy": tableNetworkPolicy(ctx),
 			"snowflake_role":           tableRole(ctx),
 			"snowflake_user":           tableUser(ctx),
+			// "snowflake_row_access_policy": tableRowAccessPolicy(ctx),
 		},
 	}
 
