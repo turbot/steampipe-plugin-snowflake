@@ -53,6 +53,7 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var Name sql.NullString

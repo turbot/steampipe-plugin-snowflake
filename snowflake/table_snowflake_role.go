@@ -59,6 +59,7 @@ func listSnowflakeRole(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var CreatedOn sql.NullTime
