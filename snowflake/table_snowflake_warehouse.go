@@ -73,10 +73,6 @@ type Warehouse struct {
 	Failed          sql.NullInt64  `json:"failed"`
 	Suspended       sql.NullInt64  `json:"suspended"`
 	UUID            sql.NullString `json:"uuid"`
-	// MinClusterCount sql.NullInt64  `json:"min_cluster_count"`
-	// MaxClusterCount sql.NullInt64  `json:"max_cluster_count"`
-	// StartedClusters sql.NullInt64  `json:"started_clusters"`
-	// ScalingPolicy   sql.NullString `json:"scaling_policy"`
 }
 
 //// LIST FUNCTION
