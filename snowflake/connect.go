@@ -102,11 +102,6 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "Could not open snowflake database.")
 	}
-	// connectionString := fmt.Sprintf("%s:%s@%s", *config.User, *config.Password, *config.Account)
-	// db, err := sql.Open("snowflake", connectionString)
-	// if err != nil {
-	// 	return nil, err
-	// }
 	return db, nil
 }
 
