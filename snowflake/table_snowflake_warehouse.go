@@ -79,7 +79,6 @@ type Warehouse struct {
 
 func listSnowflakeWarehouses(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	logger := plugin.Logger(ctx)
-	logger.Error("aws_region.listSnowflakeRole", "api.error", "nil")
 	db, err := connect(ctx, d)
 	if err != nil {
 		logger.Error("aws_region.listSnowflakeRole", "connnection.error", err)

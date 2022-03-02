@@ -6,23 +6,67 @@ import (
 )
 
 type snowflakeConfig struct {
-	User     *string `cty:"user"`
-	Password *string `cty:"password"`
-	Account  *string `cty:"account"`
-	Database *string `cty:"database"`
+	Account              *string `cty:"account"`
+	User                 *string `cty:"user"`
+	Password             *string `cty:"password"`
+	BrowserAuth          *bool   `cty:"browser_auth"`
+	PrivateKeyPath       *string `cty:"private_key_path"`
+	PrivateKey           *string `cty:"private_key"`
+	PrivateKeyPassphrase *string `cty:"private_key_passphrase"`
+	OAuthAccessToken     *string `cty:"oauth_access_token"`
+	Region               *string `cty:"region"`
+	Role                 *string `cty:"role"`
+	OAuthRefreshToken    *string `cty:"oauth_refresh_token"`
+	OAuthClientID        *string `cty:"oauth_client_id"`
+	OAuthClientSecret    *string `cty:"oauth_client_secret"`
+	OAuthEndpoint        *string `cty:"oauth_endpoint"`
+	OAuthRedirectURL     *string `cty:"oauth_redirect_url"`
 }
 
 var ConfigSchema = map[string]*schema.Attribute{
+	"account": {
+		Type: schema.TypeString,
+	},
 	"user": {
 		Type: schema.TypeString,
 	},
 	"password": {
 		Type: schema.TypeString,
 	},
-	"account": {
+	"browser_auth": {
+		Type: schema.TypeBool,
+	},
+	"private_key_path": {
 		Type: schema.TypeString,
 	},
-	"database": {
+	"private_key": {
+		Type: schema.TypeString,
+	},
+	"private_key_passphrase": {
+		Type: schema.TypeString,
+	},
+	"oauth_access_token": {
+		Type: schema.TypeString,
+	},
+	"region": {
+		Type: schema.TypeString,
+	},
+	"role": {
+		Type: schema.TypeString,
+	},
+	"oauth_refresh_token": {
+		Type: schema.TypeString,
+	},
+	"oauth_client_id": {
+		Type: schema.TypeString,
+	},
+	"oauth_client_secret": {
+		Type: schema.TypeString,
+	},
+	"oauth_endpoint": {
+		Type: schema.TypeString,
+	},
+	"oauth_redirect_url": {
 		Type: schema.TypeString,
 	},
 }

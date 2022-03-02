@@ -47,7 +47,6 @@ type Database struct {
 
 func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	logger := plugin.Logger(ctx)
-	logger.Error("aws_region.listSnowflakeDatabases", "api.error", "nil")
 	db, err := connect(ctx, d)
 	if err != nil {
 		logger.Error("aws_region.listAwsRegions", "connnection.error", err)

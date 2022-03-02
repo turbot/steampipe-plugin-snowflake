@@ -43,7 +43,6 @@ type RowAccessPolicy struct {
 
 func listSnowflakeRowAccessPolicies(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	logger := plugin.Logger(ctx)
-	logger.Error("snowflake_row_access_policy.listSnowflakeRowAccessPolicies", "api.error", "nil")
 	db, err := connect(ctx, d)
 	if err != nil {
 		logger.Error("snowflake_row_access_policy.listSnowflakeRowAccessPolicies", "connnection.error", err)
