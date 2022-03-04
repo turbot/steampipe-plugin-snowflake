@@ -99,8 +99,6 @@ func DescribeNetworkPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.H
 		policyName = d.KeyColumnQualString("name")
 	}
 
-	plugin.Logger(ctx).Info("snowflake_network_policy.DescribeNetworkPolicy", "POLICY NAME", policyName)
-
 	if policyName == "" {
 		return nil, nil
 	}
@@ -123,7 +121,6 @@ func DescribeNetworkPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.H
 		if err != nil {
 			return nil, err
 		}
-		plugin.Logger(ctx).Error("snowflake_network_policy.DescribeNetworkPolicy", name.String, value.String)
 		networkIPlist[name.String] = value.String
 	}
 	return networkIPlist, nil
