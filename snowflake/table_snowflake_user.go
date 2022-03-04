@@ -26,7 +26,7 @@ func tableUser(_ context.Context) *plugin.Table {
 			{Name: "email", Type: proto.ColumnType_STRING, Description: "Email address of the user"},
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "Owner of the user in Snowflake."},
 			{Name: "has_password", Type: proto.ColumnType_BOOL, Description: "Whether the user has password."},
-			{Name: "has_rsa_public_key", Type: proto.ColumnType_STRING, Description: "Whether the user has RSA public key."},
+			{Name: "has_rsa_public_key", Type: proto.ColumnType_BOOL, Description: "Whether the user has RSA public key."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Timestamp when the user was created."},
 
 			{Name: "custom_landing_page_url", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("CUSTOM_LANDING_PAGE_URL"), Description: "Snowflake Support is allowed to use the user or account."},
@@ -87,7 +87,7 @@ type User struct {
 	ExpiresAtTime         sql.NullTime   `json:"expires_at_time"`
 	LockedUntilTime       sql.NullTime   `json:"locked_until_time"`
 	HasPassword           sql.NullString `json:"has_password"`
-	HasRSAPublicKey       sql.NullString `json:"has_rsa_public_key"`
+	HasRsaPublicKey       sql.NullString `json:"has_rsa_public_key"`
 }
 
 //// LIST FUNCTION
