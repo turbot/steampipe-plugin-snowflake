@@ -18,14 +18,15 @@ func tableAccountGrant(_ context.Context) *plugin.Table {
 			Hydrate: listSnowflakeAccountGrants,
 		},
 		Columns: []*plugin.Column{
-			{Name: "name", Description: "An entity to which access can be granted. Unless allowed by a grant, access will be denied.", Type: proto.ColumnType_STRING},
-			{Name: "privilege", Description: "A defined level of access to an object.", Type: proto.ColumnType_STRING},
-			{Name: "granted_on", Description: "Date and time when the access was granted.", Type: proto.ColumnType_STRING},
-			{Name: "granted_to", Description: "Type of the object.", Type: proto.ColumnType_STRING},
-			{Name: "grantee_name", Description: "Name of the object role has been granted.", Type: proto.ColumnType_STRING},
-			{Name: "granted_by", Description: "Name of the object that granted access on the role.", Type: proto.ColumnType_STRING},
-			{Name: "grant_option", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "created_on", Description: "", Type: proto.ColumnType_TIMESTAMP},
+			{Name: "name", Type: proto.ColumnType_STRING, Description: "An entity to which access can be granted. Unless allowed by a grant, access will be denied."},
+			{Name: "privilege", Type: proto.ColumnType_STRING, Description: "A defined level of access to an object."},
+
+			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time privilege was granted."},
+			{Name: "grant_option", Type: proto.ColumnType_BOOL, Description: "If set to TRUE, the recipient role can grant the privilege to other roles."},
+			{Name: "granted_by", Type: proto.ColumnType_STRING, Description: "Name of the object that granted access on the role."},
+			{Name: "granted_on", Type: proto.ColumnType_STRING, Description: "Date and time when the access was granted."},
+			{Name: "granted_to", Type: proto.ColumnType_STRING, Description: "Type of the object."},
+			{Name: "grantee_name", Type: proto.ColumnType_STRING, Description: "Name of the object role has been granted."},
 		},
 	}
 }

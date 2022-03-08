@@ -12,21 +12,22 @@ import (
 
 func tableDatabase(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "snowflake_database",
-		Description: "Snowflake Database",
+		Name: "snowflake_database",
+		// https://docs.snowflake.com/en/sql-reference/sql/show-databases.html
+		Description: "Snowflake database is a logical grouping of schemas.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeDatabases,
 		},
 		Columns: []*plugin.Column{
-			{Name: "name", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "created_on", Description: "", Type: proto.ColumnType_TIMESTAMP},
-			{Name: "is_default", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "is_current", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "origin", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "owner", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "comment", Description: "", Type: proto.ColumnType_STRING},
+			{Name: "name", Description: "Name of the database.", Type: proto.ColumnType_STRING},
+			{Name: "created_on", Description: "Creation time of the database.", Type: proto.ColumnType_TIMESTAMP},
+			{Name: "is_default", Description: "Name of the default database for authenticating user.", Type: proto.ColumnType_STRING},
+			{Name: "is_current", Description: "Name of the current database for authenticating user.", Type: proto.ColumnType_STRING},
+			{Name: "origin", Description: "Name of the origin database.", Type: proto.ColumnType_STRING},
+			{Name: "owner", Description: "Name of the role that owns the schema.", Type: proto.ColumnType_STRING},
+			{Name: "comment", Description: "Comment for this database.", Type: proto.ColumnType_STRING},
 			{Name: "options", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "retention_time", Description: "", Type: proto.ColumnType_STRING},
+			{Name: "retention_time", Description: "Number of days that historical data is retained for Time Travel.", Type: proto.ColumnType_STRING},
 		},
 	}
 }

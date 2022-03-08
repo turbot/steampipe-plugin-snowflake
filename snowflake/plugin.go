@@ -27,6 +27,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		TableMap: map[string]*plugin.Table{
 			"snowflake_account_grant":  tableAccountGrant(ctx),
 			"snowflake_database":       tableDatabase(ctx),
+			"snowflake_database_grant": tableDatabaseGrant(ctx),
 			"snowflake_network_policy": tableNetworkPolicy(ctx),
 			"snowflake_role":           tableRole(ctx),
 			"snowflake_role_grant":     tableRoleGrant(ctx),

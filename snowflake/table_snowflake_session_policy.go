@@ -10,26 +10,26 @@ import (
 
 //// TABLE DEFINITION
 
+// https://docs.snowflake.com/en/sql-reference/ddl-user-security.html#label-session-policy-ddl
+// This command requires the role executing the command to have:
+// 	The OWNERSHIP privilege on the session policy or the APPLY on SESSION POLICY privilege.
+// 	The USAGE privilege on the schema.
 func tableSessionPolicy(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name: "snowflake_session_policy",
-		// https://docs.snowflake.com/en/sql-reference/ddl-user-security.html#label-session-policy-ddl
-		// This command requires the role executing the command to have:
-		// 	The OWNERSHIP privilege on the session policy or the APPLY on SESSION POLICY privilege.
-		// 	The USAGE privilege on the schema.
-
-		Description: "Snowflake Session Policy",
+		Name:        "snowflake_session_policy",
+		Description: "A session policy defines the idle session timeout period in minutes.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeSessionPolicies,
 		},
 		Columns: []*plugin.Column{
-			{Name: "name", Description: "", Type: proto.ColumnType_STRING},
+			{Name: "name", Description: "Identifier for the session policy.", Type: proto.ColumnType_STRING},
 			{Name: "created_on", Description: "", Type: proto.ColumnType_TIMESTAMP},
 			{Name: "database_name", Description: "", Type: proto.ColumnType_STRING},
 			{Name: "schema_name", Description: "", Type: proto.ColumnType_STRING},
 			{Name: "kind", Description: "", Type: proto.ColumnType_STRING},
 			{Name: "owner", Description: "", Type: proto.ColumnType_STRING},
 			{Name: "comment", Description: "", Type: proto.ColumnType_STRING},
+			// ADD DESCRIBE SESSION POLICY COLUMNS
 		},
 	}
 }
