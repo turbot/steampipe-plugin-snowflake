@@ -13,7 +13,7 @@ import (
 func tableRole(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_role",
-		Description: "Snowflake Role",
+		Description: "An entity to which privileges can be granted. Roles are in turn assigned to users.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeRole,
 		},
@@ -51,7 +51,7 @@ func listSnowflakeRole(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 	logger := plugin.Logger(ctx)
 	db, err := connect(ctx, d)
 	if err != nil {
-		logger.Error("aws_region.listSnowflakeRole", "connnection.error", err)
+		logger.Error("snowflake_role.listSnowflakeRole", "connnection.error", err)
 		return nil, err
 	}
 	rows, err := db.QueryContext(ctx, "SHOW ROLES")

@@ -22,11 +22,11 @@ func tableRoleGrant(_ context.Context) *plugin.Table {
 			},
 		},
 		Columns: []*plugin.Column{
-			{Name: "role", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "created_on", Description: "", Type: proto.ColumnType_TIMESTAMP},
-			{Name: "granted_to", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "grantee_name", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "granted_by", Description: "", Type: proto.ColumnType_STRING},
+			{Name: "role", Description: "Name of the role on that access has been granted.", Type: proto.ColumnType_STRING},
+			{Name: "created_on", Description: "Date and time when the role was granted to the user/role.", Type: proto.ColumnType_TIMESTAMP},
+			{Name: "granted_to", Description: "Type of the object. Valid values USER and ROLE.", Type: proto.ColumnType_STRING},
+			{Name: "grantee_name", Description: "Name of the object role has been granted.", Type: proto.ColumnType_STRING},
+			{Name: "granted_by", Description: "Name of the object that granted access on the role.", Type: proto.ColumnType_STRING},
 		},
 	}
 }

@@ -10,12 +10,17 @@ import (
 
 //// TABLE DEFINITION
 
-func tableRowAccessPolicy(_ context.Context) *plugin.Table {
+func tableSessionPolicy(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "snowflake_row_access_policy",
-		Description: "Snowflake Row Access Policy",
+		Name: "snowflake_session_policy",
+		// https://docs.snowflake.com/en/sql-reference/ddl-user-security.html#label-session-policy-ddl
+		// This command requires the role executing the command to have:
+		// 	The OWNERSHIP privilege on the session policy or the APPLY on SESSION POLICY privilege.
+		// 	The USAGE privilege on the schema.
+
+		Description: "Snowflake Session Policy",
 		List: &plugin.ListConfig{
-			Hydrate: listSnowflakeRowAccessPolicies,
+			Hydrate: listSnowflakeSessionPolicies,
 		},
 		Columns: []*plugin.Column{
 			{Name: "name", Description: "", Type: proto.ColumnType_STRING},
@@ -29,28 +34,18 @@ func tableRowAccessPolicy(_ context.Context) *plugin.Table {
 	}
 }
 
-type Policy struct {
-	CreatedOn    sql.NullString `db:"created_on"`
-	Name         sql.NullString `db:"name"`
-	DatabaseName sql.NullString `db:"database_name"`
-	SchemaName   sql.NullString `db:"schema_name"`
-	Kind         sql.NullString `db:"kind"`
-	Owner        sql.NullString `db:"owner"`
-	Comment      sql.NullString `db:"comment"`
-}
-
-type RowAccessPolicy Policy
+type SessionPolicy Policy
 
 //// LIST FUNCTION
 
-func listSnowflakeRowAccessPolicies(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listSnowflakeSessionPolicies(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	logger := plugin.Logger(ctx)
 	db, err := connect(ctx, d)
 	if err != nil {
 		logger.Error("snowflake_row_access_policy.listSnowflakeRowAccessPolicies", "connnection.error", err)
 		return nil, err
 	}
-	rows, err := db.QueryContext(ctx, "SHOW ROW ACCESS POLICIES")
+	rows, err := db.QueryContext(ctx, "SHOW SESSION POLICIES")
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +64,7 @@ func listSnowflakeRowAccessPolicies(ctx context.Context, d *plugin.QueryData, _ 
 			return nil, err
 		}
 
-		d.StreamListItem(ctx, RowAccessPolicy{CreatedOn, Name, DatabaseName, SchemaName, Kind, Owner, Comment})
+		d.StreamListItem(ctx, SessionPolicy{CreatedOn, Name, DatabaseName, SchemaName, Kind, Owner, Comment})
 	}
 
 	for rows.NextResultSet() {
@@ -87,7 +82,7 @@ func listSnowflakeRowAccessPolicies(ctx context.Context, d *plugin.QueryData, _ 
 				return nil, err
 			}
 
-			d.StreamListItem(ctx, RowAccessPolicy{CreatedOn, Name, DatabaseName, SchemaName, Kind, Owner, Comment})
+			d.StreamListItem(ctx, SessionPolicy{CreatedOn, Name, DatabaseName, SchemaName, Kind, Owner, Comment})
 		}
 	}
 	return nil, nil

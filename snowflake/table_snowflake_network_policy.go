@@ -16,18 +16,19 @@ func tableNetworkPolicy(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name: "snowflake_network_policy",
 		// Lists all network policies defined in the system. Only returns results for the SECURITYADMIN or ACCOUNTADMIN role.
-		Description: "Snowflake Network Policy",
+		// https://docs.snowflake.com/en/user-guide/ui-account.html#network-policies
+		Description: "Network policies enable restricting access to your account based on user IP address.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeNetworkPolicies,
 		},
 		Columns: []*plugin.Column{
-			{Name: "name", Type: proto.ColumnType_STRING, Description: ""},
-			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: ""},
-			{Name: "comment", Type: proto.ColumnType_STRING, Description: ""},
-			{Name: "entries_in_allowed_ip_list", Type: proto.ColumnType_INT, Description: ""},
-			{Name: "entries_in_blocked_ip_list", Type: proto.ColumnType_INT, Description: ""},
-			{Name: "allowed_ip_list", Type: proto.ColumnType_STRING, Hydrate: DescribeNetworkPolicy, Transform: transform.FromField("ALLOWED_IP_LIST"), Description: ""},
-			{Name: "blocked_ip_list", Type: proto.ColumnType_STRING, Hydrate: DescribeNetworkPolicy, Transform: transform.FromField("BLOCKED_IP_LIST"), Description: ""},
+			{Name: "name", Type: proto.ColumnType_STRING, Description: "Identifier for the network policy."},
+			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the policy was created."},
+			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Specifies a comment for the network policy."},
+			{Name: "entries_in_allowed_ip_list", Type: proto.ColumnType_INT, Description: "No of entries in the allowed IP list."},
+			{Name: "entries_in_blocked_ip_list", Type: proto.ColumnType_INT, Description: "No of entries in the blocked IP list."},
+			{Name: "allowed_ip_list", Type: proto.ColumnType_STRING, Hydrate: DescribeNetworkPolicy, Transform: transform.FromField("ALLOWED_IP_LIST"), Description: "Comma-separated list of one or more IPv4 addresses that are allowed access to your Snowflake account."},
+			{Name: "blocked_ip_list", Type: proto.ColumnType_STRING, Hydrate: DescribeNetworkPolicy, Transform: transform.FromField("BLOCKED_IP_LIST"), Description: "Comma-separated list of one or more IPv4 addresses that are denied access to your Snowflake account."},
 		},
 	}
 }

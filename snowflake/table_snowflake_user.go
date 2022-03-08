@@ -16,7 +16,7 @@ import (
 func tableUser(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_user",
-		Description: "Snowflake User",
+		Description: "A user identity recognized by Snowflake, whether associated with a person or program.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeUsers,
 		},
@@ -52,9 +52,9 @@ func tableUser(_ context.Context) *plugin.Table {
 			{Name: "must_change_password", Type: proto.ColumnType_STRING, Description: "User must change the password."},
 			{Name: "password_last_set_time", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("PASSWORD_LAST_SET_TIME"), Description: "The timestamp on which the last non-null password was set for the user. Default to null if no password has been set yet."},
 			{Name: "rsa_public_key", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("RSA_PUBLIC_KEY"), Description: "RSA public key of the user."},
+			{Name: "rsa_public_key_fp", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("RSA_PUBLIC_KEY_FP"), Description: "Fingerprint of user's RSA public key."},
 			{Name: "rsa_public_key_2", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("RSA_PUBLIC_KEY_2"), Description: "Second RSA public key of the user."},
 			{Name: "rsa_public_key_2_fp", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("RSA_PUBLIC_KEY_2_FP"), Description: "Fingerprint of user's second RSA public key."},
-			{Name: "rsa_public_key_fp", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("RSA_PUBLIC_KEY_FP"), Description: "Fingerprint of user's RSA public key."},
 			{Name: "snowflake_lock", Type: proto.ColumnType_STRING, Description: "Whether the user or account is locked by Snowflake."},
 			{Name: "snowflake_support", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("SNOWFLAKE_SUPPORT"), Description: "Snowflake Support is allowed to use the user or account."},
 		},
