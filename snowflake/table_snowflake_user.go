@@ -103,6 +103,7 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var Name sql.NullString
@@ -177,7 +178,6 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 			d.StreamListItem(ctx, User{Name, CreatedOn, LoginName, DisplayName, FirstName, LastName, Email, MinsToUnlock, DaysToExpiry, Comment, Disabled, MustChangePassword, SnowflakeLock, DefaultWarehouse, DefaultNamespace, DefaultRole, DefaultSecondaryRoles, ExtAuthnDuo, ExtAuthnUid, MinsToBypassMFA, Owner, LastSuccessLogin, ExpiresAtTime, LockedUntilTime, HasPassword, HasRSAPublicKey})
 		}
 	}
-	defer db.Close()
 	return nil, nil
 }
 
@@ -188,8 +188,6 @@ func DescribeUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 	} else {
 		userName = d.KeyColumnQualString("name")
 	}
-
-	plugin.Logger(ctx).Info("snowflake_user.DescribeUser", "USER NAME", userName)
 
 	if userName == "" {
 		return nil, nil
@@ -202,13 +200,14 @@ func DescribeUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 	}
 	rows, err := db.QueryContext(ctx, fmt.Sprintf("DESCRIBE USER %s", userName))
 	if err != nil {
-		plugin.Logger(ctx).Info("snowflake_user.DescribeUser", fmt.Sprintf("query_error for user %s", userName), fmt.Errorf("%#v", err))
 		if err.(*gosnowflake.SnowflakeError) != nil {
 			plugin.Logger(ctx).Info("snowflake_user.DescribeUser", fmt.Sprintf("query_error for user %s", userName), err.(*gosnowflake.SnowflakeError).Error())
 			return nil, nil
 		}
 		return nil, err
 	}
+	defer rows.Close()
+
 	userProperties := map[string]string{}
 	for rows.Next() {
 		var property sql.NullString

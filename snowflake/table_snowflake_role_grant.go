@@ -14,7 +14,7 @@ import (
 func tableRoleGrant(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_role_grant",
-		Description: "Snowflake Role Grant",
+		Description: "Lists all privileges and roles granted to the role.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeRoleGrants,
 			KeyColumns: plugin.KeyColumnSlice{
@@ -22,11 +22,11 @@ func tableRoleGrant(_ context.Context) *plugin.Table {
 			},
 		},
 		Columns: []*plugin.Column{
-			{Name: "role", Description: "Name of the role on that access has been granted.", Type: proto.ColumnType_STRING},
-			{Name: "created_on", Description: "Date and time when the role was granted to the user/role.", Type: proto.ColumnType_TIMESTAMP},
-			{Name: "granted_to", Description: "Type of the object. Valid values USER and ROLE.", Type: proto.ColumnType_STRING},
-			{Name: "grantee_name", Description: "Name of the object role has been granted.", Type: proto.ColumnType_STRING},
-			{Name: "granted_by", Description: "Name of the object that granted access on the role.", Type: proto.ColumnType_STRING},
+			{Name: "role", Type: proto.ColumnType_STRING, Description: "Name of the role on that access has been granted."},
+			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the role was granted to the user/role."},
+			{Name: "granted_to", Type: proto.ColumnType_STRING, Description: "Type of the object. Valid values USER and ROLE."},
+			{Name: "grantee_name", Type: proto.ColumnType_STRING, Description: "Name of the object role has been granted."},
+			{Name: "granted_by", Type: proto.ColumnType_STRING, Description: "Name of the object that granted access on the role."},
 		},
 	}
 }
@@ -88,6 +88,5 @@ func listSnowflakeRoleGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 		d.StreamListItem(ctx, RoleGrant{CreatedOn, Role, GrantedTo, GranteeName, GrantedBy})
 	}
 
-	defer db.Close()
 	return nil, nil
 }

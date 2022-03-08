@@ -101,6 +101,5 @@ func listSnowflakeRole(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 			d.StreamListItem(ctx, Role{CreatedOn, Name, IsDefault, IsCurrent, IsInherited, AssignedToUsers, GrantedToRoles, GrantedRoles, Owner, Comment})
 		}
 	}
-	defer db.Close()
 	return nil, nil
 }

@@ -88,7 +88,6 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 		}
 	}
 
-	defer db.Close()
 	return nil, nil
 }
 
@@ -113,6 +112,8 @@ func DescribeNetworkPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.H
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
+
 	networkIPlist := map[string]string{}
 	for rows.Next() {
 		var name sql.NullString

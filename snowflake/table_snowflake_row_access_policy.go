@@ -20,8 +20,8 @@ func tableRowAccessPolicy(_ context.Context) *plugin.Table {
 		Columns: []*plugin.Column{
 			{Name: "name", Description: "", Type: proto.ColumnType_STRING},
 			{Name: "created_on", Description: "", Type: proto.ColumnType_TIMESTAMP},
-			{Name: "database_name", Description: "", Type: proto.ColumnType_STRING},
-			{Name: "schema_name", Description: "", Type: proto.ColumnType_STRING},
+			{Name: "database_name", Description: "The database for the row access policy.", Type: proto.ColumnType_STRING},
+			{Name: "schema_name", Description: "The schema in database for the row access policy", Type: proto.ColumnType_STRING},
 			{Name: "kind", Description: "", Type: proto.ColumnType_STRING},
 			{Name: "owner", Description: "", Type: proto.ColumnType_STRING},
 			{Name: "comment", Description: "", Type: proto.ColumnType_STRING},
