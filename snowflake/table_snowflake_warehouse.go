@@ -13,7 +13,7 @@ import (
 func tableSnowflakeWarehouse(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_warehouse",
-		Description: "Snowflake Warehouse",
+		Description: "A warehouse, is a cluster of compute resources in Snowflake. Warehouse provides the required resources, such as CPU, memory, and temporary storage, to perform queries.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeWarehouses,
 		},

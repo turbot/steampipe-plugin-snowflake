@@ -33,7 +33,6 @@ func tableSessionPolicy(_ context.Context) *plugin.Table {
 			{Name: "session_idle_timeout_mins", Type: proto.ColumnType_INT, Hydrate: DescribeSessionPolicy, Description: "Time period in minutes of inactivity with either the web interface or a programmatic client"},
 			{Name: "session_ui_idle_timeout_mins", Type: proto.ColumnType_INT, Hydrate: DescribeSessionPolicy, Description: "Time period in minutes of inactivity with the web interface."},
 			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for this policy"},
-			// ADD DESCRIBE SESSION POLICY COLUMNS
 		},
 	}
 }
