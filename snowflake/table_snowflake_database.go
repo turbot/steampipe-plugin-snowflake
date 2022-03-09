@@ -10,10 +10,10 @@ import (
 
 //// TABLE DEFINITION
 
+// https://docs.snowflake.com/en/sql-reference/sql/show-databases.html
 func tableDatabase(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name: "snowflake_database",
-		// https://docs.snowflake.com/en/sql-reference/sql/show-databases.html
+		Name:        "snowflake_database",
 		Description: "Snowflake database is a logical grouping of schemas.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeDatabases,
@@ -21,12 +21,12 @@ func tableDatabase(_ context.Context) *plugin.Table {
 		Columns: []*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Name of the database."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Creation time of the database."},
-			{Name: "is_default", Type: proto.ColumnType_STRING, Description: "Name of the default database for authenticating user."},
+			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for this database."},
 			{Name: "is_current", Type: proto.ColumnType_STRING, Description: "Name of the current database for authenticating user."},
+			{Name: "is_default", Type: proto.ColumnType_STRING, Description: "Name of the default database for authenticating user."},
+			{Name: "options", Type: proto.ColumnType_STRING, Description: ""},
 			{Name: "origin", Type: proto.ColumnType_STRING, Description: "Name of the origin database."},
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "Name of the role that owns the schema."},
-			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for this database."},
-			{Name: "options", Type: proto.ColumnType_STRING, Description: ""},
 			{Name: "retention_time", Type: proto.ColumnType_STRING, Description: "Number of days that historical data is retained for Time Travel."},
 		},
 	}
@@ -50,7 +50,7 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 	logger := plugin.Logger(ctx)
 	db, err := connect(ctx, d)
 	if err != nil {
-		logger.Error("aws_region.listAwsRegions", "connnection.error", err)
+		logger.Error("snowflake_database.listSnowflakeDatabases", "connnection.error", err)
 		return nil, err
 	}
 	rows, err := db.QueryContext(ctx, "SHOW DATABASES")

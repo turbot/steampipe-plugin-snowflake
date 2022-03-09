@@ -76,7 +76,7 @@ func listSnowflakeWarehouses(ctx context.Context, d *plugin.QueryData, _ *plugin
 	logger := plugin.Logger(ctx)
 	db, err := connect(ctx, d)
 	if err != nil {
-		logger.Error("aws_region.listSnowflakeRole", "connnection.error", err)
+		logger.Error("snowflake_warehouse.listSnowflakeWarehouses", "connnection.error", err)
 		return nil, err
 	}
 	rows, err := db.QueryContext(ctx, "SHOW WAREHOUSES")

@@ -26,7 +26,6 @@ func tableDatabaseGrant(_ context.Context) *plugin.Table {
 		Columns: []*plugin.Column{
 			{Name: "database", Type: proto.ColumnType_STRING, Transform: transform.FromField("Name").Transform(valueFromNullable), Description: "Name of the database."},
 			{Name: "privilege", Type: proto.ColumnType_STRING, Description: "A defined level of access to an database."},
-
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the access was granted."},
 			{Name: "grant_option", Type: proto.ColumnType_BOOL, Description: "If set to TRUE, the recipient role can grant the privilege to other roles."},
 			{Name: "granted_by", Type: proto.ColumnType_STRING, Description: "Identifier for the object that granted the privilege."},
