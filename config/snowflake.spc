@@ -10,6 +10,8 @@ connection "snowflake" {
   # The region id for Snowflake Account
   # region = "ap-south-1.aws"
 
+  # Optional; The role that should be used by steampipe for the user.
+  # If not mentioned will use the default role for the User
   # role = "ACCOUNTADMIN"
 
   # Authentication to snowflake can be done in three ways
@@ -17,7 +19,7 @@ connection "snowflake" {
   # 2. Key Based Authentication
   # 3. OAuth Based Authentication
 
-  # 1.1 Using Password
+  # 1.1 Authentication using password
   # The password for your Snowflake Account
   # password = "~dummy@pass"
 
@@ -25,7 +27,9 @@ connection "snowflake" {
   # https://docs.snowflake.com/en/user-guide/key-pair-auth.html
   # private_key_path       = "/Users/lalitbhardwaj/Turbot/prod/my_sample_codes/Go_Basics/snowflake/rsa_key.p8"
   # private_key_passphrase = "abcde"
+
   # OR use private key directly
+
   # private_key = "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFHzBJ....au/BUg==\n-----END ENCRYPTED PRIVATE KEY-----"
   # private_key_passphrase = "abcde"
 
