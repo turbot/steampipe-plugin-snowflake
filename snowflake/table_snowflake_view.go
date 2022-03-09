@@ -10,11 +10,11 @@ import (
 
 //// TABLE DEFINITION
 
+// https://docs.snowflake.com/en/user-guide/views-introduction.html
 func tableSnowflakeView(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name: "snowflake_view",
-		// https://docs.snowflake.com/en/sql-reference/sql/show-databases.html
-		Description: "Snowflake database is a logical grouping of schemas.",
+		Name:        "snowflake_view",
+		Description: "Snowflake view is basically a named definition of a query.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeViews,
 		},
@@ -26,8 +26,8 @@ func tableSnowflakeView(_ context.Context) *plugin.Table {
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "The owner of the view."},
 			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Optional comment."},
 			{Name: "text", Type: proto.ColumnType_STRING, Description: "The text of the command that created the view (e.g. CREATE VIEW ...)."},
-			{Name: "is_secure", Type: proto.ColumnType_STRING, Description: "True if the view is a secure view; false otherwise."},
-			{Name: "is_materialized", Type: proto.ColumnType_STRING, Description: "True if the view is a materialized view; false otherwise."},
+			{Name: "is_secure", Type: proto.ColumnType_BOOL, Description: "True if the view is a secure view; false otherwise."},
+			{Name: "is_materialized", Type: proto.ColumnType_BOOL, Description: "True if the view is a materialized view; false otherwise."},
 		},
 	}
 }
