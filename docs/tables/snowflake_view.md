@@ -6,7 +6,7 @@ Snowflake supports two types of views:
 
 - `Non-materialized views`: A non-materialized view’s results are created by executing the query at the time that the view is referenced in a query.
 
-- `Materialized views`: A materialized view’s results are stored, almost as though the results were a table. This allows faster access, but requires storage space and active maintenance, both of which incur additional costs.
+- `Materialized views`: A materialized view’s results are stored, almost as though the results were a table. This allows faster access but requires storage space and active maintenance, both of which incur additional costs.
 
 ## Examples
 
