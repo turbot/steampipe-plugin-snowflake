@@ -30,7 +30,7 @@ from
   snowflake_user
 where
   (last_success_login > now() - interval '30 days') and
-  last_success_login is not null
+  last_success_login is not null;
 ```
 
 ```
