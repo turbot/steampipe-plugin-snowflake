@@ -19,7 +19,7 @@ import (
 func tableSessionPolicy(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_session_policy",
-		Description: "A session policy defines the idle session timeout period in minutes.",
+		Description: "A session policy defines the idle session timeout period in minutes and provides the option to override the default idle timeout value of 4 hours.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeSessionPolicies,
 		},
