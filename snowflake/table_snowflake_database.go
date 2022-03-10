@@ -27,7 +27,7 @@ func tableDatabase(_ context.Context) *plugin.Table {
 			{Name: "options", Type: proto.ColumnType_STRING, Description: ""},
 			{Name: "origin", Type: proto.ColumnType_STRING, Description: "Name of the origin database."},
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "Name of the role that owns the schema."},
-			{Name: "retention_time", Type: proto.ColumnType_STRING, Description: "Number of days that historical data is retained for Time Travel."},
+			{Name: "retention_time", Type: proto.ColumnType_INT, Description: "Number of days that historical data is retained for Time Travel."},
 		},
 	}
 }
