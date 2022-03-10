@@ -12,11 +12,11 @@ import (
 
 //// TABLE DEFINITION
 
+// Lists all network policies defined in the system. Only returns results for the SECURITYADMIN or ACCOUNTADMIN role.
+// https://docs.snowflake.com/en/user-guide/ui-account.html#network-policies
 func tableNetworkPolicy(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name: "snowflake_network_policy",
-		// Lists all network policies defined in the system. Only returns results for the SECURITYADMIN or ACCOUNTADMIN role.
-		// https://docs.snowflake.com/en/user-guide/ui-account.html#network-policies
+		Name:        "snowflake_network_policy",
 		Description: "Network policies enable restricting access to your account based on user IP address.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeNetworkPolicies,
