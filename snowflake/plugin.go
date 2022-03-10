@@ -1,8 +1,8 @@
 /*
-Package aws implements a steampipe plugin for aws.
+Package snow implements a steampipe plugin for Snowflake.
 
 This plugin provides data that Steampipe uses to present foreign
-tables that represent Amazon AWS resources.
+tables that represent Snowflake resources.
 */
 package snowflake
 
@@ -13,9 +13,9 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v2/plugin/transform"
 )
 
-const pluginName = "steampipe-plugin-aws"
+const pluginName = "steampipe-plugin-snowflake"
 
-// Plugin creates this (aws) plugin
+// Plugin creates this (snowflake) plugin
 func Plugin(ctx context.Context) *plugin.Plugin {
 	p := &plugin.Plugin{
 		Name:             pluginName,
