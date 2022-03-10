@@ -25,5 +25,5 @@ select
 from
   snowflake_network_policy
 where
-  name = 'TEST' ;
+  name = 'np1' ;
 ```
