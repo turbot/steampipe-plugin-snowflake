@@ -12,10 +12,10 @@ import (
 
 //// TABLE DEFINITION
 
+// https://docs.snowflake.com/en/sql-reference/sql/show-databases.html
 func tableDatabaseGrant(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name: "snowflake_database_grant",
-		// https://docs.snowflake.com/en/sql-reference/sql/show-databases.html
+		Name:        "snowflake_database_grant",
 		Description: "Lists all privileges that have been granted on the database.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeDatabaseGrants,
