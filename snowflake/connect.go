@@ -24,6 +24,13 @@ import (
 )
 
 func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
+
+	// have we already created and cached the session?
+	cacheKey := "snowflake"
+	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
+		return cachedData.(*sql.DB), nil
+	}
+
 	config := GetConfig(d.Connection)
 	var account, user, password, oauthAccessToken, privateKeyPath, privateKey, privateKeyPassphrase, region, role, oauthEndpoint, oauthClientSecret, oauthClientID, oauthRefreshToken, oauthRedirectURL string
 	var browserAuth bool
@@ -102,6 +109,7 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "Could not open snowflake database.")
 	}
+	d.ConnectionManager.Cache.Set(cacheKey, db)
 	return db, nil
 }
 
