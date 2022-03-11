@@ -1,8 +1,8 @@
 # Table: snowflake_database_grant
 
-Lists all privileges that have been granted on a database.
+Lists all privileges that have been granted on the database.
 
-**Note** This table requires an '=' qualifier for `database` columns
+**Note** This table requires an '=' qualifier for `database` columns.
 
 ## Examples
 
