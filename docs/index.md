@@ -58,7 +58,85 @@ steampipe plugin install snowflake
 
 ### Credentials
 
-- TODO
+The Snowflake provider supports multiple ways to authenticate:
+
+- Password
+- Keypair Authentication
+- OAuth Access Token
+- OAuth Refresh Token
+- Browser Auth
+
+In all the cases `account`, `username` and `region` are required.
+
+### Using username and password
+
+If you choose to use Username and Password Authentication, export these credentials:
+
+```hcl
+connection "snowflake" {
+  plugin   = "snowflake"
+  account  = "xy12345"
+  user     = "steampipe"
+  region   = "ap-south-1.aws"
+  role     = "ACCOUNTADMIN"
+  password = "~dummy@pass"
+}
+```
+
+#### Keypair Authentication
+
+You should [generate the public and private keys](https://docs.snowflake.com/en/user-guide/key-pair-auth.html).
+
+```hcl
+connection "snowflake" {
+  plugin   = "snowflake"
+  account  = "xy12345"
+  user     = "steampipe"
+  region   = "ap-south-1.aws"
+  role     = "ACCOUNTADMIN"
+  private_key_path = "/Users/lalitbhardwaj/Turbot/prod/my_sample_codes/Go_Basics/snowflake/rsa_key.p8"
+  # or private_key = "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFHzBJ....au/BUg==\n-----END ENCRYPTED PRIVATE KEY-----"
+  # private_key_passphrase = "abcde" # If key supports passphrase authentication
+}
+```
+
+#### OAuth Access Token
+
+If you have an OAuth access token:
+
+```hcl
+connection "snowflake" {
+  plugin   = "snowflake"
+  account  = "xy12345"
+  user     = "steampipe"
+  region   = "ap-south-1.aws"
+  role     = "ACCOUNTADMIN"
+  oauth_access_token = "...."
+}
+```
+
+Note that once this access token expires, you'll need to request a new one through an external application.
+
+### OAuth Refresh Token
+
+If you have an OAuth Refresh token:
+
+```hcl
+connection "snowflake" {
+  plugin              = "snowflake"
+  account             = "xy12345"
+  user                = "steampipe"
+  region              = "ap-south-1.aws"
+  role                = "ACCOUNTADMIN"
+  oauth_client_id     = "...."
+  oauth_client_secret = "...."
+  oauth_endpoint      = "...."
+  oauth_redirect_url  = "...."
+  oauth_refresh_token = "...."
+}
+```
+
+Note because access token have a short life; typically 1 hour, by passing refresh token new access token will be generated.
 
 ### Configuration
 
@@ -81,10 +159,11 @@ connection "snowflake" {
   # If not mentioned will use the default role for the User
   # role = "ACCOUNTADMIN"
 
-  # Authentication to snowflake can be done in three ways
+  # Authentication to snowflake can be done in below ways
   # 1. Using Password
-  # 2. Key Based Authentication
-  # 3. OAuth Based Authentication
+  # 2. Key Pair Authentication
+  # 3. OAuth Access Token
+  # 4. OAuth Refresh Token
 
   # 1.1 Authentication using password
   # The password for your Snowflake Account
@@ -100,8 +179,15 @@ connection "snowflake" {
   # private_key = "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFHzBJ....au/BUg==\n-----END ENCRYPTED PRIVATE KEY-----"
   # private_key_passphrase = "abcde"
 
-  # 1.3 OAuth Based Authentication
-  # TODO
+  # 1.3 OAuth Access Token
+  # oauth_access_token = "...."
+
+  # 1.4 OAuth Refresh Token
+  # oauth_client_id     = "0oa44dah4cudhAkPU5d7"
+  # oauth_client_secret = "wkQYoty7kCRrBzmkqBbubxK-egaJDJ5gT1BH-4b-"
+  # oauth_endpoint      = "https://xyz.abc.com/oauth2/auFGTkTZs5d7/v1/token"
+  # oauth_redirect_url  = "https://xy1234.ap-south-1.aws.snowflakecomputing.com/"
+  # oauth_refresh_token = "0oa44dah4cudhAkPU5d70oa44dah4cudhAkPU5d7"
 }
 ```
 
@@ -114,6 +200,6 @@ connection "snowflake" {
 
 The Snowflake plugin support below authentication mechanisms
 
-1. `Using User Password`
+1. Using User Password
 2. [Key Based Authentication](https://docs.snowflake.com/en/user-guide/key-pair-auth.html)
 3. [OAuth Based Authentication](https://docs.snowflake.com/en/user-guide/oauth-custom.html)

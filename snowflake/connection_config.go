@@ -8,19 +8,19 @@ import (
 type snowflakeConfig struct {
 	Account              *string `cty:"account"`
 	User                 *string `cty:"user"`
+	Region               *string `cty:"region"`
+	Role                 *string `cty:"role"`
 	Password             *string `cty:"password"`
 	BrowserAuth          *bool   `cty:"browser_auth"`
 	PrivateKeyPath       *string `cty:"private_key_path"`
 	PrivateKey           *string `cty:"private_key"`
 	PrivateKeyPassphrase *string `cty:"private_key_passphrase"`
 	OAuthAccessToken     *string `cty:"oauth_access_token"`
-	Region               *string `cty:"region"`
-	Role                 *string `cty:"role"`
-	OAuthRefreshToken    *string `cty:"oauth_refresh_token"`
 	OAuthClientID        *string `cty:"oauth_client_id"`
 	OAuthClientSecret    *string `cty:"oauth_client_secret"`
 	OAuthEndpoint        *string `cty:"oauth_endpoint"`
 	OAuthRedirectURL     *string `cty:"oauth_redirect_url"`
+	OAuthRefreshToken    *string `cty:"oauth_refresh_token"`
 }
 
 var ConfigSchema = map[string]*schema.Attribute{
