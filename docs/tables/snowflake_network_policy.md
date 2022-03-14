@@ -1,5 +1,7 @@
 # Table: snowflake_network_policy
 
+Network policies enable restricting access to your account based on user IP address.
+
 ## Examples
 
 ### Basic info

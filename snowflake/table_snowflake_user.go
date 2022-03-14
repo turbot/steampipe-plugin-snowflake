@@ -13,7 +13,7 @@ import (
 
 //// TABLE DEFINITION
 
-func tableUser(_ context.Context) *plugin.Table {
+func tableSnowflakeUser(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_user",
 		Description: "A user identity recognized by Snowflake, whether associated with a person or program.",

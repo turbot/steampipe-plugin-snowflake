@@ -20,7 +20,7 @@ from
   snowflake_user;
 ```
 
-### Users that have passwords in Snowflake
+### List users that have passwords
 
 ```sql
 select

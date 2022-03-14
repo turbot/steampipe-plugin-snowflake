@@ -10,7 +10,7 @@ import (
 
 //// TABLE DEFINITION
 
-func tableAccountGrant(_ context.Context) *plugin.Table {
+func tableSnowflakeAccountGrant(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_account_grant",
 		Description: "Lists all the account-level (i.e. global) privileges that have been granted to roles.",

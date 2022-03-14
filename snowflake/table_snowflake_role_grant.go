@@ -11,7 +11,7 @@ import (
 
 //// TABLE DEFINITION
 
-func tableRoleGrant(_ context.Context) *plugin.Table {
+func tableSnowflakeRoleGrant(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_role_grant",
 		Description: "Lists all privileges and roles granted to the role.",

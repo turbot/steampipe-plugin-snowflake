@@ -14,7 +14,7 @@ import (
 
 // Lists all network policies defined in the system. Only returns results for the SECURITYADMIN or ACCOUNTADMIN role.
 // https://docs.snowflake.com/en/user-guide/ui-account.html#network-policies
-func tableNetworkPolicy(_ context.Context) *plugin.Table {
+func tableSnowflakeNetworkPolicy(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_network_policy",
 		Description: "Network policies enable restricting access to your account based on user IP address.",

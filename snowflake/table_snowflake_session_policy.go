@@ -16,7 +16,7 @@ import (
 // This command requires the role executing the command to have:
 // 	The OWNERSHIP privilege on the session policy or the APPLY on SESSION POLICY privilege.
 // 	The USAGE privilege on the schema.
-func tableSessionPolicy(_ context.Context) *plugin.Table {
+func tableSnowflakeSessionPolicy(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_session_policy",
 		Description: "A session policy defines the idle session timeout period in minutes and provides the option to override the default idle timeout value of 4 hours.",

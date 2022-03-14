@@ -66,11 +66,12 @@ The Snowflake provider supports multiple ways to authenticate:
 - OAuth Refresh Token
 - Browser Auth
 
-In all the cases `account`, `username` and `region` are required.
+In all authentication methods account, user, and region is required.
 
 ### Using username and password
 
-If you choose to use Username and Password Authentication, export these credentials:
+- [Create and manage user with Web Interface](https://docs.snowflake.com/en/user-guide/admin-user-management.html#using-the-web-interface)
+- [Create and manage user using SQL](https://docs.snowflake.com/en/user-guide/admin-user-management.html#using-sql)
 
 ```hcl
 connection "snowflake" {
@@ -85,7 +86,7 @@ connection "snowflake" {
 
 #### Keypair Authentication
 
-You should [generate the public and private keys](https://docs.snowflake.com/en/user-guide/key-pair-auth.html).
+You can [generate the public and private keys](https://docs.snowflake.com/en/user-guide/key-pair-auth.html) here.
 
 ```hcl
 connection "snowflake" {
@@ -136,7 +137,7 @@ connection "snowflake" {
 }
 ```
 
-Note because access token have a short life; typically 1 hour, by passing refresh token new access token will be generated.
+Note: because access token have a short life; typically 1 hour, refresh token will be used to generate new access token.
 
 ### Configuration
 

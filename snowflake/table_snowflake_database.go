@@ -11,7 +11,7 @@ import (
 //// TABLE DEFINITION
 
 // https://docs.snowflake.com/en/sql-reference/sql/show-databases.html
-func tableDatabase(_ context.Context) *plugin.Table {
+func tableSnowflakeDatabase(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_database",
 		Description: "Snowflake database is a logical grouping of schemas.",

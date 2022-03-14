@@ -83,7 +83,7 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 	if config.OAuthRefreshToken != nil {
 		accessToken, err := GetOauthAccessToken(oauthEndpoint, oauthClientID, oauthClientSecret, GetOauthData(oauthRefreshToken, oauthRedirectURL))
 		if err != nil {
-			return nil, errors.Wrap(err, "could not retreive access token from refresh token")
+			return nil, fmt.Errorf("could not retreive access token from refresh token. Error: %w", err)
 		}
 		oauthAccessToken = accessToken
 	}
@@ -102,12 +102,12 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 	)
 	if err != nil {
 		plugin.Logger(ctx).Error("DSN", "could not build dsn for snowflake connection", err)
-		return nil, errors.Wrap(err, "could not build dsn for snowflake connection")
+		return nil, fmt.Errorf("could not build dsn for snowflake connection. Error: %w", err)
 	}
 
 	db, err := sql.Open("snowflake", dsn)
 	if err != nil {
-		return nil, errors.Wrap(err, "Could not open snowflake database.")
+		return nil, fmt.Errorf("Could not open snowflake database. Error: %w", err)
 	}
 	d.ConnectionManager.Cache.Set(cacheKey, db)
 	return db, nil
@@ -123,8 +123,8 @@ func DSN(ctx context.Context, account, user,
 	region,
 	role string) (string, error) {
 
-	// us-west-2 is their default region, but if you actually specify that it won't trigger their default code
-	//  https://github.com/snowflakedb/gosnowflake/blob/52137ce8c32eaf93b0bd22fc5c7297beff339812/dsn.go#L61
+	// us-west-2 is their default region for snowflake instance, if it is mentioned in the connection config
+	// don's add it into connection string
 	if region == "us-west-2" {
 		region = ""
 	}
@@ -139,18 +139,18 @@ func DSN(ctx context.Context, account, user,
 	if privateKeyPath != "" {
 		privateKeyBytes, err := ReadPrivateKeyFile(privateKeyPath)
 		if err != nil {
-			return "", errors.Wrap(err, "Private Key file could not be read")
+			return "", fmt.Errorf("Private Key file could not be read. Error: %w", err)
 		}
 		rsaPrivateKey, err := ParsePrivateKey(privateKeyBytes, []byte(privateKeyPassphrase))
 		if err != nil {
-			return "", errors.Wrap(err, "Private Key could not be parsed")
+			return "", fmt.Errorf("Private Key could not be parsed. Error: %w", err)
 		}
 		config.PrivateKey = rsaPrivateKey
 		config.Authenticator = gosnowflake.AuthTypeJwt
 	} else if privateKey != "" {
 		rsaPrivateKey, err := ParsePrivateKey([]byte(privateKey), []byte(privateKeyPassphrase))
 		if err != nil {
-			return "", errors.Wrap(err, "Private Key could not be parsed")
+			return "", fmt.Errorf("Private Key could not be parsed. Error: %w", err)
 		}
 		config.PrivateKey = rsaPrivateKey
 		config.Authenticator = gosnowflake.AuthTypeJwt
@@ -171,12 +171,12 @@ func DSN(ctx context.Context, account, user,
 func ReadPrivateKeyFile(privateKeyPath string) ([]byte, error) {
 	expandedPrivateKeyPath, err := homedir.Expand(privateKeyPath)
 	if err != nil {
-		return nil, errors.Wrap(err, "Invalid Path to private key")
+		return nil, fmt.Errorf("Invalid Path to private key. Error: %w", err)
 	}
 
 	privateKeyBytes, err := ioutil.ReadFile(expandedPrivateKeyPath)
 	if err != nil {
-		return nil, errors.Wrap(err, "Could not read private key")
+		return nil, fmt.Errorf("Could not read private key. Error: %w", err)
 	}
 
 	if len(privateKeyBytes) == 0 {
@@ -208,7 +208,7 @@ func ParsePrivateKey(privateKeyBytes []byte, passhrase []byte) (*rsa.PrivateKey,
 
 	privateKey, err := ssh.ParseRawPrivateKey(privateKeyBytes)
 	if err != nil {
-		return nil, errors.Wrap(err, "Could not parse private key")
+		return nil, fmt.Errorf("Could not parse private key. Error: %w", err)
 	}
 
 	rsaPrivateKey, ok := privateKey.(*rsa.PrivateKey)
@@ -235,7 +235,7 @@ func GetOauthData(refreshToken, redirectUrl string) url.Values {
 func GetOauthRequest(dataContent io.Reader, endPoint, clientId, clientSecret string) (*http.Request, error) {
 	request, err := http.NewRequest("POST", endPoint, dataContent)
 	if err != nil {
-		return nil, errors.Wrap(err, "Request to the endpoint could not be completed")
+		return nil, fmt.Errorf("Request to the endpoint could not be completed %w", err)
 	}
 	request.SetBasicAuth(clientId, clientSecret)
 	request.Header.Set("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
@@ -252,26 +252,26 @@ func GetOauthAccessToken(
 	client := &http.Client{}
 	request, err := GetOauthRequest(strings.NewReader(data.Encode()), endPoint, client_id, client_secret)
 	if err != nil {
-		return "", errors.Wrap(err, "Oauth request returned an error:")
+		return "", fmt.Errorf("Oauth request returned an error: %w", err)
 	}
 
 	var result Result
 
 	response, err := client.Do(request)
 	if err != nil {
-		return "", errors.Wrap(err, "Response status returned an error:")
+		return "", fmt.Errorf("Response status returned an error: %w", err)
 	}
 	if response.StatusCode != 200 {
-		return "", errors.New(fmt.Sprintf("Response status code: %s: %s", strconv.Itoa(response.StatusCode), http.StatusText(response.StatusCode)))
+		return "", fmt.Errorf("Response status code: %s: %s", strconv.Itoa(response.StatusCode), http.StatusText(response.StatusCode))
 	}
 	defer response.Body.Close()
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		return "", errors.Wrap(err, "Response body was not able to be parsed")
+		return "", fmt.Errorf("Response body was not able to be parsed %w", err)
 	}
 	err = json.Unmarshal(body, &result)
 	if err != nil {
-		return "", errors.Wrap(err, "Error parsing JSON from Snowflake")
+		return "", fmt.Errorf("Error parsing JSON from Snowflake. Error: %w", err)
 	}
 	return result.AccessToken, nil
 }

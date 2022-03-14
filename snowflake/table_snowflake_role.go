@@ -10,7 +10,7 @@ import (
 
 //// TABLE DEFINITION
 
-func tableRole(_ context.Context) *plugin.Table {
+func tableSnowflakeRole(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_role",
 		Description: "An entity to which privileges can be granted. Roles are in turn assigned to users.",

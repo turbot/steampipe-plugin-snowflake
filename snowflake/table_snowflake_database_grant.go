@@ -13,7 +13,7 @@ import (
 //// TABLE DEFINITION
 
 // https://docs.snowflake.com/en/sql-reference/sql/show-databases.html
-func tableDatabaseGrant(_ context.Context) *plugin.Table {
+func tableSnowflakeDatabaseGrant(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_database_grant",
 		Description: "Lists all privileges that have been granted on the database.",

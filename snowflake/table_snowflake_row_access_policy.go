@@ -10,7 +10,7 @@ import (
 
 //// TABLE DEFINITION
 
-func tableRowAccessPolicy(_ context.Context) *plugin.Table {
+func tableSnowflakeRowAccessPolicy(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_row_access_policy",
 		Description: "Snowflake Row Access Policy",
