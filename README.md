@@ -20,7 +20,16 @@ steampipe plugin install snowflake
 Run a query:
 
 ```sql
-select name, email, disabled, default_role, has_password, has_rsa_public_key from snowflake_user where (last_success_login > now() - interval '30 days') and last_success_login is not null;
+select
+  name,
+  email,
+  disabled,
+  last_success_login
+from
+  snowflake_user
+where
+  (last_success_login > now() - interval '30 days')
+  and last_success_login is not null;
 ```
 
 ## Developing
