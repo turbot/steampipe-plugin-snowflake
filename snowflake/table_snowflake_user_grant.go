@@ -14,7 +14,7 @@ import (
 func tableSnowflakeUserGrant(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_user_grant",
-		Description: "List all privileges and roles granted to the user.",
+		Description: "List all privileges and roles granted to a user.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeUserGrants,
 			KeyColumns: plugin.KeyColumnSlice{
@@ -65,7 +65,9 @@ func listSnowflakeUserGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 		logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "connnection.error", err)
 		return nil, err
 	}
-	rows, err := db.QueryContext(ctx, fmt.Sprintf("SHOW GRANTS TO USER %s", user))
+	// SQL compilation error: qual containing special characters in username leads to sql compilation error.
+	// Handle sql compilation error for query by wrapping qual inside double quotes.
+	rows, err := db.QueryContext(ctx, fmt.Sprintf("SHOW GRANTS TO USER \"%s\"", user))
 	if err != nil {
 		logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "query.error", err)
 		return nil, err
