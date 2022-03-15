@@ -18,7 +18,7 @@ where
   username = 'STEAMPIPE';
 ```
 
-### List all privileges for a specific user
+### List all account-level privileges for a specific user
 
 ```sql
 select
