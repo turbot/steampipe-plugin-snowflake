@@ -49,7 +49,7 @@ type Policy struct {
 
 type SessionPolicy Policy
 
-// / ViewCol returns a reference for a column of a Vehicle
+// SessionPolicyCol returns a reference for a column of a SessionPolicy
 func SessionPolicyCol(colname string, sp *SessionPolicy) interface{} {
 	switch colname {
 	case "created_on":
@@ -77,16 +77,17 @@ func listSnowflakeSessionPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 	logger := plugin.Logger(ctx)
 	db, err := connect(ctx, d)
 	if err != nil {
-		logger.Error("snowflake_row_access_policy.listSnowflakeRowAccessPolicies", "connnection.error", err)
+		logger.Error("snowflake_session_policy.listSnowflakeSessionPolicies", "connnection.error", err)
 		return nil, err
 	}
 	rows, err := db.QueryContext(ctx, "SHOW SESSION POLICIES")
 	if err != nil {
-		logger.Error("snowflake_row_access_policy.listSnowflakeRowAccessPolicies", "query.error", err)
+		logger.Error("snowflake_session_policy.listSnowflakeSessionPolicies", "query.error", err)
 		return nil, err
 	}
 	columns, err := rows.Columns()
 	if err != nil {
+		logger.Error("snowflake_session_policy.listSnowflakeSessionPolicies", "get_coloumns.error", err)
 		return nil, err
 	}
 
