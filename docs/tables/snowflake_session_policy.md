@@ -4,6 +4,11 @@ A session policy defines the idle session timeout period in minutes and provides
 
 The session policy can be set for an account or user with configurable idle timeout periods to address compliance requirements. If a user is associated with both an account and user-level session policy, the user-level session policy takes precedence.
 
+**Note**: This table requires the role/user executing the command to have:
+
+- The OWNERSHIP privilege on the session policy or the APPLY on SESSION POLICY privilege.
+- The USAGE privilege on the schema.
+
 ## Examples
 
 ### Basic info

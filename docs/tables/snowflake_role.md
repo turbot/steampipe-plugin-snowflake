@@ -1,5 +1,7 @@
 # Tables: snowflake_role
 
+The Role is an entity to which privileges can be granted. Roles are in turn assigned to users.
+
 ## Examples
 
 ### Basic info

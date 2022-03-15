@@ -2,6 +2,8 @@
 
 Network policies enable restricting access to your account based on user IP address.
 
+**Note**: Only the network policy owner (i.e. role with the `OWNERSHIP` privilege on the network policy) or higher can query this table.
+
 ## Examples
 
 ### Basic info

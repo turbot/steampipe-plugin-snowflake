@@ -2,6 +2,8 @@
 
 A user identity recognized by Snowflake, whether associated with a person or program.
 
+**Note**: This table can only be queried by users with a role that has the `MANAGE GRANTS` global privilege. This privilege is usually granted to the `ACCOUNTADMIN` and `SECURITYADMIN` roles.
+
 ## Examples
 
 ### Basic info

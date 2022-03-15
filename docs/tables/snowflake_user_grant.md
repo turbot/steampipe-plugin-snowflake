@@ -2,7 +2,10 @@
 
 List all roles granted to a User.
 
-**Note** This table requires an '=' qualifier for `username` columns
+**Note**
+
+- The `PUBLIC` role, which is automatically available to every user, is not listed in this table.
+- This table requires an '=' qualifier for `username` columns
 
 ### List all grants for a specific user
 
