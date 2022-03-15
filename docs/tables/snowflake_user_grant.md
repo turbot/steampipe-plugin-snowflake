@@ -22,7 +22,11 @@ where
 
 ```sql
 select
-  *
+  privilege,
+  role,
+  username,
+  sug.created_on,
+  sug.granted_by
 from
   snowflake.snowflake_account_grant sag
   inner join
