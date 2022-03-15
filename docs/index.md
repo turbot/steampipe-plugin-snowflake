@@ -36,7 +36,7 @@ where
 | name      | email            | disabled | default_role | has_password | has_rsa_public_key |
 +-----------+------------------+----------+--------------+--------------+--------------------+
 | ROHIT     | rohit@xyz.com    | false    | ACCOUNTADMIN | true         | false              |
-| TEST1     | test1@xyz.com    | false    | PUBLIC       | true         | true               |
+| SUMIT     | sumit@xyz.com    | false    | PUBLIC       | true         | true               |
 +-----------+------------------+----------+--------------+--------------+--------------------+
 ```
 
