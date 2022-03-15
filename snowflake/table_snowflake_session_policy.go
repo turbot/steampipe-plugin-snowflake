@@ -37,7 +37,39 @@ func tableSnowflakeSessionPolicy(_ context.Context) *plugin.Table {
 	}
 }
 
+type Policy struct {
+	CreatedOn    sql.NullString `db:"created_on"`
+	Name         sql.NullString `db:"name"`
+	DatabaseName sql.NullString `db:"database_name"`
+	SchemaName   sql.NullString `db:"schema_name"`
+	Kind         sql.NullString `db:"kind"`
+	Owner        sql.NullString `db:"owner"`
+	Comment      sql.NullString `db:"comment"`
+}
+
 type SessionPolicy Policy
+
+// / ViewCol returns a reference for a column of a Vehicle
+func SessionPolicyCol(colname string, sp *SessionPolicy) interface{} {
+	switch colname {
+	case "created_on":
+		return &sp.CreatedOn
+	case "name":
+		return &sp.Name
+	case "database_name":
+		return &sp.DatabaseName
+	case "schema_name":
+		return &sp.SchemaName
+	case "kind":
+		return &sp.Kind
+	case "owner":
+		return &sp.Owner
+	case "comment":
+		return &sp.Comment
+	default:
+		panic("unknown column " + colname)
+	}
+}
 
 //// LIST FUNCTION
 
@@ -50,42 +82,47 @@ func listSnowflakeSessionPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 	}
 	rows, err := db.QueryContext(ctx, "SHOW SESSION POLICIES")
 	if err != nil {
+		logger.Error("snowflake_row_access_policy.listSnowflakeRowAccessPolicies", "query.error", err)
+		return nil, err
+	}
+	columns, err := rows.Columns()
+	if err != nil {
 		return nil, err
 	}
 
 	for rows.Next() {
-		var CreatedOn sql.NullString
-		var Name sql.NullString
-		var DatabaseName sql.NullString
-		var SchemaName sql.NullString
-		var Kind sql.NullString
-		var Owner sql.NullString
-		var Comment sql.NullString
+		policy := SessionPolicy{}
+		// make references for the cols with the aid of SessionPolicyCol
+		cols := make([]interface{}, len(columns))
 
-		err = rows.Scan(&CreatedOn, &Name, &DatabaseName, &SchemaName, &Kind, &Owner, &Comment)
+		for i, col := range columns {
+			cols[i] = SessionPolicyCol(col, &policy)
+		}
+
+		err = rows.Scan(cols...)
 		if err != nil {
 			return nil, err
 		}
 
-		d.StreamListItem(ctx, SessionPolicy{CreatedOn, Name, DatabaseName, SchemaName, Kind, Owner, Comment})
+		d.StreamListItem(ctx, policy)
 	}
 
 	for rows.NextResultSet() {
 		for rows.Next() {
-			var CreatedOn sql.NullString
-			var Name sql.NullString
-			var DatabaseName sql.NullString
-			var SchemaName sql.NullString
-			var Kind sql.NullString
-			var Owner sql.NullString
-			var Comment sql.NullString
+			policy := SessionPolicy{}
+			// make references for the cols with the aid of SessionPolicyCol
+			cols := make([]interface{}, len(columns))
 
-			err = rows.Scan(&CreatedOn, &Name, &DatabaseName, &SchemaName, &Kind, &Owner, &Comment)
+			for i, col := range columns {
+				cols[i] = SessionPolicyCol(col, &policy)
+			}
+
+			err = rows.Scan(cols...)
 			if err != nil {
 				return nil, err
 			}
 
-			d.StreamListItem(ctx, SessionPolicy{CreatedOn, Name, DatabaseName, SchemaName, Kind, Owner, Comment})
+			d.StreamListItem(ctx, policy)
 		}
 	}
 	return nil, nil

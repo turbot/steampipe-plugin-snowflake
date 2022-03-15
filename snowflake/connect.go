@@ -79,6 +79,9 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 	if config.OAuthRedirectURL != nil {
 		oauthRedirectURL = *config.OAuthRedirectURL
 	}
+	if config.OAuthAccessToken != nil {
+		oauthAccessToken = *config.OAuthAccessToken
+	}
 
 	if config.OAuthRefreshToken != nil {
 		accessToken, err := GetOauthAccessToken(oauthEndpoint, oauthClientID, oauthClientSecret, GetOauthData(oauthRefreshToken, oauthRedirectURL))
