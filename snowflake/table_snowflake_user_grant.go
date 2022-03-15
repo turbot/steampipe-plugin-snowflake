@@ -14,7 +14,7 @@ import (
 func tableSnowflakeUserGrant(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_user_grant",
-		Description: "List all privileges and roles granted to a user.",
+		Description: "List all roles granted to a user.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeUserGrants,
 			KeyColumns: plugin.KeyColumnSlice{

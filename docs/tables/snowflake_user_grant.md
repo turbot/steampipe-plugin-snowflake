@@ -1,6 +1,6 @@
 # Table: snowflake_user_grant
 
-List all privileges and roles granted to a User.
+List all roles granted to a User.
 
 **Note** This table requires an '=' qualifier for `username` columns
 
@@ -16,4 +16,21 @@ from
   snowflake_user_grant
 where
   username = 'STEAMPIPE';
+```
+
+### List all privileges for a specific user
+
+```sql
+select
+  *
+from
+  snowflake.snowflake_account_grant sag
+  inner join
+    snowflake.snowflake_user_grant sug
+    on sug.role = sag.grantee_name
+where
+  sug.username = 'STEAMPIPE'
+  and sag.granted_to = 'ROLE'
+order by
+  sag.grantee_name;
 ```
