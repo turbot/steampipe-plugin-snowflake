@@ -2,7 +2,7 @@
 organization: Turbot
 category: ["saas"]
 icon_url: "/images/plugins/turbot/snowflake.svg"
-brand_color: "#A0E3F6"
+brand_color: "#2596BE"
 display_name: "Snowflake"
 name: "snowflake"
 description: "Steampipe plugin for querying roles, databases, and more from Snowflake."
@@ -30,6 +30,7 @@ where
   (last_success_login > now() - interval '30 days')
   and last_success_login is not null;
 ```
+
 ```
 +-----------+------------------+----------+--------------+--------------+--------------------+
 | name      | email            | disabled | default_role | has_password | has_rsa_public_key |
@@ -61,11 +62,10 @@ The Snowflake provider supports multiple ways to authenticate:
 - Keypair Authentication
 - OAuth Access Token
 - OAuth Refresh Token
-- Browser Auth
 
 In all authentication methods account, user, and region is required.
 
-### Using username and password
+#### Using username and password
 
 - [Create and manage user with Web Interface](https://docs.snowflake.com/en/user-guide/admin-user-management.html#using-the-web-interface)
 - [Create and manage user using SQL](https://docs.snowflake.com/en/user-guide/admin-user-management.html#using-sql)
@@ -74,9 +74,9 @@ In all authentication methods account, user, and region is required.
 connection "snowflake" {
   plugin   = "snowflake"
   account  = "xy12345"
-  user     = "steampipe"
   region   = "ap-south-1.aws"
   role     = "ACCOUNTADMIN"
+  user     = "steampipe"
   password = "~dummy@pass"
 }
 ```
@@ -87,15 +87,16 @@ You can [generate the public and private keys](https://docs.snowflake.com/en/use
 
 ```hcl
 connection "snowflake" {
-  plugin   = "snowflake"
-  account  = "xy12345"
-  user     = "steampipe"
-  region   = "ap-south-1.aws"
-  role     = "ACCOUNTADMIN"
-  private_key_path = "/Users/lalitbhardwaj/Turbot/prod/my_sample_codes/Go_Basics/snowflake/rsa_key.p8"
-  # or private_key = "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFHzBJ....au/BUg==\n-----END ENCRYPTED PRIVATE KEY-----"
+  plugin                   = "snowflake"
+  account                  = "xy12345"
+  user                     = "steampipe"
+  region                   = "ap-south-1.aws"
+  role                     = "ACCOUNTADMIN"
+  private_key_path         = "/path/to/rsa_key.p8"
+  # private_key            = "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFHzBJ....au/BUg==\n-----END ENCRYPTED PRIVATE KEY-----"
   # private_key_passphrase = "abcde" # If key supports passphrase authentication
 }
+
 ```
 
 #### OAuth Access Token
@@ -104,12 +105,12 @@ If you have an OAuth access token:
 
 ```hcl
 connection "snowflake" {
-  plugin   = "snowflake"
-  account  = "xy12345"
-  user     = "steampipe"
-  region   = "ap-south-1.aws"
-  role     = "ACCOUNTADMIN"
-  oauth_access_token = "...."
+  plugin             = "snowflake"
+  account            = "xy12345"
+  user               = "steampipe"
+  region             = "ap-south-1.aws"
+  role               = "ACCOUNTADMIN"
+  oauth_access_token = "eyJraWQiOiJLWjN....jwqt1uCG8Z94ZYZp_LK3YhQbWLkWA"
 }
 ```
 
@@ -126,11 +127,11 @@ connection "snowflake" {
   user                = "steampipe"
   region              = "ap-south-1.aws"
   role                = "ACCOUNTADMIN"
-  oauth_client_id     = "...."
-  oauth_client_secret = "...."
-  oauth_endpoint      = "...."
-  oauth_redirect_url  = "...."
-  oauth_refresh_token = "...."
+  oauth_client_id     = "0oa44dah4cudhAkPU5d7"
+  oauth_client_secret = "wkQYoty7kCRrBzmkqBbubxK-egaJDJ5gT1BH-4b-"
+  oauth_endpoint      = "https://xyz.abc.com/oauth2/auFGTkTZs5d7/v1/token"
+  oauth_redirect_url  = "https://xy1234.ap-south-1.aws.snowflakecomputing.com/"
+  oauth_refresh_token = "0oa44dah4cudhAkPU5d70oa44dah4cudhAkPU5d7"
 }
 ```
 
@@ -145,15 +146,18 @@ connection "snowflake" {
   plugin = "snowflake"
 
   # Your Snowflake Account
+  # https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#account-identifier-formats-by-cloud-platform-and-region
   # account = "xy12345"
 
   # The user of your Snowflake Account
   # user = "steampipe"
 
   # The region id for Snowflake Account
-  # region = "ap-south-1.aws"
+  # "us-west-2" is the default region. If the region id  is not mentioned steampipe will assume it to be "us-west-2.aws"
+  # https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#snowflake-region-ids
+  # region = "us-west-2.aws"
 
-  # Optional; The role that should be used by steampipe for the user.
+  # Optional; Specifies the role to use by default for accessing Snowflake objects in the client session.
   # If not mentioned will use the default role for the User
   # role = "ACCOUNTADMIN"
 
@@ -163,24 +167,26 @@ connection "snowflake" {
   # 3. OAuth Access Token
   # 4. OAuth Refresh Token
 
-  # 1.1 Authentication using password
+  # 1 Authentication using password
   # The password for your Snowflake Account
   # password = "~dummy@pass"
 
-  # 1.2 Key Based Authentication
+  # 2 Key Pair Authentication
   # https://docs.snowflake.com/en/user-guide/key-pair-auth.html
-  # private_key_path       = "/Users/lalitbhardwaj/Turbot/prod/my_sample_codes/Go_Basics/snowflake/rsa_key.p8"
+  # private_key_path       = "/path/to/snowflake/rsa_key.p8"
   # private_key_passphrase = "abcde"
 
   # OR use private key directly
 
-  # private_key = "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFHzBJ....au/BUg==\n-----END ENCRYPTED PRIVATE KEY-----"
+  # private_key            = "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFHzBJ....au/BUg==\n-----END ENCRYPTED PRIVATE KEY-----"
   # private_key_passphrase = "abcde"
 
-  # 1.3 OAuth Access Token
-  # oauth_access_token = "...."
+  # 3 OAuth Access Token
+  # https://docs.snowflake.com/en/user-guide/oauth-custom.html
+  # oauth_access_token = "eyJraWQiOiJLWjN....jwqt1uCG8Z94ZYZp_LK3YhQbWLkWA"
 
-  # 1.4 OAuth Refresh Token
+  # 4 OAuth Refresh Token
+  # https://developer.okta.com/docs/guides/refresh-tokens/main/
   # oauth_client_id     = "0oa44dah4cudhAkPU5d7"
   # oauth_client_secret = "wkQYoty7kCRrBzmkqBbubxK-egaJDJ5gT1BH-4b-"
   # oauth_endpoint      = "https://xyz.abc.com/oauth2/auFGTkTZs5d7/v1/token"
@@ -198,6 +204,12 @@ connection "snowflake" {
 
 The Snowflake plugin support below authentication mechanisms
 
-1. Using User Password
+1. [Using User Password](https://docs.snowflake.com/en/user-guide/admin-user-management.html#using-the-web-interface)
 2. [Key Based Authentication](https://docs.snowflake.com/en/user-guide/key-pair-auth.html)
-3. [OAuth Based Authentication](https://docs.snowflake.com/en/user-guide/oauth-custom.html)
+3. [OAuth Access Token Authentication](https://docs.snowflake.com/en/user-guide/oauth-custom.html).
+
+   - [Configure Okta for External OAuth](https://docs.snowflake.com/en/user-guide/oauth-okta.html#label-ext-oauth-integration-okta)
+
+4. [OAuth Refresh Token Authentication](https://docs.snowflake.com/en/user-guide/oauth-custom.html)
+
+   - [Refresh access tokens in Okta](https://developer.okta.com/docs/guides/refresh-tokens/main/)
