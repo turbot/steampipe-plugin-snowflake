@@ -52,6 +52,7 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 	}
 	rows, err := db.QueryContext(ctx, "SHOW NETWORK POLICIES")
 	if err != nil {
+		logger.Error("snowflake_network_policy.listSnowflakeNetworkPolicies", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -65,6 +66,7 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 
 		err = rows.Scan(&CreatedOn, &Name, &Comment, &EntriesInAllowedIPList, &EntriesInBlockedIPList)
 		if err != nil {
+			logger.Error("snowflake_network_policy.listSnowflakeNetworkPolicies", "query.error", err)
 			return nil, err
 		}
 
@@ -81,6 +83,7 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 
 			err = rows.Scan(&CreatedOn, &Name, &Comment, &EntriesInAllowedIPList, &EntriesInBlockedIPList)
 			if err != nil {
+				logger.Error("snowflake_network_policy.listSnowflakeNetworkPolicies", "query.error", err)
 				return nil, err
 			}
 
@@ -110,6 +113,7 @@ func DescribeNetworkPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.H
 	}
 	rows, err := db.QueryContext(ctx, fmt.Sprintf("DESCRIBE NETWORK POLICY %s", policyName))
 	if err != nil {
+		plugin.Logger(ctx).Error("snowflake_network_policy.DescribeNetworkPolicy", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -121,6 +125,7 @@ func DescribeNetworkPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.H
 
 		err = rows.Scan(&name, &value)
 		if err != nil {
+			plugin.Logger(ctx).Error("snowflake_network_policy.DescribeNetworkPolicy", "query_scan.error", err)
 			return nil, err
 		}
 		networkIPlist[name.String] = value.String

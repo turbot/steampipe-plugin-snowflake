@@ -56,6 +56,7 @@ func listSnowflakeViews(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 	}
 	rows, err := db.QueryContext(ctx, "SHOW VIEWS")
 	if err != nil {
+		logger.Error("snowflake_view.listSnowflakeViews", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -74,6 +75,7 @@ func listSnowflakeViews(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 
 		err = rows.Scan(&createdOn, &name, &reserved, &databaseName, &schemaName, &owner, &comment, &text, &isSecure, &isMaterialized)
 		if err != nil {
+			logger.Error("snowflake_view.listSnowflakeViews", "query_scan.error", err)
 			return nil, err
 		}
 
@@ -94,6 +96,7 @@ func listSnowflakeViews(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 			var isMaterialized sql.NullString
 			err = rows.Scan(&createdOn, &name, &reserved, &databaseName, &schemaName, &owner, &comment, &text, &isSecure, &isMaterialized)
 			if err != nil {
+				logger.Error("snowflake_view.listSnowflakeViews", "query_scan.error", err)
 				return nil, err
 			}
 			d.StreamListItem(ctx, View{createdOn, name, reserved, databaseName, schemaName, owner, comment, text, isSecure, isMaterialized})

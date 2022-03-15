@@ -81,6 +81,7 @@ func listSnowflakeWarehouses(ctx context.Context, d *plugin.QueryData, _ *plugin
 	}
 	rows, err := db.QueryContext(ctx, "SHOW WAREHOUSES")
 	if err != nil {
+		logger.Error("snowflake_warehouse.listSnowflakeWarehouses", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -114,6 +115,7 @@ func listSnowflakeWarehouses(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 		err = rows.Scan(&Name, &State, &Type, &Size, &Running, &Queued, &IsDefault, &IsCurrent, &AutoSuspend, &AutoResume, &Available, &Provisioning, &Quiescing, &Other, &CreatedOn, &ResumedOn, &UpdatedOn, &Owner, &Comment, &ResourceMonitor, &Actives, &Pendings, &Failed, &Suspended, &UUID)
 		if err != nil {
+			logger.Error("snowflake_warehouse.listSnowflakeWarehouses", "query_scan.error", err)
 			return nil, err
 		}
 
@@ -150,6 +152,7 @@ func listSnowflakeWarehouses(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 			err = rows.Scan(&Name, &State, &Type, &Size, &Running, &Queued, &IsDefault, &IsCurrent, &AutoSuspend, &AutoResume, &Available, &Provisioning, &Quiescing, &Other, &CreatedOn, &ResumedOn, &UpdatedOn, &Owner, &Comment, &ResourceMonitor, &Actives, &Pendings, &Failed, &Suspended, &UUID)
 			if err != nil {
+				logger.Error("snowflake_warehouse.listSnowflakeWarehouses", "query_scan.error", err)
 				return nil, err
 			}
 

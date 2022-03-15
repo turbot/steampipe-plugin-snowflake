@@ -102,6 +102,7 @@ func listSnowflakeSessionPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 
 		err = rows.Scan(cols...)
 		if err != nil {
+			logger.Error("snowflake_session_policy.listSnowflakeSessionPolicies", "query_scan.error", err)
 			return nil, err
 		}
 
@@ -120,6 +121,7 @@ func listSnowflakeSessionPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 
 			err = rows.Scan(cols...)
 			if err != nil {
+				logger.Error("snowflake_session_policy.listSnowflakeSessionPolicies", "query_scan.error", err)
 				return nil, err
 			}
 
@@ -168,6 +170,7 @@ func DescribeSessionPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.H
 
 		err = rows.Scan(&created_on, &name, &session_idle_timeout_mins, &session_ui_idle_timeout_mins, &comment)
 		if err != nil {
+			plugin.Logger(ctx).Error("snowflake_session_policy.DescribeSessionPolicy", "query_scan.error", err)
 			return nil, err
 		}
 		policyProperties.SessionIdleTimeoutMins = session_idle_timeout_mins

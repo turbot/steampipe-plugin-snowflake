@@ -55,6 +55,7 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 	}
 	rows, err := db.QueryContext(ctx, "SHOW DATABASES")
 	if err != nil {
+		logger.Error("snowflake_database.listSnowflakeDatabases", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -72,6 +73,7 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 
 		err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &Origin, &Owner, &Comment, &Options, &RetentionTime)
 		if err != nil {
+			logger.Error("snowflake_database.listSnowflakeDatabases", "query.error", err)
 			return nil, err
 		}
 
@@ -92,6 +94,7 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 
 			err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &Origin, &Owner, &Comment, &Options, &RetentionTime)
 			if err != nil {
+				logger.Error("snowflake_database.listSnowflakeDatabases", "query.error", err)
 				return nil, err
 			}
 

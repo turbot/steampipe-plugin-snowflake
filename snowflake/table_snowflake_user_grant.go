@@ -91,6 +91,7 @@ func listSnowflakeUserGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 		err = rows.Scan(cols...)
 		if err != nil {
+			logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "query_scan.error", err)
 			return nil, err
 		}
 
@@ -109,6 +110,7 @@ func listSnowflakeUserGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 			err = rows.Scan(cols...)
 			if err != nil {
+				logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "query_scan.error", err)
 				return nil, err
 			}
 

@@ -54,6 +54,7 @@ func listSnowflakeDatabaseGrants(ctx context.Context, d *plugin.QueryData, _ *pl
 	}
 	rows, err := db.QueryContext(ctx, fmt.Sprintf("SHOW GRANTS ON DATABASE %s", database))
 	if err != nil {
+		logger.Error("snowflake_database_grant.listSnowflakeDatabaseGrants", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -70,6 +71,7 @@ func listSnowflakeDatabaseGrants(ctx context.Context, d *plugin.QueryData, _ *pl
 
 		err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy)
 		if err != nil {
+			logger.Error("snowflake_database_grant.listSnowflakeDatabaseGrants", "query_scan.error", err)
 			return nil, err
 		}
 
@@ -89,6 +91,7 @@ func listSnowflakeDatabaseGrants(ctx context.Context, d *plugin.QueryData, _ *pl
 
 			err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy)
 			if err != nil {
+				logger.Error("snowflake_database_grant.listSnowflakeDatabaseGrants", "query_scan.error", err)
 				return nil, err
 			}
 

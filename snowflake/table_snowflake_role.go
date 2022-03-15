@@ -56,6 +56,7 @@ func listSnowflakeRole(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 	}
 	rows, err := db.QueryContext(ctx, "SHOW ROLES")
 	if err != nil {
+		logger.Error("snowflake_role.listSnowflakeRole", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -74,6 +75,7 @@ func listSnowflakeRole(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 
 		err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &IsInherited, &AssignedToUsers, &GrantedToRoles, &GrantedRoles, &Owner, &Comment)
 		if err != nil {
+			logger.Error("snowflake_role.listSnowflakeRole", "query_scan.error", err)
 			return nil, err
 		}
 
@@ -95,6 +97,7 @@ func listSnowflakeRole(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 
 			err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &IsInherited, &AssignedToUsers, &GrantedToRoles, &GrantedRoles, &Owner, &Comment)
 			if err != nil {
+				logger.Error("snowflake_role.listSnowflakeRole", "query_scan.error", err)
 				return nil, err
 			}
 

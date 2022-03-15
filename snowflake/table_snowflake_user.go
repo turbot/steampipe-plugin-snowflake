@@ -101,6 +101,7 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 	}
 	rows, err := db.QueryContext(ctx, "SHOW USERS")
 	if err != nil {
+		logger.Error("snowflake_user.listSnowflakeUsers", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -135,6 +136,7 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 
 		err = rows.Scan(&Name, &CreatedOn, &LoginName, &DisplayName, &FirstName, &LastName, &Email, &MinsToUnlock, &DaysToExpiry, &Comment, &Disabled, &MustChangePassword, &SnowflakeLock, &DefaultWarehouse, &DefaultNamespace, &DefaultRole, &DefaultSecondaryRoles, &ExtAuthnDuo, &ExtAuthnUid, &MinsToBypassMFA, &Owner, &LastSuccessLogin, &ExpiresAtTime, &LockedUntilTime, &HasPassword, &HasRSAPublicKey)
 		if err != nil {
+			logger.Error("snowflake_user.listSnowflakeUsers", "query_scan.error", err)
 			return nil, err
 		}
 
@@ -172,6 +174,7 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 
 			err = rows.Scan(&Name, &CreatedOn, &LoginName, &DisplayName, &FirstName, &LastName, &Email, &MinsToUnlock, &DaysToExpiry, &Comment, &Disabled, &MustChangePassword, &SnowflakeLock, &DefaultWarehouse, &DefaultNamespace, &DefaultRole, &DefaultSecondaryRoles, &ExtAuthnDuo, &ExtAuthnUid, &MinsToBypassMFA, &Owner, &LastSuccessLogin, &ExpiresAtTime, &LockedUntilTime, &HasPassword, &HasRSAPublicKey)
 			if err != nil {
+				logger.Error("snowflake_user.listSnowflakeUsers", "query_scan.error", err)
 				return nil, err
 			}
 
@@ -204,6 +207,7 @@ func DescribeUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 			plugin.Logger(ctx).Info("snowflake_user.DescribeUser", fmt.Sprintf("query_error for user %s", userName), err.(*gosnowflake.SnowflakeError).Error())
 			return nil, nil
 		}
+		plugin.Logger(ctx).Error("snowflake_user.DescribeUser", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -217,6 +221,7 @@ func DescribeUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 
 		err = rows.Scan(&property, &value, &defaultval, &description)
 		if err != nil {
+			plugin.Logger(ctx).Error("snowflake_user.DescribeUser", "query_scan.error", err)
 			return nil, err
 		}
 		userProperties[property.String] = value.String

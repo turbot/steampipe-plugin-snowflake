@@ -54,6 +54,7 @@ func listSnowflakeRoleGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 	}
 	rows, err := db.QueryContext(ctx, fmt.Sprintf("SHOW GRANTS OF ROLE %s", role))
 	if err != nil {
+		logger.Error("snowflake_role_grant.listSnowflakeRoleGrants", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -67,6 +68,7 @@ func listSnowflakeRoleGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 		err = rows.Scan(&CreatedOn, &Role, &GrantedTo, &GranteeName, &GrantedBy)
 		if err != nil {
+			logger.Error("snowflake_role_grant.listSnowflakeRoleGrants", "query_scan.error", err)
 			return nil, err
 		}
 
@@ -82,6 +84,7 @@ func listSnowflakeRoleGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 		err = rows.Scan(&CreatedOn, &Role, &GrantedTo, &GranteeName, &GrantedBy)
 		if err != nil {
+			logger.Error("snowflake_role_grant.listSnowflakeRoleGrants", "query_scan.error", err)
 			return nil, err
 		}
 

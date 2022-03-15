@@ -60,11 +60,12 @@ func listSnowflakeViewGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 	}
 	db, err := connect(ctx, d)
 	if err != nil {
-		logger.Error("snowflake_view.listSnowflakeViews", "connnection.error", err)
+		logger.Error("snowflake_view_grant.listSnowflakeViewGrants", "connnection.error", err)
 		return nil, err
 	}
 	rows, err := db.QueryContext(ctx, fmt.Sprintf("SHOW GRANTS ON VIEW %s.%s.%s", database, schema, view))
 	if err != nil {
+		logger.Error("snowflake_view_grant.listSnowflakeViewGrants", "query.error", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -81,6 +82,7 @@ func listSnowflakeViewGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 		err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy)
 		if err != nil {
+			logger.Error("snowflake_view_grant.listSnowflakeViewGrants", "query_scan.error", err)
 			return nil, err
 		}
 
@@ -100,6 +102,7 @@ func listSnowflakeViewGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 			err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy)
 			if err != nil {
+				logger.Error("snowflake_view_grant.listSnowflakeViewGrants", "query_scan.error", err)
 				return nil, err
 			}
 

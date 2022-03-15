@@ -18,7 +18,7 @@ from
   snowflake_account_grant;
 ```
 
-### List grants by ACCOUNTADMIN role on Accout level
+### List privilege in ACCOUNTADMIN role
 
 ```sql
 select
