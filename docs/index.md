@@ -101,7 +101,8 @@ connection "snowflake" {
 
 #### OAuth Access Token
 
-If you have an OAuth access token:
+- [Configure Snowflake OAuth for Custom Clients](https://docs.snowflake.com/en/user-guide/oauth-custom.html).
+- [Configure Okta for External OAuth](https://docs.snowflake.com/en/user-guide/oauth-okta.html#label-ext-oauth-integration-okta)
 
 ```hcl
 connection "snowflake" {
@@ -114,9 +115,12 @@ connection "snowflake" {
 }
 ```
 
-Note that once this access token expires, you'll need to request a new one through an external application.
+Note: that once `oauth_access_token` expires, you'll need to request a new one through an external application.
 
-### OAuth Refresh Token
+#### OAuth Refresh Token
+
+- [Configure Snowflake OAuth for Custom Client](https://docs.snowflake.com/en/user-guide/oauth-custom.html)
+- [Refresh access tokens in Okta](https://developer.okta.com/docs/guides/refresh-tokens/main/)
 
 If you have an OAuth Refresh token:
 
@@ -199,17 +203,3 @@ connection "snowflake" {
 
 - Open source: https://github.com/turbot/steampipe-plugin-snowflake
 - Community: [Slack Channel](https://steampipe.io/community/join)
-
-## Configuring Snowflake Credentials
-
-The Snowflake plugin support below authentication mechanisms
-
-1. [Using User Password](https://docs.snowflake.com/en/user-guide/admin-user-management.html#using-the-web-interface)
-2. [Key Based Authentication](https://docs.snowflake.com/en/user-guide/key-pair-auth.html)
-3. [OAuth Access Token Authentication](https://docs.snowflake.com/en/user-guide/oauth-custom.html).
-
-   - [Configure Okta for External OAuth](https://docs.snowflake.com/en/user-guide/oauth-okta.html#label-ext-oauth-integration-okta)
-
-4. [OAuth Refresh Token Authentication](https://docs.snowflake.com/en/user-guide/oauth-custom.html)
-
-   - [Refresh access tokens in Okta](https://developer.okta.com/docs/guides/refresh-tokens/main/)
