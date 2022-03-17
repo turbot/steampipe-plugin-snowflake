@@ -50,11 +50,3 @@ connection "snowflake" {
   # oauth_refresh_token = "0oa44dah4cudhAkPU5d70oa44dah4cudhAkPU5d7"
 }
 
-connection "snowflake" {
-  plugin             = "snowflake"
-  account            = "xy12345"
-  user               = "steampipe"
-  region             = "ap-south-1.aws"
-  role               = "ACCOUNTADMIN"
-  oauth_access_token = "eyJraWQiOiJLWjN....jwqt1uCG8Z94ZYZp_LK3YhQbWLkWA"
-}
