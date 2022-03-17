@@ -16,7 +16,7 @@ select
   granted_to,
   grant_option
 from
-  snowflake_database_grant where database = 'SNOWFLAKE'
+  snowflake_database_grant where database = 'SNOWFLAKE';
 ```
 
 ### List grants for all databases in Snowflake
@@ -32,5 +32,5 @@ from
   snowflake_database_grant
   inner join
     snowflake_database
-    on snowflake_database_grant.database = snowflake_database.name
+    on snowflake_database_grant.database = snowflake_database.name;
 ```

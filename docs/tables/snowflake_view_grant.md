@@ -18,9 +18,9 @@ select
 from
   snowflake_view_grant
 where
-  view_name = 'ROLES' and
-  database_name = 'SNOWFLAKE' and
-  schema_name = 'ACCOUNT_USAGE';
+  view_name = 'ROLES'
+  and database_name = 'SNOWFLAKE'
+  and schema_name = 'ACCOUNT_USAGE';
 ```
 
 ### List view grants for `ACCOUNT_USAGE` schema in `SNOWFLAKE` database

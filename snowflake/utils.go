@@ -6,7 +6,7 @@ import (
 
 	_ "github.com/snowflakedb/gosnowflake"
 
-	"github.com/turbot/steampipe-plugin-sdk/v2/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
 //// TRANSFORM FUNCTIONS
