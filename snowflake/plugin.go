@@ -1,5 +1,5 @@
 /*
-Package snow implements a steampipe plugin for Snowflake.
+Package snowflake implements a steampipe plugin for Snowflake.
 
 This plugin provides data that Steampipe uses to present foreign
 tables that represent Snowflake resources.

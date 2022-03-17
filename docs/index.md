@@ -16,7 +16,7 @@ og_image: "/images/plugins/turbot/snowflake-social-graphic.png"
 
 [Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
 
-For example: List inactive users
+For example, to list inactive users:
 
 ```sql
 select
@@ -63,7 +63,7 @@ The Snowflake provider supports multiple ways to authenticate:
 - OAuth Access Token
 - OAuth Refresh Token
 
-In all authentication methods account, user, and region is required.
+For all authentication methods, `account`, `user`, and `region` are required.
 
 #### Using username and password
 
