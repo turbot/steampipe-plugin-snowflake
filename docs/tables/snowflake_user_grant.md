@@ -1,11 +1,11 @@
 # Table: snowflake_user_grant
 
-List all roles granted to a User.
+Roles are granted to users, providing them with specific permissions.
 
-**Note**
+**Notes**
 
-- The `PUBLIC` role, which is automatically available to every user, is not listed in this table.
-- This table requires an '=' qualifier for `username` columns
+- The `PUBLIC` role, which is automatically available to every user, is not listed in this table
+- This table requires an '=' qualifier for the `username` column
 
 ### List all grants for a specific user
 

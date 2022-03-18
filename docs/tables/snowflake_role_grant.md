@@ -1,12 +1,12 @@
 # Table: snowflake_role_grant
 
-Lists all privileges and roles granted to a role.
+List all privileges and roles granted to a role.
 
-**Note** This table requires an '=' qualifier for `role` columns
+**Note**: This table requires an '=' qualifier for the `role` column.
 
 ## Examples
 
-### List users granted ACCOUNTADMIN role
+### List users granted the ACCOUNTADMIN role
 
 ```sql
 select
@@ -22,7 +22,7 @@ where
   granted_to = 'USER';
 ```
 
-### List roles granted SYSADMIN role
+### List roles granted the SYSADMIN role
 
 ```sql
 select

@@ -2,7 +2,7 @@
 
 Network policies enable restricting access to your account based on user IP address.
 
-**Note**: Only the network policy owner (i.e. role with the `OWNERSHIP` privilege on the network policy) or higher can query this table.
+**Note**: Only the network policy owner, i.e., a role with the `OWNERSHIP` privilege on the network policy, or higher can query this table.
 
 ## Examples
 
@@ -29,5 +29,5 @@ select
 from
   snowflake_network_policy
 where
-  name = 'np1' ;
+  name = 'np1';
 ```

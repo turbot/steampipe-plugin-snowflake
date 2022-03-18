@@ -2,7 +2,7 @@
 
 List all privileges that have been granted on the view.
 
-**Note** This table requires an '=' qualifier for `view_name`, `database_name` and `schema_name` columns.
+**Note**: This table requires an '=' qualifier for the `view_name`, `database_name` and `schema_name` columns.
 
 ## Examples
 

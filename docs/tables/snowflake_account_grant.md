@@ -1,6 +1,6 @@
 # Table: snowflake_account_grant
 
-Lists all the account-level (i.e. global) privileges that have been granted to roles.
+List all account-level, i.e., global, privileges that have been granted to roles.
 
 ## Examples
 
@@ -18,7 +18,7 @@ from
   snowflake_account_grant;
 ```
 
-### List privilege in ACCOUNTADMIN role
+### List privileges with the ACCOUNTADMIN role
 
 ```sql
 select

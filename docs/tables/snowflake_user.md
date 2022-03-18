@@ -1,6 +1,6 @@
 # Table: snowflake_user
 
-A user identity recognized by Snowflake, whether associated with a person or program.
+A user is an identity recognized by Snowflake and can be associated with a person or program.
 
 **Note**: This table can only be queried by users with a role that has the `MANAGE GRANTS` global privilege. This privilege is usually granted to the `ACCOUNTADMIN` and `SECURITYADMIN` roles.
 
@@ -37,7 +37,7 @@ where
   has_password;
 ```
 
-### Users with passwords haven't changed password for last 90 days
+### List users whose passwords haven't been rotated in 90 days
 
 ```sql
 select
@@ -55,7 +55,7 @@ where
   and password_last_set_time::timestamp < now() - interval '90 days';
 ```
 
-### Users using keypair authentication
+### List users using keypair authentication
 
 ```sql
 select

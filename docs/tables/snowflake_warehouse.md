@@ -1,6 +1,6 @@
 # Table: snowflake_warehouse
 
-A warehouse is a cluster of compute resources in Snowflake. Warehouse provides the required resources, such as CPU, memory, and temporary storage, to perform queries.
+A warehouse is a cluster of compute resources in Snowflake. Warehouses provide the required resources, such as CPU, memory, and temporary storage, to perform queries.
 
 ## Examples
 
@@ -27,10 +27,10 @@ select
 from
   snowflake_warehouse
 where
-  state = 'STARTED'
+  state = 'STARTED';
 ```
 
-### Get count of warehouses grouped by size
+### Get a count of warehouses grouped by size
 
 ```sql
 select
@@ -42,7 +42,7 @@ group by
   size;
 ```
 
-### List warehouses with auto_resume turned off
+### List warehouses with auto-resume disabled
 
 ```sql
 select

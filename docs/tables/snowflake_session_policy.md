@@ -24,7 +24,7 @@ from
   snowflake_session_policy;
 ```
 
-### List policies with idle timeout more that an hour
+### List policies with idle timeout more than an hour
 
 ```sql
 select

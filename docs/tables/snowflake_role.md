@@ -1,6 +1,6 @@
 # Tables: snowflake_role
 
-The Role is an entity to which privileges can be granted. Roles are in turn assigned to users.
+The role is an entity to which privileges can be granted. Roles are in turn assigned to users.
 
 ## Examples
 
@@ -16,7 +16,7 @@ from
   snowflake_role;
 ```
 
-### List idle roles (i.e. not assigned to any user)
+### List idle roles
 
 ```sql
 select
