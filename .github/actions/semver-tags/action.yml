@@ -1,0 +1,12 @@
+name: "Semver Tags"
+description: "Get appropriate Semver Tags on OVI images in Google Cloud"
+inputs:
+  image-to-tag:
+    description: "The image to tag (ex: us-docker.pkg.dev/steampipe/plugin/turbot/snowflake:my-tag-or-digest)"
+    required: true
+  image-version:
+    description: "The image version,  this should be an EXACT version (ex: 1.2.3)"
+    required: true
+runs:
+  using: "node12"
+  main: "dist/index.js"
