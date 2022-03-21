@@ -2,7 +2,7 @@
 organization: Turbot
 category: ["saas"]
 icon_url: "/images/plugins/turbot/snowflake.svg"
-brand_color: "#2596BE"
+brand_color: "#29B5E8"
 display_name: "Snowflake"
 name: "snowflake"
 description: "Steampipe plugin for querying roles, databases, and more from Snowflake."
