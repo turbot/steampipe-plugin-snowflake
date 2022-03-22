@@ -104,8 +104,8 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 		role,
 	)
 	if err != nil {
-		plugin.Logger(ctx).Error("DSN", "could not build dsn for snowflake connection", err)
-		return nil, fmt.Errorf("could not build dsn for snowflake connection: %w", err)
+		plugin.Logger(ctx).Error("DSN", "could not build DSN for snowflake connection", err)
+		return nil, fmt.Errorf("could not build DSN for snowflake connection: %w", err)
 	}
 
 	db, err := sql.Open("snowflake", dsn)
