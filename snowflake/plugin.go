@@ -40,6 +40,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"snowflake_view":           tableSnowflakeView(ctx),
 			"snowflake_view_grant":     tableSnowflakeViewGrant(ctx),
 			"snowflake_warehouse":      tableSnowflakeWarehouse(ctx),
+			"snowflake_query_history":  tableSnowflakeQueryHistory(ctx),
 		},
 	}
 
