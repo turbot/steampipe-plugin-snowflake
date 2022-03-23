@@ -33,6 +33,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"snowflake_role":           tableSnowflakeRole(ctx),
 			"snowflake_role_grant":     tableSnowflakeRoleGrant(ctx),
 			"snowflake_schemata":       tableSnowflakeSchemata(ctx),
+			"snowflake_session":        tableSnowflakeSession(ctx),
 			"snowflake_session_policy": tableSnowflakeSessionPolicy(ctx),
 			"snowflake_user":           tableSnowflakeUser(ctx),
 			"snowflake_user_grant":     tableSnowflakeUserGrant(ctx),
