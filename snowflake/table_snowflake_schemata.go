@@ -13,13 +13,15 @@ import (
 // https://docs.snowflake.com/en/sql-reference/info-schema/schemata.html
 func tableSnowflakeSchemata(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "snowflake_view_schemata",
+		Name:        "snowflake_schemata",
 		Description: "This Information Schema view displays a row for each schema in the specified (or current) database, including the INFORMATION_SCHEMA schema itself.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeSchemata,
 		},
 		Columns: []*plugin.Column{
+			{Name: "schema_id", Type: proto.ColumnType_STRING, Description: "Id of the schema."},
 			{Name: "schema_name", Type: proto.ColumnType_STRING, Description: "Name of the schema."},
+			{Name: "catalog_id", Type: proto.ColumnType_STRING, Description: "Id of Database that the schema belongs to."},
 			{Name: "catalog_name", Type: proto.ColumnType_STRING, Description: "Database that the schema belongs to."},
 			{Name: "schema_owner", Type: proto.ColumnType_STRING, Description: "Name of the role that owns the schema."},
 			{Name: "retention_time", Type: proto.ColumnType_INT, Description: "Number of days that historical data is retained for Time Travel"},
