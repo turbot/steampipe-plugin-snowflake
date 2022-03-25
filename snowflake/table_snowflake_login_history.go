@@ -17,6 +17,12 @@ func tableSnowflakeLoginHistory(_ context.Context) *plugin.Table {
 		Description: "This Account Usage view can be used to query login attempts by Snowflake users within the last 365 days (1 year).",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeLoginHistory,
+			KeyColumns: plugin.KeyColumnSlice{
+				{Name: "event_id", Require: plugin.Optional, Operators: []string{"="}},
+				{Name: "event_timestamp", Require: plugin.Optional, Operators: []string{"="}},
+				{Name: "user_name", Require: plugin.Optional, Operators: []string{"="}},
+				{Name: "first_authentication_factor", Require: plugin.Optional, Operators: []string{"="}},
+			},
 		},
 		Columns: []*plugin.Column{
 			{Name: "event_id", Type: proto.ColumnType_INT, Description: "Internal/system-generated identifier for the login attempt."},
@@ -28,7 +34,7 @@ func tableSnowflakeLoginHistory(_ context.Context) *plugin.Table {
 			{Name: "reported_client_version", Type: proto.ColumnType_STRING, Description: "Reported version of the client software. This information is not authenticated."},
 			{Name: "first_authentication_factor", Type: proto.ColumnType_STRING, Description: "Method used to authenticate the user (the first factor, if using multi factor authentication)."},
 			{Name: "second_authentication_factor", Type: proto.ColumnType_STRING, Description: "The second factor, if using multi factor authentication, or NULL otherwise."},
-			{Name: "is_success", Type: proto.ColumnType_STRING, Description: "Whether the user’s request was successful or not."},
+			{Name: "is_success", Type: proto.ColumnType_STRING, Description: "Whether the user's request was successful or not."},
 			{Name: "error_code", Type: proto.ColumnType_INT, Description: "Error code, if the request was not successful."},
 			{Name: "error_message", Type: proto.ColumnType_STRING, Description: "Error message returned to the user, if the request was not successful."},
 			{Name: "related_event_id", Type: proto.ColumnType_INT, Description: "Reserved for future use."},
@@ -104,7 +110,7 @@ func listSnowflakeLoginHistory(ctx context.Context, d *plugin.QueryData, _ *plug
 
 	columns, err := rows.Columns()
 	if err != nil {
-		logger.Error("snowflake_login_history.listSnowflakeLoginHistory", "get_coloumns.error", err)
+		logger.Error("snowflake_login_history.listSnowflakeLoginHistory", "get_columns.error", err)
 		return nil, err
 	}
 

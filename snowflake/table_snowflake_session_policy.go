@@ -87,7 +87,7 @@ func listSnowflakeSessionPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 	}
 	columns, err := rows.Columns()
 	if err != nil {
-		logger.Error("snowflake_session_policy.listSnowflakeSessionPolicies", "get_coloumns.error", err)
+		logger.Error("snowflake_session_policy.listSnowflakeSessionPolicies", "get_columns.error", err)
 		return nil, err
 	}
 

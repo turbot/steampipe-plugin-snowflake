@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	"github.com/snowflakedb/gosnowflake"
-	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -40,7 +40,7 @@ func tableSnowflakeUser(_ context.Context) *plugin.Table {
 			{Name: "disabled", Type: proto.ColumnType_STRING, Description: "Whether the user is disabled."},
 			{Name: "display_name", Type: proto.ColumnType_STRING, Description: "Display name of the user."},
 			{Name: "expires_at_time", Type: proto.ColumnType_TIMESTAMP, Description: "The date and time when the user’s status is set to EXPIRED and the user can no longer log in."},
-			{Name: "ext_authn_duo", Type: proto.ColumnType_STRING, Description: "Whether Duo Security is enabled as second factor authentication."},
+			{Name: "ext_authn_duo", Type: proto.ColumnType_BOOL, Description: "Whether Duo Security is enabled as second factor authentication."},
 			{Name: "ext_authn_uid", Type: proto.ColumnType_STRING, Description: "External authentication ID of the user."},
 			{Name: "first_name", Type: proto.ColumnType_STRING, Description: "First name of the user."},
 			{Name: "last_name", Type: proto.ColumnType_STRING, Description: "Last name of the user."},

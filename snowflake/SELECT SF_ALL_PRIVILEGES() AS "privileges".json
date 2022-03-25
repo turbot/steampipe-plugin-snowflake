@@ -1,0 +1,404 @@
+
+[
+  {
+    "securable": "ACCOUNT",
+    "privileges": [
+      "OWNERSHIP",
+      "MANAGE GRANTS",
+      "MONITOR USAGE",
+      "MONITOR EXECUTION",
+      "MONITOR SECURITY",
+      "CREATE USER",
+      "CREATE ROLE",
+      "CREATE WAREHOUSE",
+      "CREATE DATABASE",
+      "CREATE SHARE",
+      "CREATE ACCOUNT managed_by_snowflake=true",
+      "CREATE NETWORK POLICY",
+      "CREATE ACCOUNT",
+      "PURCHASE DATA EXCHANGE LISTING",
+      "CREATE REPLICATION GROUP",
+      "CREATE FAILOVER GROUP",
+      "CREATE DATA EXCHANGE LISTING",
+      "CREATE INTEGRATION",
+      "CREATE EXTERNAL_VOLUME",
+      "CREATE CREDENTIAL",
+      "APPLY SESSION POLICY",
+      "APPLY PASSWORD POLICY",
+      "APPLY MASKING POLICY",
+      "APPLY ROW ACCESS POLICY",
+      "APPLY TAG",
+      "PROVISION APPLICATION",
+      "MANAGE ORGANIZATION ACCESS",
+      "IMPORT SHARE",
+      "OVERRIDE SHARE RESTRICTIONS",
+      "ATTACH POLICY",
+      "EXECUTE TASK",
+      "EXECUTE MANAGED TASK",
+      "MANAGE ACCOUNT SUPPORT CASES",
+      "MANAGE ORGANIZATION SUPPORT CASES",
+      "MANAGE USER SUPPORT CASES",
+      "MODIFY LOG LEVEL",
+      "MODIFY SESSION LOG LEVEL",
+      "APPLY RESOURCE GROUP"
+    ]
+  },
+  {
+    "securable": "DATABASE",
+    "privileges": [
+      "USAGE",
+      "REFERENCE_USAGE",
+      "OWNERSHIP",
+      "MONITOR",
+      "MODIFY",
+      "CREATE SCHEMA"
+    ]
+  },
+  {
+    "securable": "SCHEMA",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP",
+      "MONITOR",
+      "MODIFY",
+      "CREATE TABLE",
+      "CREATE TEMPORARY TABLE",
+      "CREATE EXTERNAL TABLE",
+      "CREATE STAGE",
+      "CREATE SEQUENCE",
+      "CREATE VIEW",
+      "CREATE MATERIALIZED VIEW",
+      "CREATE MATERIALIZED TABLE",
+      "ADD SEARCH OPTIMIZATION",
+      "CREATE FILE FORMAT",
+      "CREATE FUNCTION",
+      "CREATE PROCEDURE",
+      "CREATE PIPE",
+      "CREATE STREAM",
+      "CREATE TASK",
+      "CREATE TYPE",
+      "CREATE MASKING POLICY",
+      "CREATE ROW ACCESS POLICY",
+      "CREATE SESSION POLICY",
+      "CREATE PASSWORD POLICY",
+      "CREATE TAG",
+      "CREATE SECRET",
+      "CREATE DIRECTORY TABLE",
+      "CREATE EVENT TABLE",
+      "CREATE RESOURCE GROUP"
+    ]
+  },
+  {
+    "securable": "TABLE",
+    "privileges": [
+      "SELECT",
+      "INSERT",
+      "DELETE",
+      "UPDATE",
+      "TRUNCATE",
+      "REBUILD",
+      "OWNERSHIP",
+      "REFERENCES",
+      "EVOLVE SCHEMA"
+    ]
+  },
+  {
+    "securable": "VIEW",
+    "privileges": [
+      "SELECT",
+      "OWNERSHIP",
+      "REFERENCES"
+    ]
+  },
+  {
+    "securable": "MATERIALIZED_VIEW",
+    "privileges": [
+      "SELECT",
+      "OWNERSHIP",
+      "REFERENCES"
+    ]
+  },
+  {
+    "securable": "WAREHOUSE",
+    "privileges": [
+      "USAGE",
+      "OPERATE",
+      "OWNERSHIP",
+      "MONITOR",
+      "MODIFY"
+    ]
+  },
+  {
+    "securable": "VOLUME",
+    "privileges": [
+      "USAGE"
+    ]
+  },
+  {
+    "securable": "EXTERNAL_VOLUME",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "USER",
+    "privileges": [
+      "OWNERSHIP",
+      "MONITOR",
+      "APPLY SESSION POLICY",
+      "APPLY PASSWORD POLICY"
+    ]
+  },
+  {
+    "securable": "ROLE",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "FILE_FORMAT",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "STAGE",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP",
+      "READ",
+      "WRITE"
+    ]
+  },
+  {
+    "securable": "SEQUENCE",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "FUNCTION",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "PROCEDURE",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "SHARE",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "RESOURCE_MONITOR",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP",
+      "MONITOR",
+      "MODIFY"
+    ]
+  },
+  {
+    "securable": "SERVICE",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "NETWORK_POLICY",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "PIPE",
+    "privileges": [
+      "OPERATE",
+      "OWNERSHIP",
+      "MONITOR"
+    ]
+  },
+  {
+    "securable": "STREAM",
+    "privileges": [
+      "SELECT",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "GSCLUSTER",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "EXTERNAL_TABLE",
+    "privileges": [
+      "SELECT",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "TASK",
+    "privileges": [
+      "OPERATE",
+      "OWNERSHIP",
+      "MONITOR"
+    ]
+  },
+  {
+    "securable": "INTEGRATION",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP",
+      "USE_ANY_ROLE"
+    ]
+  },
+  {
+    "securable": "DATA_EXCHANGE",
+    "privileges": [
+      "OWNERSHIP",
+      "MONITOR",
+      "MODIFY"
+    ]
+  },
+  {
+    "securable": "REPLICATION_GROUP",
+    "privileges": [
+      "OWNERSHIP",
+      "MODIFY",
+      "REPLICATE",
+      "FAILOVER"
+    ]
+  },
+  {
+    "securable": "DATA_EXCHANGE_LISTING",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP",
+      "MODIFY"
+    ]
+  },
+  {
+    "securable": "DATA_EXCHANGE_PROFILE",
+    "privileges": [
+      "OWNERSHIP",
+      "MODIFY"
+    ]
+  },
+  {
+    "securable": "MASKING_POLICY",
+    "privileges": [
+      "APPLY"
+    ]
+  },
+  {
+    "securable": "POLICY",
+    "privileges": [
+      "OWNERSHIP",
+      "APPLY"
+    ]
+  },
+  {
+    "securable": "APPLICATION",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "NAMESPACE",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "ROW_ACCESS_POLICY",
+    "privileges": [
+      "APPLY"
+    ]
+  },
+  {
+    "securable": "SERVER_POOL",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "TAG",
+    "privileges": [
+      "OWNERSHIP",
+      "APPLY"
+    ]
+  },
+  {
+    "securable": "PASSWORD_POLICY",
+    "privileges": [
+      "APPLY"
+    ]
+  },
+  {
+    "securable": "OBJECT",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "ORGANIZATION",
+    "privileges": [
+      "MANAGE ORGANIZATION ACCOUNTS"
+    ]
+  },
+  {
+    "securable": "CONNECTION",
+    "privileges": [
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "DIRECTORY_TABLE",
+    "privileges": [
+      "SELECT",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "SECRET",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "EVENT_TABLE",
+    "privileges": [
+      "SELECT",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "MATERIALIZED_TABLE",
+    "privileges": [
+      "SELECT",
+      "OWNERSHIP"
+    ]
+  },
+  {
+    "securable": "RESOURCE_GROUP",
+    "privileges": [
+      "USAGE",
+      "OWNERSHIP",
+      "MONITOR",
+      "MODIFY"
+    ]
+  }
+]

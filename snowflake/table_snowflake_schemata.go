@@ -112,7 +112,7 @@ func listSnowflakeSchemata(ctx context.Context, d *plugin.QueryData, _ *plugin.H
 
 	columns, err := rows.Columns()
 	if err != nil {
-		logger.Error("snowflake_view_schemata.listSnowflakeSchemata", "get_coloumns.error", err)
+		logger.Error("snowflake_view_schemata.listSnowflakeSchemata", "get_columns.error", err)
 		return nil, err
 	}
 

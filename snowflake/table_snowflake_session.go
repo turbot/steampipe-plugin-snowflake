@@ -17,18 +17,27 @@ func tableSnowflakeSession(_ context.Context) *plugin.Table {
 		Description: "This Account Usage view provides information on the session, including information on the authentication method to Snowflake and the Snowflake login event. Snowflake returns one row for each session created over the last year.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeSession,
+			KeyColumns: plugin.KeyColumnSlice{
+				{Name: "session_id", Require: plugin.Optional, Operators: []string{"="}},
+				{Name: "user_name", Require: plugin.Optional, Operators: []string{"="}},
+				{Name: "created_on", Require: plugin.Optional, Operators: []string{"="}},
+				{Name: "authentication_method", Require: plugin.Optional, Operators: []string{"="}},
+			},
 		},
 		Columns: []*plugin.Column{
+			// Top fields
 			{Name: "session_id", Type: proto.ColumnType_INT, Description: "The unique identifier for the current session."},
-			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the session was created."},
 			{Name: "user_name", Type: proto.ColumnType_STRING, Description: "The user name of the user."},
+			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the session was created."},
 			{Name: "authentication_method", Type: proto.ColumnType_STRING, Description: "The authentication method used to access Snowflake."},
-			{Name: "login_event_id", Type: proto.ColumnType_INT, Description: "The unique identifier for the login event."},
-			{Name: "client_application_version", Type: proto.ColumnType_STRING, Description: "The version number (e.g. 3.8.7) of the Snowflake-provided client application used to create the remote session to Snowflake."},
+
+			// Other fields
 			{Name: "client_application_id", Type: proto.ColumnType_STRING, Description: "The identifier for the Snowflake-provided client application used to create the remote session to Snowflake (e.g. JDBC 3.8.7)"},
-			{Name: "client_environment", Type: proto.ColumnType_JSON, Description: "The environment variables (e.g. operating system, OCSP mode) of the client used to create a remote session to Snowflake."},
+			{Name: "client_application_version", Type: proto.ColumnType_STRING, Description: "The version number (e.g. 3.8.7) of the Snowflake-provided client application used to create the remote session to Snowflake."},
 			{Name: "client_build_id", Type: proto.ColumnType_STRING, Description: "The build number (e.g. 41897) of the third-party client application used to create a remote session to Snowflake, if available. For example, a third-party Java application that uses the JDBC driver to connect to Snowflake."},
+			{Name: "client_environment", Type: proto.ColumnType_JSON, Description: "The environment variables (e.g. operating system, OCSP mode) of the client used to create a remote session to Snowflake."},
 			{Name: "client_version", Type: proto.ColumnType_STRING, Description: "The version number (e.g. 47154) of the third-party client application that uses a Snowflake-provided client to create a remote session to Snowflake, if available."},
+			{Name: "login_event_id", Type: proto.ColumnType_INT, Description: "The unique identifier for the login event."},
 		},
 	}
 }
@@ -92,7 +101,7 @@ func listSnowflakeSession(ctx context.Context, d *plugin.QueryData, _ *plugin.Hy
 
 	columns, err := rows.Columns()
 	if err != nil {
-		logger.Error("snowflake_session.listSnowflakeSession", "get_coloumns.error", err)
+		logger.Error("snowflake_session.listSnowflakeSession", "get_columns.error", err)
 		return nil, err
 	}
 

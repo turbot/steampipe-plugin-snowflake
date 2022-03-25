@@ -293,7 +293,7 @@ func listSnowflakeQueryHistory(ctx context.Context, d *plugin.QueryData, _ *plug
 
 	columns, err := rows.Columns()
 	if err != nil {
-		logger.Error("snowflake_query_history.listSnowflakeQueryHistory", "get_coloumns.error", err)
+		logger.Error("snowflake_query_history.listSnowflakeQueryHistory", "get_columns.error", err)
 		return nil, err
 	}
 

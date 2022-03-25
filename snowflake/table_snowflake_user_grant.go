@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -76,7 +76,7 @@ func listSnowflakeUserGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 	columns, err := rows.Columns()
 	if err != nil {
-		logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "get_coloumns.error", err)
+		logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "get_columns.error", err)
 		return nil, err
 	}
 
