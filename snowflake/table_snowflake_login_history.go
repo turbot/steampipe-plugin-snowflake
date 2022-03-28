@@ -24,7 +24,7 @@ func tableSnowflakeLoginHistory(_ context.Context) *plugin.Table {
 				{Name: "first_authentication_factor", Require: plugin.Optional, Operators: []string{"="}},
 			},
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "event_id", Type: proto.ColumnType_INT, Description: "Internal/system-generated identifier for the login attempt."},
 			{Name: "event_timestamp", Type: proto.ColumnType_TIMESTAMP, Description: "Time (in the UTC time zone) of the event occurrence."},
 			{Name: "event_type", Type: proto.ColumnType_STRING, Description: "Event type, such as LOGIN for authentication events."},
@@ -38,7 +38,7 @@ func tableSnowflakeLoginHistory(_ context.Context) *plugin.Table {
 			{Name: "error_code", Type: proto.ColumnType_INT, Description: "Error code, if the request was not successful."},
 			{Name: "error_message", Type: proto.ColumnType_STRING, Description: "Error message returned to the user, if the request was not successful."},
 			{Name: "related_event_id", Type: proto.ColumnType_INT, Description: "Reserved for future use."},
-		},
+		}),
 	}
 }
 

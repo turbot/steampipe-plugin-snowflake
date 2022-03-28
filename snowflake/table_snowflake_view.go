@@ -18,7 +18,7 @@ func tableSnowflakeView(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeViews,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "The name of the view."},
 			{Name: "database_name", Type: proto.ColumnType_STRING, Description: "The name of the database in which the view exists."},
 			{Name: "schema_name", Type: proto.ColumnType_STRING, Description: "The name of the schema in which the view exists."},
@@ -28,7 +28,7 @@ func tableSnowflakeView(_ context.Context) *plugin.Table {
 			{Name: "text", Type: proto.ColumnType_STRING, Description: "The text of the command that created the view, e.g., CREATE VIEW."},
 			{Name: "is_secure", Type: proto.ColumnType_BOOL, Description: "True if the view is a secure view; false otherwise."},
 			{Name: "is_materialized", Type: proto.ColumnType_BOOL, Description: "True if the view is a materialized view; false otherwise."},
-		},
+		}),
 	}
 }
 

@@ -18,7 +18,7 @@ func tableSnowflakeSchemata(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeSchemata,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "schema_id", Type: proto.ColumnType_STRING, Description: "Id of the schema."},
 			{Name: "schema_name", Type: proto.ColumnType_STRING, Description: "Name of the schema."},
 			{Name: "catalog_id", Type: proto.ColumnType_STRING, Description: "Id of Database that the schema belongs to."},
@@ -31,7 +31,7 @@ func tableSnowflakeSchemata(_ context.Context) *plugin.Table {
 			{Name: "created", Type: proto.ColumnType_TIMESTAMP, Description: "Creation time of the schema."},
 			{Name: "last_altered", Type: proto.ColumnType_TIMESTAMP, Description: "Last altered time of the schema."},
 			{Name: "deleted", Type: proto.ColumnType_TIMESTAMP, Description: "Deletion time of the schema."},
-		},
+		}),
 	}
 }
 

@@ -21,13 +21,13 @@ func tableSnowflakeUserGrant(_ context.Context) *plugin.Table {
 				{Name: "username"},
 			},
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "username", Type: proto.ColumnType_STRING, Transform: transform.FromQual("username"), Description: "Name of the snowflake user."},
 			{Name: "role", Type: proto.ColumnType_STRING, Description: "Name of the role that has been granted to user."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the role was granted to the user/role."},
 			{Name: "granted_to", Type: proto.ColumnType_STRING, Description: "Type of the object. Only USER for this table."},
 			{Name: "granted_by", Type: proto.ColumnType_STRING, Description: "Name of the object that granted access on the user."},
-		},
+		}),
 	}
 }
 

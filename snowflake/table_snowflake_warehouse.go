@@ -17,7 +17,7 @@ func tableSnowflakeWarehouse(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeWarehouses,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Name for warehouse."},
 			{Name: "state", Type: proto.ColumnType_STRING, Description: "Whether the warehouse is active/running (STARTED), inactive (SUSPENDED), or resizing (RESIZING)."},
 			{Name: "type", Type: proto.ColumnType_STRING, Description: "Warehouse type; STANDARD is the only currently supported type."},
@@ -38,7 +38,7 @@ func tableSnowflakeWarehouse(_ context.Context) *plugin.Table {
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "Role that owns the warehouse."},
 			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for the warehouse."},
 			{Name: "resource_monitor", Type: proto.ColumnType_STRING, Description: "ID of resource monitor explicitly assigned to the warehouse; controls the monthly credit usage for the warehouse."},
-		},
+		}),
 	}
 }
 

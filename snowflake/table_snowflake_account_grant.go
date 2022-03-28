@@ -17,7 +17,7 @@ func tableSnowflakeAccountGrant(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeAccountGrants,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "An entity to which access can be granted. Unless allowed by a grant, access will be denied."},
 			{Name: "privilege", Type: proto.ColumnType_STRING, Description: "A defined level of access to an object."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time privilege was granted."},
@@ -26,7 +26,7 @@ func tableSnowflakeAccountGrant(_ context.Context) *plugin.Table {
 			{Name: "granted_on", Type: proto.ColumnType_STRING, Description: "Date and time when the access was granted."},
 			{Name: "granted_to", Type: proto.ColumnType_STRING, Description: "Type of the object."},
 			{Name: "grantee_name", Type: proto.ColumnType_STRING, Description: "Name of the object role has been granted."},
-		},
+		}),
 	}
 }
 

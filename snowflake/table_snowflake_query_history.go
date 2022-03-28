@@ -19,7 +19,7 @@ func tableSnowflakeQueryHistory(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeQueryHistory,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "query_id", Type: proto.ColumnType_STRING, Description: "The statement's unique id."},
 			{Name: "query_text", Type: proto.ColumnType_STRING, Description: "Text of the SQL statement."},
 			// {Name: "database_id", Type: proto.ColumnType_INT, Description: ""},
@@ -80,7 +80,7 @@ func tableSnowflakeQueryHistory(_ context.Context) *plugin.Table {
 			{Name: "external_function_total_received_bytes", Type: proto.ColumnType_INT, Description: "The total number of bytes that this query received from all calls to all remote services."},
 			{Name: "query_load_percent", Type: proto.ColumnType_INT, Description: "The approximate percentage of active compute resources in the warehouse for this query execution."},
 			{Name: "is_client_generated_statement", Type: proto.ColumnType_BOOL, Description: "Whether the query was client-generated."},
-		},
+		}),
 	}
 }
 

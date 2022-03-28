@@ -24,7 +24,7 @@ func tableSnowflakeSession(_ context.Context) *plugin.Table {
 				{Name: "authentication_method", Require: plugin.Optional, Operators: []string{"="}},
 			},
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			// Top fields
 			{Name: "session_id", Type: proto.ColumnType_INT, Description: "The unique identifier for the current session."},
 			{Name: "user_name", Type: proto.ColumnType_STRING, Description: "The user name of the user."},
@@ -38,7 +38,7 @@ func tableSnowflakeSession(_ context.Context) *plugin.Table {
 			{Name: "client_environment", Type: proto.ColumnType_JSON, Description: "The environment variables (e.g. operating system, OCSP mode) of the client used to create a remote session to Snowflake."},
 			{Name: "client_version", Type: proto.ColumnType_STRING, Description: "The version number (e.g. 47154) of the third-party client application that uses a Snowflake-provided client to create a remote session to Snowflake, if available."},
 			{Name: "login_event_id", Type: proto.ColumnType_INT, Description: "The unique identifier for the login event."},
-		},
+		}),
 	}
 }
 

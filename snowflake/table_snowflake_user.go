@@ -20,7 +20,7 @@ func tableSnowflakeUser(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeUsers,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Name of the snowflake user."},
 			{Name: "login_name", Type: proto.ColumnType_STRING, Description: "Login name of the user."},
 			{Name: "email", Type: proto.ColumnType_STRING, Description: "Email address of the user"},
@@ -57,7 +57,7 @@ func tableSnowflakeUser(_ context.Context) *plugin.Table {
 			{Name: "rsa_public_key_2_fp", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("RSA_PUBLIC_KEY_2_FP"), Description: "Fingerprint of user's second RSA public key."},
 			{Name: "snowflake_lock", Type: proto.ColumnType_STRING, Description: "Whether the user or account is locked by Snowflake."},
 			{Name: "snowflake_support", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("SNOWFLAKE_SUPPORT"), Description: "Snowflake Support is allowed to use the user or account."},
-		},
+		}),
 	}
 }
 

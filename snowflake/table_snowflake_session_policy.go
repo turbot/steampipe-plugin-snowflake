@@ -23,7 +23,7 @@ func tableSnowflakeSessionPolicy(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeSessionPolicies,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Identifier for the session policy."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time of the creation of session policy."},
 			{Name: "database_name", Type: proto.ColumnType_STRING, Description: "Name of the database policy belongs."},
@@ -33,7 +33,7 @@ func tableSnowflakeSessionPolicy(_ context.Context) *plugin.Table {
 			{Name: "session_idle_timeout_mins", Type: proto.ColumnType_INT, Hydrate: DescribeSessionPolicy, Description: "Time period in minutes of inactivity with either the web interface or a programmatic client"},
 			{Name: "session_ui_idle_timeout_mins", Type: proto.ColumnType_INT, Hydrate: DescribeSessionPolicy, Description: "Time period in minutes of inactivity with the web interface."},
 			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for this policy"},
-		},
+		}),
 	}
 }
 

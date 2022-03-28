@@ -17,14 +17,14 @@ func tableSnowflakeAccountParameter(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeAccountParameters,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "key", Type: proto.ColumnType_STRING, Description: ""},
 			{Name: "value", Type: proto.ColumnType_STRING, Description: ""},
 			{Name: "default", Type: proto.ColumnType_STRING, Description: ""},
 			{Name: "level", Type: proto.ColumnType_STRING, Description: ""},
 			{Name: "description", Type: proto.ColumnType_STRING, Description: ""},
 			{Name: "type", Type: proto.ColumnType_STRING, Description: ""},
-		},
+		}),
 	}
 }
 
