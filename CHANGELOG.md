@@ -1,3 +1,20 @@
+## v0.0.2 [WIP]
+
+_What's new?_
+
+- New tables added
+  - [snowflake_account_parameter](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_account_parameter)
+  - [snowflake_login_history](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_login_history)
+  - [snowflake_query_history](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_query_history)
+  - [snowflake_schemata](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_schemata)
+  - [snowflake_session](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_session)
+
+_Enhancements_
+
+- Added `account` metadata column to all existing tables.
+- Changed the column type of `ext_authn_duo` column from string to bool in `snowflake_user` table.
+- Added `database`, `schema` and `warehouse` configuration arguments to allow user to query snowflake tables and views.
+
 ## v0.0.1 [2022-03-22]
 
 _What's new?_
