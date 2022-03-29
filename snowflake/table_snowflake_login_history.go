@@ -133,7 +133,7 @@ func listSnowflakeLoginHistory(ctx context.Context, d *plugin.QueryData, _ *plug
 		query = fmt.Sprintf("%s where %s", query, condition)
 	}
 
-	logger.Info("listSnowflakeLoginHistory", "query", query)
+	// logger.Info("listSnowflakeLoginHistory", "query", query)
 
 	rows, err := db.QueryContext(ctx, query)
 	if err != nil {
