@@ -31,7 +31,6 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"snowflake_database_grant":    tableSnowflakeDatabaseGrant(ctx),
 			"snowflake_login_history":     tableSnowflakeLoginHistory(ctx),
 			"snowflake_network_policy":    tableSnowflakeNetworkPolicy(ctx),
-			"snowflake_query_history":     tableSnowflakeQueryHistory(ctx),
 			"snowflake_role":              tableSnowflakeRole(ctx),
 			"snowflake_role_grant":        tableSnowflakeRoleGrant(ctx),
 			"snowflake_schemata":          tableSnowflakeSchemata(ctx),

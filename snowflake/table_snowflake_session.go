@@ -3,6 +3,8 @@ package snowflake
 import (
 	"context"
 	"database/sql"
+	"fmt"
+	"strings"
 
 	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
@@ -20,7 +22,7 @@ func tableSnowflakeSession(_ context.Context) *plugin.Table {
 			KeyColumns: plugin.KeyColumnSlice{
 				{Name: "session_id", Require: plugin.Optional, Operators: []string{"="}},
 				{Name: "user_name", Require: plugin.Optional, Operators: []string{"="}},
-				{Name: "created_on", Require: plugin.Optional, Operators: []string{"="}},
+				{Name: "created_on", Require: plugin.Optional, Operators: []string{">", ">=", "=", "<", "<="}},
 				{Name: "authentication_method", Require: plugin.Optional, Operators: []string{"="}},
 			},
 		},
@@ -92,7 +94,38 @@ func listSnowflakeSession(ctx context.Context, d *plugin.QueryData, _ *plugin.Hy
 		logger.Error("snowflake_session.listSnowflakeSession", "connnection.error", err)
 		return nil, err
 	}
-	rows, err := db.QueryContext(ctx, "select * from SNOWFLAKE.ACCOUNT_USAGE.SESSIONS;")
+
+	equalQuals := d.KeyColumnQuals
+	quals := d.Quals
+	var conditions []string = []string{}
+
+	if equalQuals["session_id"] != nil {
+		conditions = append(conditions, fmt.Sprintf("session_id %s '%s'", "=", equalQuals["session_id"].GetStringValue()))
+	}
+
+	if equalQuals["user_name"] != nil {
+		conditions = append(conditions, fmt.Sprintf("user_name %s '%s'", "=", equalQuals["user_name"].GetStringValue()))
+	}
+
+	if equalQuals["authentication_method"] != nil {
+		conditions = append(conditions, fmt.Sprintf("authentication_method %s '%s'", "=", equalQuals["authentication_method"].GetStringValue()))
+	}
+
+	if quals["created_on"] != nil {
+		for _, q := range quals["created_on"].Quals {
+			tsSecs := q.Value.GetTimestampValue().AsTime().Format("2006-01-02 15:04:05.000")
+			conditions = append(conditions, fmt.Sprintf("created_on %s to_timestamp_ltz('%s')", q.Operator, tsSecs))
+		}
+	}
+
+	condition := strings.Join(conditions, " and ")
+	query := "SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSIONS"
+	if condition != "" {
+		query = fmt.Sprintf("%s where %s;", query, condition)
+	}
+
+	logger.Info("listSnowflakeLoginHistory", "query", query)
+	rows, err := db.QueryContext(ctx, query)
 	if err != nil {
 		logger.Error("snowflake_session.listSnowflakeSession", "query.error", err)
 		return nil, err
