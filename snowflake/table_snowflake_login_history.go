@@ -3,6 +3,8 @@ package snowflake
 import (
 	"context"
 	"database/sql"
+	"fmt"
+	"strings"
 
 	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
@@ -14,12 +16,12 @@ import (
 func tableSnowflakeLoginHistory(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_login_history",
-		Description: "This Account Usage view can be used to query login attempts by Snowflake users within the last 365 days (1 year).",
+		Description: "This Account Usage view table can be used to query login attempts by Snowflake users within the last 365 days (1 year).",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeLoginHistory,
 			KeyColumns: plugin.KeyColumnSlice{
 				{Name: "event_id", Require: plugin.Optional, Operators: []string{"="}},
-				{Name: "event_timestamp", Require: plugin.Optional, Operators: []string{"="}},
+				{Name: "event_timestamp", Require: plugin.Optional, Operators: []string{">", ">=", "=", "<", "<="}},
 				{Name: "user_name", Require: plugin.Optional, Operators: []string{"="}},
 				{Name: "first_authentication_factor", Require: plugin.Optional, Operators: []string{"="}},
 			},
@@ -101,7 +103,39 @@ func listSnowflakeLoginHistory(ctx context.Context, d *plugin.QueryData, _ *plug
 		logger.Error("snowflake_login_history.listSnowflakeLoginHistory", "connnection.error", err)
 		return nil, err
 	}
-	rows, err := db.QueryContext(ctx, "select * from SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY;")
+
+	equalQuals := d.KeyColumnQuals
+	quals := d.Quals
+	var conditions []string = []string{}
+	if equalQuals["user_name"] != nil {
+		conditions = append(conditions, fmt.Sprintf("user_name %s '%s'", "=", equalQuals["user_name"].GetStringValue()))
+	}
+
+	if equalQuals["event_id"] != nil {
+		conditions = append(conditions, fmt.Sprintf("event_id %s '%s'", "=", equalQuals["event_id"].GetStringValue()))
+	}
+
+	if equalQuals["first_authentication_factor"] != nil {
+		conditions = append(conditions, fmt.Sprintf("first_authentication_factor %s '%s'", "=", equalQuals["first_authentication_factor"].GetStringValue()))
+	}
+
+	if quals["event_timestamp"] != nil {
+		for _, q := range quals["event_timestamp"].Quals {
+			tsSecs := q.Value.GetTimestampValue().AsTime().Format("2006-01-02 15:04:05.000")
+			conditions = append(conditions, fmt.Sprintf("event_timestamp %s to_timestamp_ltz('%s')", q.Operator, tsSecs))
+		}
+	}
+
+	condition := strings.Join(conditions, " and ")
+	query := "SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY"
+
+	if condition != "" {
+		query = fmt.Sprintf("%s where %s", query, condition)
+	}
+
+	logger.Info("listSnowflakeLoginHistory", "query", query)
+
+	rows, err := db.QueryContext(ctx, query)
 	if err != nil {
 		logger.Error("snowflake_login_history.listSnowflakeLoginHistory", "query.error", err)
 		return nil, err

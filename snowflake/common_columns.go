@@ -15,12 +15,12 @@ func snowflakeColumns(columns []*plugin.Column) []*plugin.Column {
 // column definitions for the common columns
 func commonColumns() []*plugin.Column {
 	return []*plugin.Column{
-		// {
-		// 	Name:        "region",
-		// 	Type:        proto.ColumnType_STRING,
-		// 	Hydrate:      plugin.HydrateFunc(getCommonColumns).WithCache(),
-		// 	Description: "The Snowflake Region in which the account is located.",
-		// },
+		{
+			Name:        "region",
+			Type:        proto.ColumnType_STRING,
+			Hydrate:     plugin.HydrateFunc(getCommonColumns).WithCache(),
+			Description: "The Snowflake Region in which the account is located.",
+		},
 		{
 			Name:        "account",
 			Type:        proto.ColumnType_STRING,
