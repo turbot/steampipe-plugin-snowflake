@@ -22,8 +22,6 @@ type snowflakeConfig struct {
 	OAuthRedirectURL     *string `cty:"oauth_redirect_url"`
 	OAuthRefreshToken    *string `cty:"oauth_refresh_token"`
 	Warehouse            *string `cty:"warehouse"`
-	// Database             *string `cty:"database"`  // Database name
-	// Schema               *string `cty:"schema"`    // Schema
 }
 
 var ConfigSchema = map[string]*schema.Attribute{
@@ -34,12 +32,6 @@ var ConfigSchema = map[string]*schema.Attribute{
 		Type: schema.TypeString,
 	},
 	"password": {
-		Type: schema.TypeString,
-	},
-	"database": {
-		Type: schema.TypeString,
-	},
-	"schema": {
 		Type: schema.TypeString,
 	},
 	"warehouse": {
@@ -81,6 +73,13 @@ var ConfigSchema = map[string]*schema.Attribute{
 	"oauth_redirect_url": {
 		Type: schema.TypeString,
 	},
+	// TODO - Add when generic table support is added
+	// "database": {
+	// 	Type: schema.TypeString,
+	// },
+	// "schema": {
+	// 	Type: schema.TypeString,
+	// },
 }
 
 func ConfigInstance() interface{} {

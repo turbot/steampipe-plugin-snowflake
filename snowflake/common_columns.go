@@ -44,6 +44,10 @@ func getCommonColumns(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrat
 		region = *config.Region
 	}
 
+	if region == "" {
+		region = "us-west-2.aws"
+	}
+
 	commonData := snowflakeCommonColumnData{
 		Account: *config.Account,
 		Region:  region,
