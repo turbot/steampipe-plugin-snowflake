@@ -21,9 +21,9 @@ type snowflakeConfig struct {
 	OAuthEndpoint        *string `cty:"oauth_endpoint"`
 	OAuthRedirectURL     *string `cty:"oauth_redirect_url"`
 	OAuthRefreshToken    *string `cty:"oauth_refresh_token"`
-	Database             *string `cty:"database"`  // Database name
-	Schema               *string `cty:"schema"`    // Schema
-	Warehouse            *string `cty:"warehouse"` // Warehouse
+	Warehouse            *string `cty:"warehouse"`
+	// Database             *string `cty:"database"`  // Database name
+	// Schema               *string `cty:"schema"`    // Schema
 }
 
 var ConfigSchema = map[string]*schema.Attribute{

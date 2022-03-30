@@ -82,12 +82,13 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 	if config.OAuthAccessToken != nil {
 		oauthAccessToken = *config.OAuthAccessToken
 	}
-	if config.Database != nil {
-		database = *config.Database
-	}
-	if config.Schema != nil {
-		schema = *config.Schema
-	}
+	// TODO - Required to query general tables through steampipe
+	// if config.Database != nil {
+	// 	database = *config.Database
+	// }
+	// if config.Schema != nil {
+	// 	schema = *config.Schema
+	// }
 	if config.Warehouse != nil {
 		warehouse = *config.Warehouse
 	}
