@@ -19,9 +19,9 @@ func tableSnowflakeAccountParameter(_ context.Context) *plugin.Table {
 		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "key", Type: proto.ColumnType_STRING, Description: "Name of the account parameter."},
 			{Name: "value", Type: proto.ColumnType_STRING, Description: "Current value of the parameter."},
-			{Name: "level", Type: proto.ColumnType_STRING, Description: "Level of the parameter.Can be one of SYSTEM or ACCOUNT."},
 			{Name: "default", Type: proto.ColumnType_STRING, Description: "Default value of the parameter."},
 			{Name: "description", Type: proto.ColumnType_STRING, Description: "Description for the parameter."},
+			{Name: "level", Type: proto.ColumnType_STRING, Description: "Level of the parameter.Can be one of SYSTEM or ACCOUNT."},
 			{Name: "type", Type: proto.ColumnType_STRING, Description: "Data type of the parameter value."},
 		}),
 	}

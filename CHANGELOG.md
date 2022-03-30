@@ -5,7 +5,6 @@ _What's new?_
 - New tables added
   - [snowflake_account_parameter](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_account_parameter)
   - [snowflake_login_history](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_login_history)
-  - [snowflake_query_history](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_query_history)
   - [snowflake_schemata](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_schemata)
   - [snowflake_session](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_session)
 

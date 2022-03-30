@@ -16,5 +16,37 @@ select
   session_id,
   user_name,
   authentication_method,
-  created_on
+  created_on,
+  client_environment ->> 'APPLICATION' as clint_application
+from
+  snowflake_session;
+```
+
+### List distinct authentication methods used in last year
+
+```sql
+select distinct
+  user_name,
+  authentication_method
+from
+  snowflake_session
+order by
+  user_name;
+```
+
+### List sessions authencticated without Snowflake MFA with passsword in 30 days
+
+```sql
+select distinct
+  user_name,
+  authentication_method,
+  client_environment ->> 'APPLICATION' as clint_application
+from
+  snowflake_session
+where
+  split_part(authentication_method, '+', 2) = ''
+  and authentication_method like 'Password%'
+  and created_on > now() - interval '30 days'
+order by
+  user_name desc;
 ```
