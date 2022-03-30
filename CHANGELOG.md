@@ -12,7 +12,7 @@ _Enhancements_
 
 - Added `account` metadata column to all existing tables.
 - Changed the column type of `ext_authn_duo` column from string to bool in `snowflake_user` table.
-- Added `database`, `schema` and `warehouse` configuration arguments to allow user to query snowflake tables and views.
+- Added `warehouse` configuration arguments to allow users to query SNOWFLAKE.ACCOUNT_USAGE views.
 
 ## v0.0.1 [2022-03-22]
 
