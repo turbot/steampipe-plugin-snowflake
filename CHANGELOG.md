@@ -10,7 +10,7 @@ _What's new?_
 
 _Enhancements_
 
-- Added `account` metadata column to all existing tables.
+- Added `account` and `region` metadata column to all existing tables.
 - Changed the column type of `ext_authn_duo` column from string to bool in `snowflake_user` table.
 - Added `warehouse` configuration arguments to allow users to query SNOWFLAKE.ACCOUNT_USAGE views.
 
