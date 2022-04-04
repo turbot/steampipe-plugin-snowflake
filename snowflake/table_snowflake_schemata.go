@@ -24,7 +24,7 @@ func tableSnowflakeSchemata(_ context.Context) *plugin.Table {
 			{Name: "catalog_id", Type: proto.ColumnType_STRING, Description: "ID of the database that the schema belongs to."},
 			{Name: "catalog_name", Type: proto.ColumnType_STRING, Description: "Database that the schema belongs to."},
 			{Name: "schema_owner", Type: proto.ColumnType_STRING, Description: "Name of the role that owns the schema."},
-			{Name: "retention_time", Type: proto.ColumnType_INT, Description: "Number of days that historical data is retained for Time Travel"},
+			{Name: "retention_time", Type: proto.ColumnType_INT, Description: "Number of days that historical data is retained for Time Travel."},
 			{Name: "is_transient", Type: proto.ColumnType_STRING, Description: "Whether this is a transient schema."},
 			{Name: "is_managed_access", Type: proto.ColumnType_STRING, Description: "Whether the schema is a managed access schema."},
 			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for this schema."},
