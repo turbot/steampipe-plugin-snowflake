@@ -12,7 +12,7 @@ _Enhancements_
 
 - Recompiled plugin with Go 1.18 ([#2](https://github.com/turbot/steampipe-plugin-snowflake/pull/2))
 - Added `warehouse` configuration argument to allow users to query SNOWFLAKE.ACCOUNT_USAGE views ([#2](https://github.com/turbot/steampipe-plugin-snowflake/pull/2))
-- Added `account` and `region` common columns to all existing tables ([#2](https://github.com/turbot/steampipe-plugin-snowflake/pull/2))
+- Added `account` and `region` common columns to all tables ([#2](https://github.com/turbot/steampipe-plugin-snowflake/pull/2))
 - Added `min_cluster_count`, `max_cluster_count`, `started_clusters` and `scaling_policy` columns to `snowflake_warehouse` table ([#2](https://github.com/turbot/steampipe-plugin-snowflake/pull/2))
 
 _Bug fixes_
