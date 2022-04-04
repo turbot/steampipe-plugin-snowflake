@@ -4,7 +4,7 @@ This Account Usage view provides information on the session, including informati
 
 **Notes**:
 
-- This table requires a `Snowflake warehouse` to query. You can set it by `warehouse` config argument in Steampipe connection config.
+- This table requires a `warehouse` to query. You can set it by `warehouse` config argument in Steampipe connection config.
 - Latency for the view may be up to 180 minutes (3 hours).
 
 ## Examples
@@ -17,7 +17,7 @@ select
   user_name,
   authentication_method,
   created_on,
-  client_environment ->> 'APPLICATION' as clint_application
+  client_environment ->> 'APPLICATION' as client_application
 from
   snowflake_session;
 ```
