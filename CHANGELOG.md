@@ -1,4 +1,4 @@
-## v0.0.2 [WIP]
+## v0.0.2 [2022-04-04]
 
 _What's new?_
 
@@ -11,11 +11,12 @@ _What's new?_
 _Enhancements_
 
 - Added `account` and `region` metadata column to all existing tables.
+- Added `min_cluster_count`, `max_cluster_count`, `started_clusters` and `scaling_policy` columns to `snowflake_warehouse` table.
 - Added `warehouse` configuration argument to allow users to query SNOWFLAKE.ACCOUNT_USAGE views.
 
 _Bug fixes_
 
-- Changed the column type of `ext_authn_duo` column from string to bool in `snowflake_user` table.
+- Fixed the column type of `ext_authn_duo` column from string to bool in `snowflake_user` table.
 
 ## v0.0.1 [2022-03-22]
 
