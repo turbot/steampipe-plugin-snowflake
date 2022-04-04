@@ -4,7 +4,7 @@ This Account Usage view can be used to query login attempts by Snowflake users w
 
 **Notes:**
 
-- This table requires a `Snowflake warehouse` to query. You can set it by `warehouse` config argument in Steampipe connection config.
+- This table requires a [Snowflake warehouse](https://docs.snowflake.com/en/user-guide/warehouses.html) to query. You can specify it in the `warehouse` config argument, or if not specified, the user's default warehouse will be used.
 - Latency for the view may be up to 120 minutes (2 hours).
 
 ## Examples
