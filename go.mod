@@ -3,6 +3,7 @@ module github.com/turbot/steampipe-plugin-snowflake
 go 1.17
 
 require (
+	github.com/jmoiron/sqlx v1.3.4
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/snowflakedb/gosnowflake v1.6.7
