@@ -18,7 +18,7 @@ func tableSnowflakeDatabase(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeDatabases,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Name of the database."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Creation time of the database."},
 			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for this database."},
@@ -28,7 +28,7 @@ func tableSnowflakeDatabase(_ context.Context) *plugin.Table {
 			{Name: "origin", Type: proto.ColumnType_STRING, Description: "Name of the origin database."},
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "Name of the role that owns the schema."},
 			{Name: "retention_time", Type: proto.ColumnType_INT, Description: "Number of days that historical data is retained for Time Travel."},
-		},
+		}),
 	}
 }
 

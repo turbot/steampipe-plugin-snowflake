@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	"github.com/snowflakedb/gosnowflake"
-	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -20,7 +20,7 @@ func tableSnowflakeUser(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeUsers,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Name of the snowflake user."},
 			{Name: "login_name", Type: proto.ColumnType_STRING, Description: "Login name of the user."},
 			{Name: "email", Type: proto.ColumnType_STRING, Description: "Email address of the user"},
@@ -39,8 +39,8 @@ func tableSnowflakeUser(_ context.Context) *plugin.Table {
 			{Name: "default_warehouse", Type: proto.ColumnType_STRING, Description: "Default warehouse for this user."},
 			{Name: "disabled", Type: proto.ColumnType_STRING, Description: "Whether the user is disabled."},
 			{Name: "display_name", Type: proto.ColumnType_STRING, Description: "Display name of the user."},
-			{Name: "expires_at_time", Type: proto.ColumnType_TIMESTAMP, Description: "The date and time when the user’s status is set to EXPIRED and the user can no longer log in."},
-			{Name: "ext_authn_duo", Type: proto.ColumnType_STRING, Description: "Whether Duo Security is enabled as second factor authentication."},
+			{Name: "expires_at_time", Type: proto.ColumnType_TIMESTAMP, Description: "The date and time when the user's status is set to EXPIRED and the user can no longer log in."},
+			{Name: "ext_authn_duo", Type: proto.ColumnType_BOOL, Description: "Whether Duo Security is enabled as second factor authentication."},
 			{Name: "ext_authn_uid", Type: proto.ColumnType_STRING, Description: "External authentication ID of the user."},
 			{Name: "first_name", Type: proto.ColumnType_STRING, Description: "First name of the user."},
 			{Name: "last_name", Type: proto.ColumnType_STRING, Description: "Last name of the user."},
@@ -57,7 +57,7 @@ func tableSnowflakeUser(_ context.Context) *plugin.Table {
 			{Name: "rsa_public_key_2_fp", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("RSA_PUBLIC_KEY_2_FP"), Description: "Fingerprint of user's second RSA public key."},
 			{Name: "snowflake_lock", Type: proto.ColumnType_STRING, Description: "Whether the user or account is locked by Snowflake."},
 			{Name: "snowflake_support", Type: proto.ColumnType_STRING, Hydrate: DescribeUser, Transform: transform.FromField("SNOWFLAKE_SUPPORT"), Description: "Snowflake Support is allowed to use the user or account."},
-		},
+		}),
 	}
 }
 

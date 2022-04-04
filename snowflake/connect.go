@@ -32,7 +32,7 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 	}
 
 	config := GetConfig(d.Connection)
-	var account, user, password, oauthAccessToken, privateKeyPath, privateKey, privateKeyPassphrase, region, role, oauthEndpoint, oauthClientSecret, oauthClientID, oauthRefreshToken, oauthRedirectURL string
+	var account, user, password, oauthAccessToken, privateKeyPath, privateKey, privateKeyPassphrase, region, role, oauthEndpoint, oauthClientSecret, oauthClientID, oauthRefreshToken, oauthRedirectURL, database, schema, warehouse string
 	var browserAuth bool
 	if config.Account != nil {
 		account = *config.Account
@@ -82,6 +82,16 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 	if config.OAuthAccessToken != nil {
 		oauthAccessToken = *config.OAuthAccessToken
 	}
+	// TODO - Required to query general tables through steampipe
+	// if config.Database != nil {
+	// 	database = *config.Database
+	// }
+	// if config.Schema != nil {
+	// 	schema = *config.Schema
+	// }
+	if config.Warehouse != nil {
+		warehouse = *config.Warehouse
+	}
 
 	if config.OAuthRefreshToken != nil {
 		accessToken, err := GetOauthAccessToken(oauthEndpoint, oauthClientID, oauthClientSecret, GetOauthData(oauthRefreshToken, oauthRedirectURL))
@@ -102,6 +112,9 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 		oauthAccessToken,
 		region,
 		role,
+		database,
+		schema,
+		warehouse,
 	)
 	if err != nil {
 		plugin.Logger(ctx).Error("DSN", "could not build DSN for snowflake connection", err)
@@ -124,7 +137,7 @@ func DSN(ctx context.Context, account, user,
 	privateKeyPassphrase,
 	oauthAccessToken,
 	region,
-	role string) (string, error) {
+	role, database, schema, warehouse string) (string, error) {
 
 	// us-west-2 is their default region for snowflake instance, if it is mentioned in the connection config
 	// don't add it into connection string
@@ -133,10 +146,13 @@ func DSN(ctx context.Context, account, user,
 	}
 
 	config := gosnowflake.Config{
-		Account: account,
-		User:    user,
-		Region:  region,
-		Role:    role,
+		Account:   account,
+		User:      user,
+		Region:    region,
+		Role:      role,
+		Database:  database,
+		Schema:    schema,
+		Warehouse: warehouse,
 	}
 
 	if privateKeyPath != "" {

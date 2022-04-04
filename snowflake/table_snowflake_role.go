@@ -17,7 +17,7 @@ func tableSnowflakeRole(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeRole,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Name of the role."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the role was created."},
 			{Name: "assigned_to_users", Type: proto.ColumnType_INT, Description: "Number of users the role is assigned."},
@@ -28,7 +28,7 @@ func tableSnowflakeRole(_ context.Context) *plugin.Table {
 			{Name: "is_default", Type: proto.ColumnType_STRING, Description: "\"Y\" if is the default role of authenticated user, otherwise \"F\"."},
 			{Name: "is_inherited", Type: proto.ColumnType_STRING, Description: "\"Y\" if current role is inherited by authenticated user, otherwise \"F\"."},
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "Owner of the role."},
-		},
+		}),
 	}
 }
 

@@ -25,7 +25,7 @@ func tableSnowflakeViewGrant(_ context.Context) *plugin.Table {
 				{Name: "schema_name"},
 			},
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "view_name", Type: proto.ColumnType_STRING, Transform: transform.FromQual("view_name"), Description: "The name of the view."},
 			{Name: "database_name", Type: proto.ColumnType_STRING, Transform: transform.FromQual("database_name"), Description: "The name of the database in which the view exists."},
 			{Name: "schema_name", Type: proto.ColumnType_STRING, Transform: transform.FromQual("schema_name"), Description: "The name of the schema in which the view exists."},
@@ -36,7 +36,7 @@ func tableSnowflakeViewGrant(_ context.Context) *plugin.Table {
 			{Name: "granted_on", Type: proto.ColumnType_STRING, Description: "Date and time when the access was granted."},
 			{Name: "granted_to", Type: proto.ColumnType_STRING, Description: "Type of the object."},
 			{Name: "grantee_name", Type: proto.ColumnType_STRING, Description: "Name of the object role has been granted."},
-		},
+		}),
 	}
 }
 

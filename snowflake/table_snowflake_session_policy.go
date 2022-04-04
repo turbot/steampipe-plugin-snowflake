@@ -23,17 +23,17 @@ func tableSnowflakeSessionPolicy(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeSessionPolicies,
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Identifier for the session policy."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time of the creation of session policy."},
 			{Name: "database_name", Type: proto.ColumnType_STRING, Description: "Name of the database policy belongs."},
 			{Name: "schema_name", Type: proto.ColumnType_STRING, Description: "Name of the schema in database policy belongs."},
 			{Name: "kind", Type: proto.ColumnType_STRING, Description: "Type of the snowflake policy."},
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "Name of the role that owns the policy."},
-			{Name: "session_idle_timeout_mins", Type: proto.ColumnType_INT, Hydrate: DescribeSessionPolicy, Description: "Time period in minutes of inactivity with either the web interface or a programmatic client"},
+			{Name: "session_idle_timeout_mins", Type: proto.ColumnType_INT, Hydrate: DescribeSessionPolicy, Description: "Time period in minutes of inactivity with either the web interface or a programmatic client."},
 			{Name: "session_ui_idle_timeout_mins", Type: proto.ColumnType_INT, Hydrate: DescribeSessionPolicy, Description: "Time period in minutes of inactivity with the web interface."},
-			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for this policy"},
-		},
+			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for this policy."},
+		}),
 	}
 }
 
@@ -87,7 +87,7 @@ func listSnowflakeSessionPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 	}
 	columns, err := rows.Columns()
 	if err != nil {
-		logger.Error("snowflake_session_policy.listSnowflakeSessionPolicies", "get_coloumns.error", err)
+		logger.Error("snowflake_session_policy.listSnowflakeSessionPolicies", "get_columns.error", err)
 		return nil, err
 	}
 

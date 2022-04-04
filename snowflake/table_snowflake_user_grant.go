@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -21,13 +21,13 @@ func tableSnowflakeUserGrant(_ context.Context) *plugin.Table {
 				{Name: "username"},
 			},
 		},
-		Columns: []*plugin.Column{
+		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "username", Type: proto.ColumnType_STRING, Transform: transform.FromQual("username"), Description: "Name of the snowflake user."},
 			{Name: "role", Type: proto.ColumnType_STRING, Description: "Name of the role that has been granted to user."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the role was granted to the user/role."},
 			{Name: "granted_to", Type: proto.ColumnType_STRING, Description: "Type of the object. Only USER for this table."},
 			{Name: "granted_by", Type: proto.ColumnType_STRING, Description: "Name of the object that granted access on the user."},
-		},
+		}),
 	}
 }
 
@@ -76,7 +76,7 @@ func listSnowflakeUserGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 	columns, err := rows.Columns()
 	if err != nil {
-		logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "get_coloumns.error", err)
+		logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "get_columns.error", err)
 		return nil, err
 	}
 
