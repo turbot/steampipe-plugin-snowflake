@@ -146,14 +146,13 @@ func DSN(ctx context.Context, account, user,
 	}
 
 	config := gosnowflake.Config{
-		Account:     account,
-		User:        user,
-		Region:      region,
-		Role:        role,
-		Database:    database,
-		Schema:      schema,
-		Warehouse:   warehouse,
-		Application: "STEAMPIPE",
+		Account:   account,
+		User:      user,
+		Region:    region,
+		Role:      role,
+		Database:  database,
+		Schema:    schema,
+		Warehouse: warehouse,
 	}
 
 	if privateKeyPath != "" {
