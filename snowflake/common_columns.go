@@ -19,6 +19,7 @@ func commonColumns() []*plugin.Column {
 			Name:        "region",
 			Type:        proto.ColumnType_STRING,
 			Hydrate:     plugin.HydrateFunc(getCommonColumns).WithCache(),
+			Transform:   transform.FromCamel(),
 			Description: "The Snowflake region in which the account is located.",
 		},
 		{
