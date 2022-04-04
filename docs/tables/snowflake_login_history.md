@@ -18,7 +18,7 @@ from
   snowflake_login_history;
 ```
 
-### List all authentication methods used in last 30 days
+### List all authentication methods used in the last 30 days
 
 ```sql
 select distinct
