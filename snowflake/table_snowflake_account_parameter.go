@@ -21,7 +21,7 @@ func tableSnowflakeAccountParameter(_ context.Context) *plugin.Table {
 			{Name: "value", Type: proto.ColumnType_STRING, Description: "Current value of the parameter."},
 			{Name: "default", Type: proto.ColumnType_STRING, Description: "Default value of the parameter."},
 			{Name: "description", Type: proto.ColumnType_STRING, Description: "Description for the parameter."},
-			{Name: "level", Type: proto.ColumnType_STRING, Description: "Level of the parameter.Can be one of SYSTEM or ACCOUNT."},
+			{Name: "level", Type: proto.ColumnType_STRING, Description: "Level of the parameter.Can be SYSTEM or ACCOUNT."},
 			{Name: "type", Type: proto.ColumnType_STRING, Description: "Data type of the parameter value."},
 		}),
 	}

@@ -32,7 +32,7 @@ where
   key = 'ALLOW_CLIENT_MFA_CACHING';
 ```
 
-### Get number of days Snowflake retains historical data for performing Time Travel actions (SELECT, CLONE, UNDROP) on the object.
+### Get number of days Snowflake retains historical data for performing Time Travel actions (SELECT, CLONE, UNDROP) on the object
 
 ```sql
 select

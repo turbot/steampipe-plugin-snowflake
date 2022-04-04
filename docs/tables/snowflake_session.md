@@ -2,7 +2,7 @@
 
 This Account Usage view provides information on the session, including information on the authentication method to Snowflake and the Snowflake login event. Snowflake returns one row for each session created over the last year.
 
-**Note**:
+**Notes**:
 
 - This table requires a `Snowflake warehouse` to query. You can set it by `warehouse` config argument in Steampipe connection config.
 - Latency for the view may be up to 180 minutes (3 hours).
@@ -22,7 +22,7 @@ from
   snowflake_session;
 ```
 
-### List distinct authentication methods used in last year
+### List distinct authentication methods used in the last year
 
 ```sql
 select distinct
@@ -34,13 +34,13 @@ order by
   user_name;
 ```
 
-### List sessions authencticated without Snowflake MFA with passsword in 30 days
+### List sessions authenticated without Snowflake MFA with passsword in last 30 days
 
 ```sql
 select distinct
   user_name,
   authentication_method,
-  client_environment ->> 'APPLICATION' as clint_application
+  client_environment ->> 'APPLICATION' as client_application
 from
   snowflake_session
 where

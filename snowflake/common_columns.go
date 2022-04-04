@@ -19,13 +19,13 @@ func commonColumns() []*plugin.Column {
 			Name:        "region",
 			Type:        proto.ColumnType_STRING,
 			Hydrate:     plugin.HydrateFunc(getCommonColumns).WithCache(),
-			Description: "The Snowflake Region in which the account is located.",
+			Description: "The Snowflake region in which the account is located.",
 		},
 		{
 			Name:        "account",
 			Type:        proto.ColumnType_STRING,
 			Hydrate:     plugin.HydrateFunc(getCommonColumns).WithCache(),
-			Description: "The Snowflake Account ID.",
+			Description: "The Snowflake account ID.",
 			Transform:   transform.FromCamel(),
 		},
 	}
@@ -44,6 +44,8 @@ func getCommonColumns(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrat
 		region = *config.Region
 	}
 
+	// us-west-2 is the Snowflake's default region.
+	// If it is not available in connection config, default region to us-west-2
 	if region == "" {
 		region = "us-west-2.aws"
 	}

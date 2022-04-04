@@ -19,9 +19,9 @@ func tableSnowflakeSchemata(_ context.Context) *plugin.Table {
 			Hydrate: listSnowflakeSchemata,
 		},
 		Columns: snowflakeColumns([]*plugin.Column{
-			{Name: "schema_id", Type: proto.ColumnType_STRING, Description: "Id of the schema."},
+			{Name: "schema_id", Type: proto.ColumnType_STRING, Description: "ID of the schema."},
 			{Name: "schema_name", Type: proto.ColumnType_STRING, Description: "Name of the schema."},
-			{Name: "catalog_id", Type: proto.ColumnType_STRING, Description: "Id of Database that the schema belongs to."},
+			{Name: "catalog_id", Type: proto.ColumnType_STRING, Description: "ID of Database that the schema belongs to."},
 			{Name: "catalog_name", Type: proto.ColumnType_STRING, Description: "Database that the schema belongs to."},
 			{Name: "schema_owner", Type: proto.ColumnType_STRING, Description: "Name of the role that owns the schema."},
 			{Name: "retention_time", Type: proto.ColumnType_INT, Description: "Number of days that historical data is retained for Time Travel"},

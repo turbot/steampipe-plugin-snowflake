@@ -11,8 +11,11 @@ _What's new?_
 _Enhancements_
 
 - Added `account` and `region` metadata column to all existing tables.
+- Added `warehouse` configuration argument to allow users to query SNOWFLAKE.ACCOUNT_USAGE views.
+
+_Bug fixes_
+
 - Changed the column type of `ext_authn_duo` column from string to bool in `snowflake_user` table.
-- Added `warehouse` configuration arguments to allow users to query SNOWFLAKE.ACCOUNT_USAGE views.
 
 ## v0.0.1 [2022-03-22]
 

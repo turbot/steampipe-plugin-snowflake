@@ -2,7 +2,7 @@
 
 This Information Schema view displays a row for each schema in the specified (or current) database, including the INFORMATION_SCHEMA schema itself.
 
-**Note**:
+**Notes**:
 
 - This table requires a `Snowflake warehouse` to query. You can set it by `warehouse` config argument in Steampipe connection config.
 - The view only displays objects for which the current role for the session has been granted access privileges.
@@ -65,5 +65,5 @@ select
 from
   snowflake_schemata
 where
-  retention_time > 10;
+  retention_time > 15;
 ```

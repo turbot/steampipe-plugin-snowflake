@@ -161,7 +161,7 @@ connection "snowflake" {
   # If not specified, the default role for the user will be used
   # role = "ACCOUNTADMIN"
 
-  # Specifies the sSnowflake warehouse to use for executing snowflake queries (Required for schemata, session and login_history tables)
+  # Specifies the Snowflake warehouse to use for executing snowflake queries
   # If not specified, the default warehouse for the user will be used
   # warehouse = "COMPUTE_WH"
 
