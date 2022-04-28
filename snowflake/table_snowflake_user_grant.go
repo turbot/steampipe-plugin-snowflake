@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/snowflakedb/gosnowflake"
 	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
@@ -69,6 +70,12 @@ func listSnowflakeUserGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 	// Handle sql compilation error for query by wrapping qual inside double quotes.
 	rows, err := db.QueryContext(ctx, fmt.Sprintf("SHOW GRANTS TO USER \"%s\"", user))
 	if err != nil {
+		if sn_error, ok := err.(*gosnowflake.SnowflakeError); ok {
+			if sn_error.Number == 2003 {
+				logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "query.error", fmt.Sprintf("%#v", sn_error.Error()))
+				return nil, nil
+			}
+		}
 		logger.Error("snowflake_user_grant.listSnowflakeUserGrants", "query.error", err)
 		return nil, err
 	}
