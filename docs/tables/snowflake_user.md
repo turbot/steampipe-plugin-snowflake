@@ -72,19 +72,17 @@ where
   has_rsa_public_key;
 ```
 
-### List inactive users
+### List users that have not logged in for 30 days
 
 ```sql
 select
   name,
   email,
   disabled,
-  default_role,
-  has_password,
-  has_rsa_public_key
+  last_success_login
 from
   snowflake_user
 where
-  (last_success_login > now() - interval '30 days')
-  and last_success_login is not null;
+  last_success_login is null
+  or (last_success_login < now() - interval '30 days');
 ```
