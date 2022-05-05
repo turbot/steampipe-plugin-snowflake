@@ -1,3 +1,9 @@
+## v0.1.1 [2022-05-05]
+
+_Bug fixes_
+
+- Fixed query in inactive user example in `snowflake_user` table doc.
+
 ## v0.1.0 [2022-04-28]
 
 _Enhancements_
