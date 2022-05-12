@@ -31,32 +31,7 @@ where
   (last_success_login > now() - interval '30 days')
   and last_success_login is not null;
 ```
-## Examples
 
-```sql
-select account as "Account",
-    name as "Warehouse",
-    credit_quota as "Credit Quota",
-    used_credits as "Used Credits",
-    remaining_credits as "Remaining Credits",
-    to_char(used_credits/credit_quota*100,'9990D9') as "% Used",
-    case
-        when used_credits/credit_quota*100 > 90 then 'alert'
-        when used_credits/credit_quota*100 > 75 then 'warning'
-        else 'ok'
-    end as type
-from snowflake_resource_monitor
-where used_credits/credit_quota*100 > 75
-order by used_credits/credit_quota desc
-```
-
-```sql
-select account as "Account",
-    name as "Warehouse"
-from snowflake_resource_monitor
-where remaining_credits < 1
-```
-  
 ## Developing
 
 Prerequisites:
