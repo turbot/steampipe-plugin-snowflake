@@ -49,6 +49,13 @@ from snowflake_resource_monitor
 where used_credits/credit_quota*100 > 75
 order by used_credits/credit_quota desc
 ```
+
+```sql
+select account as "Account",
+    name as "Warehouse"
+from snowflake_resource_monitor
+where remaining_credits < 1
+```
   
 ## Developing
 
