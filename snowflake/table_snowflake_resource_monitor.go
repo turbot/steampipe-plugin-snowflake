@@ -78,10 +78,10 @@ func listSnowflakeResourceMonitors(ctx context.Context, d *plugin.QueryData, _ *
 	err = sqlx.StructScan(rows, &resourceMonitors)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			logger.Error("snowflake_warehouse.listSnowflakeResourceMonitors", "no monitors found")
+			logger.Error("snowflake_resource_monitor.listSnowflakeResourceMonitors", "no monitors found")
 			return nil, nil
 		}
-		logger.Error("snowflake_warehouse.listSnowflakeResourceMonitors", "struct_scan.error", err)
+		logger.Error("snowflake_resource_monitor.listSnowflakeResourceMonitors", "struct_scan.error", err)
 		return nil, err
 	}
 
@@ -90,4 +90,3 @@ func listSnowflakeResourceMonitors(ctx context.Context, d *plugin.QueryData, _ *
 	}
 	return nil, nil
 }
-
