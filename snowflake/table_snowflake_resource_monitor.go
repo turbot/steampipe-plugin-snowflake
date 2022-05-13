@@ -85,8 +85,8 @@ func listSnowflakeResourceMonitors(ctx context.Context, d *plugin.QueryData, _ *
 		return nil, err
 	}
 
-	for _, warehouse := range resourceMonitors {
-		d.StreamListItem(ctx, warehouse)
+	for _, resourceMonitor := range resourceMonitors {
+		d.StreamListItem(ctx, resourceMonitor)
 	}
 	return nil, nil
 }
