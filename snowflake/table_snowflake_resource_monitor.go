@@ -16,7 +16,7 @@ import (
 func tableSnowflakeResourceMonitor(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_resource_monitor",
-		Description: "Lists all the resource monitors in your account for which you have access privileges.",
+		Description: "Lists all the resource monitors in your account(s) for which you have access privileges.",
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeResourceMonitors,
 		},
