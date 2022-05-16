@@ -31,6 +31,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"snowflake_database_grant":    tableSnowflakeDatabaseGrant(ctx),
 			"snowflake_login_history":     tableSnowflakeLoginHistory(ctx),
 			"snowflake_network_policy":    tableSnowflakeNetworkPolicy(ctx),
+			"snowflake_resource_monitor":  tableSnowflakeWarehouse(ctx),
 			"snowflake_role":              tableSnowflakeRole(ctx),
 			"snowflake_role_grant":        tableSnowflakeRoleGrant(ctx),
 			"snowflake_schemata":          tableSnowflakeSchemata(ctx),
@@ -41,7 +42,6 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"snowflake_view":              tableSnowflakeView(ctx),
 			"snowflake_view_grant":        tableSnowflakeViewGrant(ctx),
 			"snowflake_warehouse":         tableSnowflakeWarehouse(ctx),
-			"snowflake_resource_monitor":  tableSnowflakeWarehouse(ctx),
 		},
 	}
 

@@ -19,12 +19,12 @@ from
 ### List warehouses and % credit left
 
 ```sql
-select account as "Account",
-    name as "Warehouse",
-    credit_quota as "Credit Quota",
-    used_credits as "Used Credits",
-    remaining_credits as "Remaining Credits",
-    to_char(used_credits/credit_quota*100,'9990D9') as "% Used",
+select account,
+    name as warehouse,
+    credit_quota,
+    used_credits,
+    remaining_credits,
+    round(used_credits/credit_quota*100, 1) as "% Used",
     case
         when used_credits/credit_quota*100 > 90 then 'alert'
         when used_credits/credit_quota*100 > 75 then 'warning'

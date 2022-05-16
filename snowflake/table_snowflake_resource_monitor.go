@@ -11,6 +11,8 @@ import (
 
 //// TABLE DEFINITION
 
+// https://docs.snowflake.com/en/user-guide/resource-monitors.html
+// https://docs.snowflake.com/en/sql-reference/sql/show-resource-monitors.html
 func tableSnowflakeResourceMonitor(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_resource_monitor",
@@ -20,16 +22,16 @@ func tableSnowflakeResourceMonitor(_ context.Context) *plugin.Table {
 		},
 		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Name for warehouse."},
-			{Name: "credit_quota", Type: proto.ColumnType_DOUBLE, Description: "Monthly credit quota for the resource monitor."},
+			{Name: "credit_quota", Type: proto.ColumnType_DOUBLE, Description: "Specifies the number of Snowflake credits allocated to the monitor for the specified frequency interval."},
 			{Name: "used_credits", Type: proto.ColumnType_DOUBLE, Description: "Number of credits used in the current monthly billing cycle by all the warehouses associated with the resource monitor."},
 			{Name: "remaining_credits", Type: proto.ColumnType_DOUBLE, Description: "Number of credits still available to use in the current monthly billing cycle."},
-			{Name: "level", Type: proto.ColumnType_STRING, Description: "Level"},
-			{Name: "frequency", Type: proto.ColumnType_STRING, Description: "Daily, Weekly, etc"},
+			{Name: "level", Type: proto.ColumnType_STRING, Description: "Specifies whether the resource monitor is used to monitor the credit usage for your entire Account (i.e. all warehouses in the account) or a specific set of individual warehouses."},
+			{Name: "frequency", Type: proto.ColumnType_STRING, Description: "The interval at which the used credits reset relative to the specified start date (Daily,Weekly,Monthly,Yearly,Never)."},
 			{Name: "start_time", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the monitor was started."},
 			{Name: "end_time", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the monitor was stopped."},
 			{Name: "notify_at", Type: proto.ColumnType_STRING, Description: "Levels to which to alert."},
-			{Name: "suspend_at", Type: proto.ColumnType_STRING, Description: "Levels to which to suspend warehouse"},
-			{Name: "suspend_immediately_at", Type: proto.ColumnType_STRING, Description: "Levels to which to suspend warehouse"},
+			{Name: "suspend_at", Type: proto.ColumnType_STRING, Description: "Levels to which to suspend warehouse."},
+			{Name: "suspend_immediately_at", Type: proto.ColumnType_STRING, Description: "Levels to which to suspend warehouse."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the monitor was created."},
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "Role that owns the warehouse."},
 			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for the warehouse."},
