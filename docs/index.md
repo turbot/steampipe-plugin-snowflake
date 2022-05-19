@@ -178,7 +178,9 @@ connection "snowflake" {
 
   # OR use the private key directly:
 
-  # private_key            = "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFHzBJ....au/BUg==\n-----END ENCRYPTED PRIVATE KEY-----"
+  # private_key            = "-----BEGIN ENCRYPTED PRIVATE KEY-----
+MIIFHzBJ....au/BUg==
+-----END ENCRYPTED PRIVATE KEY-----"
   # private_key_passphrase = "abcde"
 
   # 3. OAuth access token
