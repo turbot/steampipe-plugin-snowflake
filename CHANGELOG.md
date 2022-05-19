@@ -1,3 +1,10 @@
+## v0.2.0 [2022-05-19]
+
+_What's new?_
+
+- New tables added
+  - [snowflake_resource_monitor](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_resource_monitor) ([#8](https://github.com/turbot/steampipe-plugin-snowflake/pull/8))
+
 ## v0.1.1 [2022-05-05]
 
 _Bug fixes_
