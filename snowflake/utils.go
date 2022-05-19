@@ -3,9 +3,11 @@ package snowflake
 import (
 	"context"
 	"database/sql"
+	"strings"
 
 	_ "github.com/snowflakedb/gosnowflake"
 
+	"github.com/turbot/go-kit/types"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
@@ -55,4 +57,9 @@ func valueFromNullable(_ context.Context, d *transform.TransformData) (interface
 		return item.Time, nil
 	}
 	return nil, nil
+}
+
+func splitString(_ context.Context, d *transform.TransformData) (interface{}, error) {
+	s := strings.Split(types.SafeString(d.Value), ",")
+	return s, nil
 }

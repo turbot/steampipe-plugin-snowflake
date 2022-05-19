@@ -7,6 +7,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -29,9 +30,9 @@ func tableSnowflakeResourceMonitor(_ context.Context) *plugin.Table {
 			{Name: "frequency", Type: proto.ColumnType_STRING, Description: "The interval at which the used credits reset relative to the specified start date (Daily,Weekly,Monthly,Yearly,Never)."},
 			{Name: "start_time", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the monitor was started."},
 			{Name: "end_time", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the monitor was stopped."},
-			{Name: "notify_at", Type: proto.ColumnType_STRING, Description: "Levels to which to alert."},
-			{Name: "suspend_at", Type: proto.ColumnType_STRING, Description: "Levels to which to suspend warehouse."},
-			{Name: "suspend_immediately_at", Type: proto.ColumnType_STRING, Description: "Levels to which to suspend warehouse."},
+			{Name: "notify_at", Type: proto.ColumnType_JSON, Description: "Levels to which to alert.", Transform: transform.FromField("NotifyAt.String").Transform(splitString)},
+			{Name: "suspend_at", Type: proto.ColumnType_JSON, Description: "Levels to which to suspend warehouse.", Transform: transform.FromField("SuspendAt.String").Transform(splitString)},
+			{Name: "suspend_immediately_at", Type: proto.ColumnType_JSON, Description: "Levels to which to suspend warehouse.", Transform: transform.FromField("SuspendImmediatelyAt.String").Transform(splitString)},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time when the monitor was created."},
 			{Name: "owner", Type: proto.ColumnType_STRING, Description: "Role that owns the warehouse."},
 			{Name: "comment", Type: proto.ColumnType_STRING, Description: "Comment for the warehouse."},
