@@ -24,7 +24,7 @@ select account,
     credit_quota,
     used_credits,
     remaining_credits,
-    round(used_credits/credit_quota*100, 1) as percent_used,
+    round((used_credits/credit_quota*100)::numeric, 1) as percent_used,
     case
       when used_credits/credit_quota*100 > 90 then 'alert'
       when used_credits/credit_quota*100 > 75 then 'warning'
