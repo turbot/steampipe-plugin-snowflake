@@ -1,6 +1,6 @@
-# Table: snowflake_warehouse
+# Table: snowflake_resource_monitor
 
-A warehouse is a cluster of compute resources in Snowflake. Warehouses provide the required resources, such as CPU, memory, and temporary storage, to perform queries.
+A resource monitor can be used to monitor credit usage by user-managed virtual warehouses and virtual warehouses used by cloud services.
 
 ## Examples
 
@@ -8,7 +8,7 @@ A warehouse is a cluster of compute resources in Snowflake. Warehouses provide t
 
 ```sql
 select
-  name,
+  name as warehouse,
   credit_quota,
   used_credits,
   remaining_credits
@@ -24,22 +24,28 @@ select account,
     credit_quota,
     used_credits,
     remaining_credits,
-    round(used_credits/credit_quota*100, 1) as "% Used",
+    round(used_credits/credit_quota*100, 1) as percent_used,
     case
-        when used_credits/credit_quota*100 > 90 then 'alert'
-        when used_credits/credit_quota*100 > 75 then 'warning'
-        else 'ok'
+      when used_credits/credit_quota*100 > 90 then 'alert'
+      when used_credits/credit_quota*100 > 75 then 'warning'
+      else 'ok'
     end as type
-from snowflake_resource_monitor
-where used_credits/credit_quota*100 > 75
-order by used_credits/credit_quota desc
+from
+  snowflake_resource_monitor
+where
+  used_credits/credit_quota*100 > 75
+order by
+  used_credits/credit_quota desc;
 ```
 
 ### List warehouses which have used all their credits
 
 ```sql
-select account as "Account",
-    name as "Warehouse"
-from snowflake_resource_monitor
-where remaining_credits < 1
+select
+  account,
+  name as warehouse
+from
+  snowflake_resource_monitor
+where
+  remaining_credits < 1;
 ```
