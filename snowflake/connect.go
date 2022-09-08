@@ -8,9 +8,9 @@ import (
 	"encoding/pem"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 
@@ -193,7 +193,7 @@ func ReadPrivateKeyFile(privateKeyPath string) ([]byte, error) {
 		return nil, fmt.Errorf("Invalid Path to private key: %w", err)
 	}
 
-	privateKeyBytes, err := ioutil.ReadFile(expandedPrivateKeyPath)
+	privateKeyBytes, err := os.ReadFile(expandedPrivateKeyPath)
 	if err != nil {
 		return nil, fmt.Errorf("Could not read private key: %w", err)
 	}
@@ -282,7 +282,7 @@ func GetOauthAccessToken(
 		return "", fmt.Errorf("Response status code: %s: %s", strconv.Itoa(response.StatusCode), http.StatusText(response.StatusCode))
 	}
 	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return "", fmt.Errorf("Response body was not able to be parsed: %w", err)
 	}
