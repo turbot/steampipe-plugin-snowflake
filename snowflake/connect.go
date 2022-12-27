@@ -55,9 +55,6 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 	if config.PrivateKeyPassphrase != nil {
 		privateKeyPassphrase = *config.PrivateKeyPassphrase
 	}
-	if config.PrivateKeyPassphrase != nil {
-		privateKeyPassphrase = *config.PrivateKeyPassphrase
-	}
 	if config.Region != nil {
 		region = *config.Region
 	}
