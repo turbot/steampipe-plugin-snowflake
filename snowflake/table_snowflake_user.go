@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	"github.com/snowflakedb/gosnowflake"
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -189,7 +189,7 @@ func DescribeUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 	if h.Item != nil {
 		userName = h.Item.(User).Name.String
 	} else {
-		userName = d.KeyColumnQualString("name")
+		userName = d.EqualsQualString("name")
 	}
 
 	if userName == "" {

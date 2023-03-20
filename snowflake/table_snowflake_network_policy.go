@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 )
 
 //// TABLE DEFINITION
@@ -99,7 +99,7 @@ func DescribeNetworkPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.H
 	if h.Item != nil {
 		policyName = h.Item.(NetworkPolicy).Name.String
 	} else {
-		policyName = d.KeyColumnQualString("name")
+		policyName = d.EqualsQualString("name")
 	}
 
 	if policyName == "" {
