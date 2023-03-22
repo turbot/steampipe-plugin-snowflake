@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -46,15 +46,15 @@ type ViewGrant AccountGrant
 
 func listSnowflakeViewGrants(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	logger := plugin.Logger(ctx)
-	view := d.KeyColumnQualString("view_name")
+	view := d.EqualsQualString("view_name")
 	if view == "" {
 		return nil, nil
 	}
-	database := d.KeyColumnQualString("database_name")
+	database := d.EqualsQualString("database_name")
 	if database == "" {
 		return nil, nil
 	}
-	schema := d.KeyColumnQualString("schema_name")
+	schema := d.EqualsQualString("schema_name")
 	if schema == "" {
 		return nil, nil
 	}
