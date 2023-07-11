@@ -3,6 +3,8 @@ package snowflake
 import (
 	"context"
 	"database/sql"
+	"fmt"
+	"strings"
 
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
@@ -17,14 +19,15 @@ func tableSnowflakeWarehouseMeteringHistory(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listSnowflakeWarehouseMeteringHistory,
 			KeyColumns: plugin.KeyColumnSlice{
-				{Name: "start_time", Require: plugin.Optional, Operators: []string{">="}},
-				{Name: "end_time", Require: plugin.Optional, Operators: []string{"<="}},
+				{Name: "warehouse_id", Require: plugin.Optional},
+				{Name: "warehouse_name", Require: plugin.Optional},
 			},
 		},
 		Columns: snowflakeColumns([]*plugin.Column{
 			{Name: "start_time", Type: proto.ColumnType_TIMESTAMP, Description: "The beginning of the hour in which this warehouse usage took place."},
 			{Name: "end_time", Type: proto.ColumnType_TIMESTAMP, Description: "The end of the hour in which this warehouse usage took place."},
 			{Name: "warehouse_name", Type: proto.ColumnType_STRING, Description: "Name of the warehouse."},
+			{Name: "warehouse_id", Type: proto.ColumnType_STRING, Description: "Internal/system-generated identifier for the warehouse."},
 			{Name: "credits_used", Type: proto.ColumnType_DOUBLE, Description: "Number of credits billed for this warehouse in this hour."},
 			{Name: "credits_used_compute", Type: proto.ColumnType_DOUBLE, Description: "Number of credits used for the warehouse in the hour."},
 			{Name: "credits_used_cloud_services", Type: proto.ColumnType_DOUBLE, Description: "Number of credits used for cloud services in the hour."},
@@ -36,6 +39,7 @@ type WarehouseMeteringHistory struct {
 	StartTime                sql.NullTime   `json:"START_TIME"`
 	EndTime                  sql.NullTime   `json:"END_TIME"`
 	WarehouseName            sql.NullString `json:"WAREHOUSE_NAME"`
+	WarehouseId              sql.NullString `json:"WAREHOUSE_Id"`
 	CreditsUsed              sql.NullString `json:"CREDITS_USED"`
 	CreditsUsedCompute       sql.NullString `json:"CREDITS_USED_COMPUTE"`
 	CreditsUsedCloudServices sql.NullString `json:"CREDITS_USED_CLOUD_SERVICES"`
@@ -51,17 +55,19 @@ func listSnowflakeWarehouseMeteringHistory(ctx context.Context, d *plugin.QueryD
 		return nil, err
 	}
 
-	// var st, et string
+	conditions := []string{}
+	if d.EqualsQualString("warehouse_name") != "" {
+		conditions = append(conditions, fmt.Sprintf("warehouse_name %s '%s'", "=", d.EqualsQualString("warehouse_name")))
+	}
+	if d.EqualsQualString("warehouse_id") != "" {
+		conditions = append(conditions, fmt.Sprintf("warehouse_id %s '%s'", "=", d.EqualsQualString("warehouse_id")))
+	}
 
-	// if d.EqualsQuals["start_time"] != nil {
-	// 	st = d.EqualsQuals["start_time"].GetTimestampValue().AsTime().Format("2006-01-02 15:04:05")
-	// }
-	// if d.EqualsQuals["end_time"] != nil {
-	// 	et = d.EqualsQuals["end_time"].GetTimestampValue().AsTime().Format("2006-01-02 15:04:05.000")
-	// }
-
-	// query := fmt.Sprintf("SELECT * FROM TABLE ( SNOWFLAKE.INFORMATION_SCHEMA.WAREHOUSE_METERING_HISTORY('%s','%s'));", st, et)
+	condition := strings.Join(conditions, " and ")
 	query := "SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.WAREHOUSE_METERING_HISTORY"
+	if condition != "" {
+		query = fmt.Sprintf("%s where %s", query, condition)
+	}
 
 	rows, err := db.QueryContext(ctx, query)
 	if err != nil {
@@ -123,6 +129,8 @@ func WarehouseMeteringHistoryCol(colname string, item *WarehouseMeteringHistory)
 		return &item.EndTime
 	case "WAREHOUSE_NAME":
 		return &item.WarehouseName
+	case "WAREHOUSE_ID":
+		return &item.WarehouseId
 	case "CREDITS_USED":
 		return &item.CreditsUsed
 	case "CREDITS_USED_COMPUTE":
