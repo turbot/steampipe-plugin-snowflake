@@ -111,7 +111,7 @@ select
   warehouse_name,
   (credits_used_cloud_services / credits_used) * 100 as cloud_services_percentage
 from
-  your_table_name
+  snowflake_warehouse_metering_history
 where
   credits_used > 0;
 ```
