@@ -1,6 +1,6 @@
 # Table: snowflake_warehouse_metering_history
 
-The `warehouse_metering_history` table in the `ACCOUNT_USAGE` schema in Snowflake is a system-generated table that stores historical information about the usage and consumption of virtual warehouses in your Snowflake account. It provides detailed metrics related to the performance and resource utilization of the virtual warehouses over time.
+The `snowflake_warehouse_metering_history` table in the `ACCOUNT_USAGE` schema in Snowflake is a system-generated table that stores historical information about the usage and consumption of virtual warehouses in your Snowflake account. It provides detailed metrics related to the performance and resource utilization of the virtual warehouses over time.
 
 ## Examples
 
