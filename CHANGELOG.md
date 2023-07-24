@@ -1,3 +1,10 @@
+## v0.6.0 [2023-07-24]
+
+_What's new?_
+
+- New tables added
+  - [snowflake_warehouse_metering_history](https://hub.steampipe.io/plugins/turbot/snowflake/tables/snowflake_warehouse_metering_history) ([#21](https://github.com/turbot/steampipe-plugin-snowflake/pull/21))
+
 ## v0.5.0 [2023-05-11]
 
 _Dependencies_
