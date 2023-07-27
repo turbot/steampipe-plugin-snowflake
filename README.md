@@ -6,7 +6,7 @@ Use SQL to query roles, databases, and more from Snowflake.
 
 - **[Get started →](https://hub.steampipe.io/plugins/turbot/snowflake)**
 - Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/snowflake/tables)
-- Community: [Slack Channel](https://steampipe.io/community/join)
+- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
 - Get involved: [Issues](https://github.com/turbot/steampipe-plugin-snowflake/issues)
 
 ## Quick start
