@@ -1,43 +1,12 @@
-# Table: snowflake_user_grant
+---
+title: "Steampipe Table: snowflake_user_grant - Query Snowflake User Grants using SQL"
+description: "Allows users to query User Grants in Snowflake, providing insights into user access and rights within the Snowflake data warehouse."
+---
 
-Roles are granted to users, providing them with specific permissions.
+# Table: snowflake_user_grant - Query Snowflake User Grants using SQL
 
-**Notes**
+A User Grant in Snowflake is a permission set that is assigned to a user, allowing them to access and manipulate data within the Snowflake data warehouse. These grants define the level of access a user has to database objects and are crucial for maintaining data security and integrity. User Grants in Snowflake include permissions to perform various operations such as SELECT, INSERT, UPDATE, DELETE, and more on Snowflake objects.
 
-- The `PUBLIC` role, which is automatically available to every user, is not listed in this table
-- This table requires an '=' qualifier for the `username` column
+## Table Usage Guide
 
-### List all grants for a specific user
-
-```sql
-select
-  username,
-  role,
-  granted_by,
-  created_on
-from
-  snowflake_user_grant
-where
-  username = 'STEAMPIPE';
-```
-
-### List all account-level privileges for a specific user
-
-```sql
-select
-  privilege,
-  role,
-  username,
-  sug.created_on,
-  sug.granted_by
-from
-  snowflake.snowflake_account_grant sag
-  inner join
-    snowflake.snowflake_user_grant sug
-    on sug.role = sag.grantee_name
-where
-  sug.username = 'STEAMPIPE'
-  and sag.granted_to = 'ROLE'
-order by
-  sag.grantee_name;
-```
+The `snowflake_user_grant` table provides insights into User Grants within Snowflake. As a Database Administrator or Security Analyst, you can explore user-specific grant details through this table, including what operations a user can perform, on which database objects, and the scope of these permissions. Use it to monitor and manage user permissions, ensuring appropriate access levels and maintaining data security within your Snowflake data warehouse.
