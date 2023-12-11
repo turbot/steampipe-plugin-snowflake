@@ -8,6 +8,7 @@ name: "snowflake"
 description: "Steampipe plugin for querying roles, databases, and more from Snowflake."
 og_description: "Query Snowflake with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/snowflake-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Snowflake + Steampipe
