@@ -8,13 +8,14 @@ name: "snowflake"
 description: "Steampipe plugin for querying roles, databases, and more from Snowflake."
 og_description: "Query Snowflake with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/snowflake-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Snowflake + Steampipe
 
 [Snowflake](https://app.snowflake.com/) enables data storage, processing, and analytic solutions that are faster, easier to use, and far more flexible than traditional offerings.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 For example, to list inactive users:
 
@@ -195,7 +196,4 @@ connection "snowflake" {
 }
 ```
 
-## Get involved
 
-- Open source: https://github.com/turbot/steampipe-plugin-snowflake
-- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
