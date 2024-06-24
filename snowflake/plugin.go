@@ -23,6 +23,12 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
 		},
+		ConnectionKeyColumns: []plugin.ConnectionKeyColumn{
+			{
+				Name:    "account",
+				Hydrate: getAccountForConnection,
+			},
+		},
 		TableMap: map[string]*plugin.Table{
 			"snowflake_account_grant":              tableSnowflakeAccountGrant(ctx),
 			"snowflake_account_parameter":          tableSnowflakeAccountParameter(ctx),
