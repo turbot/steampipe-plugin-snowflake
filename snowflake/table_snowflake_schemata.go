@@ -52,6 +52,10 @@ type Schemata struct {
 	Created                    sql.NullTime   `json:"CREATED"`
 	LastAltered                sql.NullTime   `json:"LAST_ALTERED"`
 	Deleted                    sql.NullTime   `json:"DELETED"`
+	OwnerRoleType              sql.NullString `json:"OWNER_ROLE_TYPE"`
+	SchemaType                 sql.NullString `json:"SCHEMA_TYPE"`
+	VersionName                sql.NullString `json:"VERSION_NAME"`
+	VersionedSchemaId          sql.NullString `json:"VERSIONED_SCHEMA_ID"`
 }
 
 // SchemataCol returns a reference for a column of a Schemata
@@ -89,6 +93,14 @@ func SchemataCol(colname string, item *Schemata) interface{} {
 		return &item.LastAltered
 	case "DELETED":
 		return &item.Deleted
+	case "OWNER_ROLE_TYPE":
+		return &item.OwnerRoleType
+	case "SCHEMA_TYPE":
+		return &item.SchemaType
+	case "VERSION_NAME":
+		return &item.VersionName
+	case "VERSIONED_SCHEMA_ID":
+		return &item.VersionedSchemaId
 	default:
 		panic("unknown column " + colname)
 	}

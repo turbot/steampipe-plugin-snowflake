@@ -42,6 +42,9 @@ type Database struct {
 	Comment       sql.NullString `json:"comment"`
 	Options       sql.NullString `json:"options"`
 	RetentionTime sql.NullString `json:"retention_time"`
+	Kind          sql.NullString `json:"kind"`
+	Budget        sql.NullString `json:"budget"`
+	OwnerRoleType sql.NullString `json:"owner_role_type"`
 }
 
 //// LIST FUNCTION
@@ -70,14 +73,17 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 		var Comment sql.NullString
 		var Options sql.NullString
 		var RetentionTime sql.NullString
+		var Kind sql.NullString
+		var Budget sql.NullString
+		var OwnerRoleType sql.NullString
 
-		err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &Origin, &Owner, &Comment, &Options, &RetentionTime)
+		err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &Origin, &Owner, &Comment, &Options, &RetentionTime, &Kind, &Budget, &OwnerRoleType)
 		if err != nil {
 			logger.Error("snowflake_database.listSnowflakeDatabases", "query.error", err)
 			return nil, err
 		}
 
-		d.StreamListItem(ctx, Database{CreatedOn, Name, IsDefault, IsCurrent, Origin, Owner, Comment, Options, RetentionTime})
+		d.StreamListItem(ctx, Database{CreatedOn, Name, IsDefault, IsCurrent, Origin, Owner, Comment, Options, RetentionTime, Kind, Budget, Owner})
 	}
 
 	for rows.NextResultSet() {
@@ -91,14 +97,17 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 			var Comment sql.NullString
 			var Options sql.NullString
 			var RetentionTime sql.NullString
+			var Kind sql.NullString
+			var Budget sql.NullString
+			var OwnerRoleType sql.NullString
 
-			err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &Origin, &Owner, &Comment, &Options, &RetentionTime)
+			err = rows.Scan(&CreatedOn, &Name, &IsDefault, &IsCurrent, &Origin, &Owner, &Comment, &Options, &RetentionTime, &Kind, &Budget, &OwnerRoleType)
 			if err != nil {
 				logger.Error("snowflake_database.listSnowflakeDatabases", "query.error", err)
 				return nil, err
 			}
 
-			d.StreamListItem(ctx, Database{CreatedOn, Name, IsDefault, IsCurrent, Origin, Owner, Comment, Options, RetentionTime})
+			d.StreamListItem(ctx, Database{CreatedOn, Name, IsDefault, IsCurrent, Origin, Owner, Comment, Options, RetentionTime, Kind, Budget, Owner})
 		}
 	}
 	return nil, nil

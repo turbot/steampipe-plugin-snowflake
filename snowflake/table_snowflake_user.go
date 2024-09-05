@@ -88,6 +88,8 @@ type User struct {
 	LockedUntilTime       sql.NullTime   `json:"locked_until_time"`
 	HasPassword           sql.NullString `json:"has_password"`
 	HasRsaPublicKey       sql.NullString `json:"has_rsa_public_key"`
+	Type                  sql.NullString `json:"type"`
+	HasMFA                sql.NullBool  `json:"has_mfa"`
 }
 
 //// LIST FUNCTION
@@ -133,14 +135,16 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 		var LockedUntilTime sql.NullTime
 		var HasPassword sql.NullString
 		var HasRSAPublicKey sql.NullString
+		var Type sql.NullString
+		var HasMFA                sql.NullBool
 
-		err = rows.Scan(&Name, &CreatedOn, &LoginName, &DisplayName, &FirstName, &LastName, &Email, &MinsToUnlock, &DaysToExpiry, &Comment, &Disabled, &MustChangePassword, &SnowflakeLock, &DefaultWarehouse, &DefaultNamespace, &DefaultRole, &DefaultSecondaryRoles, &ExtAuthnDuo, &ExtAuthnUid, &MinsToBypassMFA, &Owner, &LastSuccessLogin, &ExpiresAtTime, &LockedUntilTime, &HasPassword, &HasRSAPublicKey)
+		err = rows.Scan(&Name, &CreatedOn, &LoginName, &DisplayName, &FirstName, &LastName, &Email, &MinsToUnlock, &DaysToExpiry, &Comment, &Disabled, &MustChangePassword, &SnowflakeLock, &DefaultWarehouse, &DefaultNamespace, &DefaultRole, &DefaultSecondaryRoles, &ExtAuthnDuo, &ExtAuthnUid, &MinsToBypassMFA, &Owner, &LastSuccessLogin, &ExpiresAtTime, &LockedUntilTime, &HasPassword, &HasRSAPublicKey, &Type, &HasMFA)
 		if err != nil {
 			logger.Error("snowflake_user.listSnowflakeUsers", "query_scan.error", err)
 			return nil, err
 		}
 
-		d.StreamListItem(ctx, User{Name, CreatedOn, LoginName, DisplayName, FirstName, LastName, Email, MinsToUnlock, DaysToExpiry, Comment, Disabled, MustChangePassword, SnowflakeLock, DefaultWarehouse, DefaultNamespace, DefaultRole, DefaultSecondaryRoles, ExtAuthnDuo, ExtAuthnUid, MinsToBypassMFA, Owner, LastSuccessLogin, ExpiresAtTime, LockedUntilTime, HasPassword, HasRSAPublicKey})
+		d.StreamListItem(ctx, User{Name, CreatedOn, LoginName, DisplayName, FirstName, LastName, Email, MinsToUnlock, DaysToExpiry, Comment, Disabled, MustChangePassword, SnowflakeLock, DefaultWarehouse, DefaultNamespace, DefaultRole, DefaultSecondaryRoles, ExtAuthnDuo, ExtAuthnUid, MinsToBypassMFA, Owner, LastSuccessLogin, ExpiresAtTime, LockedUntilTime, HasPassword, HasRSAPublicKey, Type, HasMFA})
 	}
 
 	for rows.NextResultSet() {
@@ -171,14 +175,16 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 			var LockedUntilTime sql.NullTime
 			var HasPassword sql.NullString
 			var HasRSAPublicKey sql.NullString
+			var Type sql.NullString
+			var HasMFA sql.NullBool
 
-			err = rows.Scan(&Name, &CreatedOn, &LoginName, &DisplayName, &FirstName, &LastName, &Email, &MinsToUnlock, &DaysToExpiry, &Comment, &Disabled, &MustChangePassword, &SnowflakeLock, &DefaultWarehouse, &DefaultNamespace, &DefaultRole, &DefaultSecondaryRoles, &ExtAuthnDuo, &ExtAuthnUid, &MinsToBypassMFA, &Owner, &LastSuccessLogin, &ExpiresAtTime, &LockedUntilTime, &HasPassword, &HasRSAPublicKey)
+			err = rows.Scan(&Name, &CreatedOn, &LoginName, &DisplayName, &FirstName, &LastName, &Email, &MinsToUnlock, &DaysToExpiry, &Comment, &Disabled, &MustChangePassword, &SnowflakeLock, &DefaultWarehouse, &DefaultNamespace, &DefaultRole, &DefaultSecondaryRoles, &ExtAuthnDuo, &ExtAuthnUid, &MinsToBypassMFA, &Owner, &LastSuccessLogin, &ExpiresAtTime, &LockedUntilTime, &HasPassword, &HasRSAPublicKey, &Type, &HasMFA)
 			if err != nil {
 				logger.Error("snowflake_user.listSnowflakeUsers", "query_scan.error", err)
 				return nil, err
 			}
 
-			d.StreamListItem(ctx, User{Name, CreatedOn, LoginName, DisplayName, FirstName, LastName, Email, MinsToUnlock, DaysToExpiry, Comment, Disabled, MustChangePassword, SnowflakeLock, DefaultWarehouse, DefaultNamespace, DefaultRole, DefaultSecondaryRoles, ExtAuthnDuo, ExtAuthnUid, MinsToBypassMFA, Owner, LastSuccessLogin, ExpiresAtTime, LockedUntilTime, HasPassword, HasRSAPublicKey})
+			d.StreamListItem(ctx, User{Name, CreatedOn, LoginName, DisplayName, FirstName, LastName, Email, MinsToUnlock, DaysToExpiry, Comment, Disabled, MustChangePassword, SnowflakeLock, DefaultWarehouse, DefaultNamespace, DefaultRole, DefaultSecondaryRoles, ExtAuthnDuo, ExtAuthnUid, MinsToBypassMFA, Owner, LastSuccessLogin, ExpiresAtTime, LockedUntilTime, HasPassword, HasRSAPublicKey, Type, HasMFA})
 		}
 	}
 	return nil, nil

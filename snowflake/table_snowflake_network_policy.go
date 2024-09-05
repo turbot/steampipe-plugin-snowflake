@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -34,11 +34,13 @@ func tableSnowflakeNetworkPolicy(_ context.Context) *plugin.Table {
 }
 
 type NetworkPolicy struct {
-	Name                   sql.NullString `json:"name"`
-	CreatedOn              sql.NullTime   `json:"created_on"`
-	Comment                sql.NullString `json:"comment"`
-	EntriesInAllowedIPList sql.NullInt64  `json:"entries_in_allowed_ip_list"`
-	EntriesInBlockedIPList sql.NullInt64  `json:"entries_in_blocked_ip_list"`
+	Name                         sql.NullString `json:"name"`
+	CreatedOn                    sql.NullTime   `json:"created_on"`
+	Comment                      sql.NullString `json:"comment"`
+	EntriesInAllowedIPList       sql.NullInt64  `json:"entries_in_allowed_ip_list"`
+	EntriesInBlockedIPList       sql.NullInt64  `json:"entries_in_blocked_ip_list"`
+	EntriesInAllowedNetworkRules sql.NullString `json:"entries_in_allowed_network_rules"`
+	EntriesInBlockedNetworkRules sql.NullString `json:"entries_in_blocked_network_rules"`
 }
 
 //// LIST FUNCTION
@@ -63,14 +65,16 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 		var Comment sql.NullString
 		var EntriesInAllowedIPList sql.NullInt64
 		var EntriesInBlockedIPList sql.NullInt64
+		var EntriesInAllowedNetworkRules sql.NullString
+		var EntriesInBlockedNetworkRules sql.NullString
 
-		err = rows.Scan(&CreatedOn, &Name, &Comment, &EntriesInAllowedIPList, &EntriesInBlockedIPList)
+		err = rows.Scan(&CreatedOn, &Name, &Comment, &EntriesInAllowedIPList, &EntriesInBlockedIPList, &EntriesInAllowedNetworkRules, &EntriesInBlockedNetworkRules)
 		if err != nil {
 			logger.Error("snowflake_network_policy.listSnowflakeNetworkPolicies", "query.error", err)
 			return nil, err
 		}
 
-		d.StreamListItem(ctx, NetworkPolicy{Name, CreatedOn, Comment, EntriesInAllowedIPList, EntriesInBlockedIPList})
+		d.StreamListItem(ctx, NetworkPolicy{Name, CreatedOn, Comment, EntriesInAllowedIPList, EntriesInBlockedIPList, EntriesInAllowedNetworkRules, EntriesInBlockedNetworkRules})
 	}
 
 	for rows.NextResultSet() {
@@ -80,14 +84,16 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 			var Comment sql.NullString
 			var EntriesInAllowedIPList sql.NullInt64
 			var EntriesInBlockedIPList sql.NullInt64
+			var EntriesInAllowedNetworkRules sql.NullString
+			var EntriesInBlockedNetworkRules sql.NullString
 
-			err = rows.Scan(&CreatedOn, &Name, &Comment, &EntriesInAllowedIPList, &EntriesInBlockedIPList)
+			err = rows.Scan(&CreatedOn, &Name, &Comment, &EntriesInAllowedIPList, &EntriesInBlockedIPList, &EntriesInAllowedNetworkRules, &EntriesInBlockedNetworkRules)
 			if err != nil {
 				logger.Error("snowflake_network_policy.listSnowflakeNetworkPolicies", "query.error", err)
 				return nil, err
 			}
 
-			d.StreamListItem(ctx, NetworkPolicy{Name, CreatedOn, Comment, EntriesInAllowedIPList, EntriesInBlockedIPList})
+			d.StreamListItem(ctx, NetworkPolicy{Name, CreatedOn, Comment, EntriesInAllowedIPList, EntriesInBlockedIPList, EntriesInAllowedNetworkRules, EntriesInBlockedNetworkRules})
 		}
 	}
 

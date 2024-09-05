@@ -77,6 +77,8 @@ type Warehouse struct {
 	Suspended       sql.NullInt64  `json:"suspended" db:"suspended"`
 	UUID            sql.NullString `json:"uuid" db:"uuid"`
 	ScalingPolicy   sql.NullString `json:"scaling_policy" db:"scaling_policy"`
+	Budget          sql.NullString `json:"budget" db:"budget"`
+	OwnerRoleType          sql.NullString `json:"owner_role_type" db:"owner_role_type"`
 }
 
 //// LIST FUNCTION
