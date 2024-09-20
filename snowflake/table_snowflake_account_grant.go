@@ -21,7 +21,7 @@ func tableSnowflakeAccountGrant(_ context.Context) *plugin.Table {
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "An entity to which access can be granted. Unless allowed by a grant, access will be denied."},
 			{Name: "privilege", Type: proto.ColumnType_STRING, Description: "A defined level of access to an object."},
 			{Name: "created_on", Type: proto.ColumnType_TIMESTAMP, Description: "Date and time privilege was granted."},
-			{Name: "grant_option", Type: proto.ColumnType_STRING, Description: "If set to TRUE, the recipient role can grant the privilege to other roles."},
+			{Name: "grant_option", Type: proto.ColumnType_BOOL, Description: "If set to TRUE, the recipient role can grant the privilege to other roles."},
 			{Name: "granted_by", Type: proto.ColumnType_STRING, Description: "Name of the object that granted access on the role."},
 			{Name: "granted_on", Type: proto.ColumnType_STRING, Description: "Date and time when the access was granted."},
 			{Name: "granted_to", Type: proto.ColumnType_STRING, Description: "Type of the object."},
@@ -37,7 +37,7 @@ type AccountGrant struct {
 	Name        sql.NullString `json:"name"`
 	GrantedTo   sql.NullString `json:"granted_to"`
 	GranteeName sql.NullString `json:"grantee_name"`
-	GrantOption sql.NullString `json:"grant_option"`
+	GrantOption sql.NullBool `json:"grant_option"`
 	GrantedBy   sql.NullString `json:"granted_by"`
 	Role        sql.NullString `json:"role"`
 }
@@ -65,7 +65,7 @@ func listSnowflakeAccountGrants(ctx context.Context, d *plugin.QueryData, _ *plu
 		var name sql.NullString
 		var grantedTo sql.NullString
 		var granteeName sql.NullString
-		var grantOption sql.NullString
+		var grantOption sql.NullBool
 		var grantedBy sql.NullString
 		var role sql.NullString
 
@@ -85,7 +85,7 @@ func listSnowflakeAccountGrants(ctx context.Context, d *plugin.QueryData, _ *plu
 		var name sql.NullString
 		var grantedTo sql.NullString
 		var granteeName sql.NullString
-		var grantOption sql.NullString
+		var grantOption sql.NullBool
 		var grantedBy sql.NullString
 		var role sql.NullString
 
