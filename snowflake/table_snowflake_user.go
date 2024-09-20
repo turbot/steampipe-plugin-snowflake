@@ -89,7 +89,7 @@ type User struct {
 	HasPassword           sql.NullString `json:"has_password"`
 	HasRsaPublicKey       sql.NullString `json:"has_rsa_public_key"`
 	Type                  sql.NullString `json:"type"`
-	HasMFA                sql.NullBool  `json:"has_mfa"`
+	HasMFA                sql.NullBool   `json:"has_mfa"`
 }
 
 //// LIST FUNCTION
@@ -136,7 +136,7 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 		var HasPassword sql.NullString
 		var HasRSAPublicKey sql.NullString
 		var Type sql.NullString
-		var HasMFA                sql.NullBool
+		var HasMFA sql.NullBool
 
 		err = rows.Scan(&Name, &CreatedOn, &LoginName, &DisplayName, &FirstName, &LastName, &Email, &MinsToUnlock, &DaysToExpiry, &Comment, &Disabled, &MustChangePassword, &SnowflakeLock, &DefaultWarehouse, &DefaultNamespace, &DefaultRole, &DefaultSecondaryRoles, &ExtAuthnDuo, &ExtAuthnUid, &MinsToBypassMFA, &Owner, &LastSuccessLogin, &ExpiresAtTime, &LockedUntilTime, &HasPassword, &HasRSAPublicKey, &Type, &HasMFA)
 		if err != nil {
