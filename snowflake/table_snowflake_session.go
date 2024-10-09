@@ -55,6 +55,7 @@ type Session struct {
 	ClientEnvironment        sql.NullString `json:"CLIENT_ENVIRONMENT"`
 	ClientBuildId            sql.NullString `json:"CLIENT_BUILD_ID"`
 	ClientVersion            sql.NullString `json:"CLIENT_VERSION"`
+	ClosedReason             sql.NullString `json:"CLOSED_REASON"`
 }
 
 // SessionCol returns a reference for a column of a Session
@@ -80,6 +81,8 @@ func SessionCol(colname string, item *Session) interface{} {
 		return &item.ClientBuildId
 	case "CLIENT_VERSION":
 		return &item.ClientVersion
+	case "CLOSED_REASON":
+		return &item.ClosedReason
 	default:
 		panic("unknown column " + colname)
 	}

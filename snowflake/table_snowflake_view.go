@@ -43,6 +43,8 @@ type View struct {
 	Text           sql.NullString `json:"text"`
 	IsSecure       sql.NullString `json:"is_secure"`
 	IsMaterialized sql.NullString `json:"is_materialized"`
+	TableName      sql.NullString `json:"table_name"`
+	TableCatalog   sql.NullString `json:"table_catalog"`
 }
 
 //// LIST FUNCTION
@@ -72,14 +74,16 @@ func listSnowflakeViews(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 		var text sql.NullString
 		var isSecure sql.NullString
 		var isMaterialized sql.NullString
+		var tableName sql.NullString
+		var tableCatalog sql.NullString
 
-		err = rows.Scan(&createdOn, &name, &reserved, &databaseName, &schemaName, &owner, &comment, &text, &isSecure, &isMaterialized)
+		err = rows.Scan(&createdOn, &name, &reserved, &databaseName, &schemaName, &owner, &comment, &text, &isSecure, &isMaterialized, &tableName, &tableCatalog)
 		if err != nil {
 			logger.Error("snowflake_view.listSnowflakeViews", "query_scan.error", err)
 			return nil, err
 		}
 
-		d.StreamListItem(ctx, View{createdOn, name, reserved, databaseName, schemaName, owner, comment, text, isSecure, isMaterialized})
+		d.StreamListItem(ctx, View{createdOn, name, reserved, databaseName, schemaName, owner, comment, text, isSecure, isMaterialized, tableName, tableCatalog})
 	}
 
 	for rows.NextResultSet() {
@@ -94,12 +98,16 @@ func listSnowflakeViews(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 			var text sql.NullString
 			var isSecure sql.NullString
 			var isMaterialized sql.NullString
-			err = rows.Scan(&createdOn, &name, &reserved, &databaseName, &schemaName, &owner, &comment, &text, &isSecure, &isMaterialized)
+			var tableName sql.NullString
+			var tableCatalog sql.NullString
+
+			err = rows.Scan(&createdOn, &name, &reserved, &databaseName, &schemaName, &owner, &comment, &text, &isSecure, &isMaterialized, &tableName, &tableCatalog)
 			if err != nil {
 				logger.Error("snowflake_view.listSnowflakeViews", "query_scan.error", err)
 				return nil, err
 			}
-			d.StreamListItem(ctx, View{createdOn, name, reserved, databaseName, schemaName, owner, comment, text, isSecure, isMaterialized})
+
+			d.StreamListItem(ctx, View{createdOn, name, reserved, databaseName, schemaName, owner, comment, text, isSecure, isMaterialized, tableName, tableCatalog})
 		}
 	}
 	return nil, nil

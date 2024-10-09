@@ -77,16 +77,17 @@ func listSnowflakeViewGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 		var name sql.NullString
 		var grantedTo sql.NullString
 		var granteeName sql.NullString
-		var grantOption sql.NullString
+		var grantOption sql.NullBool
 		var grantedBy sql.NullString
+		var role sql.NullString
 
-		err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy)
+		err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy, &role)
 		if err != nil {
 			logger.Error("snowflake_view_grant.listSnowflakeViewGrants", "query_scan.error", err)
 			return nil, err
 		}
 
-		d.StreamListItem(ctx, ViewGrant{createdOn, privilege, grantedOn, name, grantedTo, granteeName, grantOption, grantedBy})
+		d.StreamListItem(ctx, ViewGrant{createdOn, privilege, grantedOn, name, grantedTo, granteeName, grantOption, grantedBy, role})
 	}
 
 	for rows.NextResultSet() {
@@ -97,16 +98,17 @@ func listSnowflakeViewGrants(ctx context.Context, d *plugin.QueryData, _ *plugin
 			var name sql.NullString
 			var grantedTo sql.NullString
 			var granteeName sql.NullString
-			var grantOption sql.NullString
+			var grantOption sql.NullBool
 			var grantedBy sql.NullString
+			var role sql.NullString
 
-			err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy)
+			err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy, &role)
 			if err != nil {
 				logger.Error("snowflake_view_grant.listSnowflakeViewGrants", "query_scan.error", err)
 				return nil, err
 			}
 
-			d.StreamListItem(ctx, ViewGrant{createdOn, privilege, grantedOn, name, grantedTo, granteeName, grantOption, grantedBy})
+			d.StreamListItem(ctx, ViewGrant{createdOn, privilege, grantedOn, name, grantedTo, granteeName, grantOption, grantedBy, role})
 		}
 	}
 	return nil, nil

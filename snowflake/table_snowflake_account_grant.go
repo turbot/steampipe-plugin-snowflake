@@ -37,8 +37,9 @@ type AccountGrant struct {
 	Name        sql.NullString `json:"name"`
 	GrantedTo   sql.NullString `json:"granted_to"`
 	GranteeName sql.NullString `json:"grantee_name"`
-	GrantOption sql.NullString `json:"grant_option"`
+	GrantOption sql.NullBool `json:"grant_option"`
 	GrantedBy   sql.NullString `json:"granted_by"`
+	Role        sql.NullString `json:"role"`
 }
 
 //// LIST FUNCTION
@@ -64,16 +65,17 @@ func listSnowflakeAccountGrants(ctx context.Context, d *plugin.QueryData, _ *plu
 		var name sql.NullString
 		var grantedTo sql.NullString
 		var granteeName sql.NullString
-		var grantOption sql.NullString
+		var grantOption sql.NullBool
 		var grantedBy sql.NullString
+		var role sql.NullString
 
-		err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy)
+		err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy, &role)
 		if err != nil {
 			logger.Error("snowflake_account_grant.listSnowflakeAccountGrants", "query_scan.error", err)
 			return nil, err
 		}
 
-		d.StreamListItem(ctx, AccountGrant{createdOn, privilege, grantedOn, name, grantedTo, granteeName, grantOption, grantedBy})
+		d.StreamListItem(ctx, AccountGrant{createdOn, privilege, grantedOn, name, grantedTo, granteeName, grantOption, grantedBy, role})
 	}
 
 	for rows.NextResultSet() {
@@ -83,16 +85,17 @@ func listSnowflakeAccountGrants(ctx context.Context, d *plugin.QueryData, _ *plu
 		var name sql.NullString
 		var grantedTo sql.NullString
 		var granteeName sql.NullString
-		var grantOption sql.NullString
+		var grantOption sql.NullBool
 		var grantedBy sql.NullString
+		var role sql.NullString
 
-		err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy)
+		err = rows.Scan(&createdOn, &privilege, &grantedOn, &name, &grantedTo, &granteeName, &grantOption, &grantedBy, &role)
 		if err != nil {
 			logger.Error("snowflake_account_grant.listSnowflakeAccountGrants", "query_scan.error", err)
 			return nil, err
 		}
 
-		d.StreamListItem(ctx, AccountGrant{createdOn, privilege, grantedOn, name, grantedTo, granteeName, grantOption, grantedBy})
+		d.StreamListItem(ctx, AccountGrant{createdOn, privilege, grantedOn, name, grantedTo, granteeName, grantOption, grantedBy, role})
 	}
 	return nil, nil
 }

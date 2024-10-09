@@ -58,6 +58,7 @@ type LoginHistory struct {
 	ErrorCode                  sql.NullInt64  `json:"ERROR_CODE"`
 	ErrorMessage               sql.NullString `json:"ERROR_MESSAGE"`
 	RelatedEventId             sql.NullInt64  `json:"RELATED_EVENT_ID"`
+	Connection                 sql.NullString `json:"CONNECTION"`
 }
 
 // LoginHistoryCol returns a reference for a column of a LoginHistory
@@ -89,6 +90,8 @@ func LoginHistoryCol(colname string, item *LoginHistory) interface{} {
 		return &item.ErrorMessage
 	case "RELATED_EVENT_ID":
 		return &item.RelatedEventId
+	case "CONNECTION":
+		return &item.Connection
 	default:
 		panic("unknown column " + colname)
 	}
