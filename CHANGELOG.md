@@ -1,3 +1,14 @@
+## v0.9.0 [2024-10-15]
+
+_Bug fixes_
+
+- Fixed the schema of Snowflake DB tables to correctly return data instead of an error. ([#78](https://github.com/turbot/steampipe-plugin-snowflake/pull/78))
+
+_Dependencies_
+
+- Recompiled plugin with Go version `1.22`. ([#75](https://github.com/turbot/steampipe-plugin-snowflake/pull/75))
+- Recompiled plugin with [steampipe-plugin-sdk v5.10.4](https://github.com/turbot/steampipe-plugin-sdk/blob/develop/CHANGELOG.md#v5104-2024-08-29) that fixes logging in the plugin export tool. ([#75](https://github.com/turbot/steampipe-plugin-snowflake/pull/75))
+
 ## v0.8.0 [2023-12-12]
 
 _What's new?_
