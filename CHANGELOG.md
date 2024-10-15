@@ -2,7 +2,7 @@
 
 _Bug fixes_
 
-- Fixed the schema of Snowflake DB tables to correctly return data instead of an error: ([#78](https://github.com/turbot/steampipe-plugin-snowflake/pull/78))
+- Fixed the schema of Snowflake DB tables to correctly return data instead of an error. ([#78](https://github.com/turbot/steampipe-plugin-snowflake/pull/78))
 
 _Dependencies_
 
