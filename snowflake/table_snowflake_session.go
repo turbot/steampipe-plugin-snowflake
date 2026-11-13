@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 //// TABLE DEFINITION
@@ -100,7 +100,7 @@ func listSnowflakeSession(ctx context.Context, d *plugin.QueryData, _ *plugin.Hy
 
 	equalQuals := d.EqualsQuals
 	quals := d.Quals
-	var conditions []string = []string{}
+	conditions := []string{}
 
 	if equalQuals["session_id"] != nil {
 		conditions = append(conditions, fmt.Sprintf("session_id %s '%s'", "=", equalQuals["session_id"].GetStringValue()))
@@ -133,7 +133,7 @@ func listSnowflakeSession(ctx context.Context, d *plugin.QueryData, _ *plugin.Hy
 		logger.Error("snowflake_session.listSnowflakeSession", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	columns, err := rows.Columns()
 	if err != nil {

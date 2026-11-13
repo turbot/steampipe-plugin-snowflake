@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 //// TABLE DEFINITION
@@ -61,7 +61,7 @@ func listSnowflakeDatabases(ctx context.Context, d *plugin.QueryData, _ *plugin.
 		logger.Error("snowflake_database.listSnowflakeDatabases", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	for rows.Next() {
 		var CreatedOn sql.NullString

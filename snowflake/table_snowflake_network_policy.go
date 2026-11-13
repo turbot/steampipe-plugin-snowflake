@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -57,7 +57,7 @@ func listSnowflakeNetworkPolicies(ctx context.Context, d *plugin.QueryData, _ *p
 		logger.Error("snowflake_network_policy.listSnowflakeNetworkPolicies", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	for rows.Next() {
 		var Name sql.NullString
@@ -122,7 +122,7 @@ func DescribeNetworkPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.H
 		plugin.Logger(ctx).Error("snowflake_network_policy.DescribeNetworkPolicy", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	networkIPlist := map[string]string{}
 	for rows.Next() {

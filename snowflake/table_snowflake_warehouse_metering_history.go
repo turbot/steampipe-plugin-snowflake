@@ -1,4 +1,4 @@
- package snowflake
+package snowflake
 
 import (
 	"context"
@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 //// TABLE DEFINITION
@@ -74,7 +74,7 @@ func listSnowflakeWarehouseMeteringHistory(ctx context.Context, d *plugin.QueryD
 		logger.Error("snowflake_warehouse_metering_history.listSnowflakeWarehouseMeteringHistory", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	columns, err := rows.Columns()
 	if err != nil {

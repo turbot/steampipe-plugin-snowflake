@@ -4,11 +4,11 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
-//// TABLE DEFINITION
+// // TABLE DEFINITION
 func tableSnowflakeAccountParameter(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_account_parameter",
@@ -70,7 +70,7 @@ func listSnowflakeAccountParameters(ctx context.Context, d *plugin.QueryData, _ 
 		logger.Error("snowflake_account_parameters.listSnowflakeAccountParameters", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	columns, err := rows.Columns()
 	if err != nil {

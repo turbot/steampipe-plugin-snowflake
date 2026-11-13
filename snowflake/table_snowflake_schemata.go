@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 //// TABLE DEFINITION
@@ -120,7 +120,7 @@ func listSnowflakeSchemata(ctx context.Context, d *plugin.QueryData, _ *plugin.H
 		logger.Error("snowflake_view_schemata.listSnowflakeSchemata", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	columns, err := rows.Columns()
 	if err != nil {
