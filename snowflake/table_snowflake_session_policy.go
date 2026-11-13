@@ -6,16 +6,17 @@ import (
 	"fmt"
 
 	gosnowflake "github.com/snowflakedb/gosnowflake"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 //// TABLE DEFINITION
 
 // https://docs.snowflake.com/en/sql-reference/ddl-user-security.html#label-session-policy-ddl
 // This command requires the role executing the command to have:
-// 	The OWNERSHIP privilege on the session policy or the APPLY on SESSION POLICY privilege.
-// 	The USAGE privilege on the schema.
+//
+//	The OWNERSHIP privilege on the session policy or the APPLY on SESSION POLICY privilege.
+//	The USAGE privilege on the schema.
 func tableSnowflakeSessionPolicy(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "snowflake_session_policy",
@@ -154,7 +155,7 @@ func DescribeSessionPolicy(ctx context.Context, d *plugin.QueryData, h *plugin.H
 		}
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	policyProperties := struct {
 		SessionIdleTimeoutMins   sql.NullInt64 `json:"session_idle_timeout_mins"`

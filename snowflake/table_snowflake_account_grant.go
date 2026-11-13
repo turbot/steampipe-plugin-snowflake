@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 //// TABLE DEFINITION
@@ -37,7 +37,7 @@ type AccountGrant struct {
 	Name        sql.NullString `json:"name"`
 	GrantedTo   sql.NullString `json:"granted_to"`
 	GranteeName sql.NullString `json:"grantee_name"`
-	GrantOption sql.NullBool `json:"grant_option"`
+	GrantOption sql.NullBool   `json:"grant_option"`
 	GrantedBy   sql.NullString `json:"granted_by"`
 	Role        sql.NullString `json:"role"`
 }
@@ -56,7 +56,7 @@ func listSnowflakeAccountGrants(ctx context.Context, d *plugin.QueryData, _ *plu
 		logger.Error("snowflake_account_grant.listSnowflakeAccountGrants", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	for rows.Next() {
 		var createdOn sql.NullTime

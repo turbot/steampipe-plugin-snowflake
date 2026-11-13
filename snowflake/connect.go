@@ -20,14 +20,14 @@ import (
 	"github.com/youmark/pkcs8"
 	"golang.org/x/crypto/ssh"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 
 	// have we already created and cached the session?
 	cacheKey := "snowflake"
-	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
+	if cachedData, ok := d.ConnectionCache.Get(ctx, cacheKey); ok {
 		return cachedData.(*sql.DB), nil
 	}
 
@@ -120,9 +120,9 @@ func connect(ctx context.Context, d *plugin.QueryData) (*sql.DB, error) {
 
 	db, err := sql.Open("snowflake", dsn)
 	if err != nil {
-		return nil, fmt.Errorf("Could not open snowflake database: %w", err)
+		return nil, fmt.Errorf("could not open snowflake database: %w", err)
 	}
-	d.ConnectionManager.Cache.Set(cacheKey, db)
+	_ = d.ConnectionCache.Set(ctx, cacheKey, db)
 	return db, nil
 }
 
@@ -155,18 +155,18 @@ func DSN(ctx context.Context, account, user,
 	if privateKeyPath != "" {
 		privateKeyBytes, err := ReadPrivateKeyFile(privateKeyPath)
 		if err != nil {
-			return "", fmt.Errorf("Private Key file could not be read: %w", err)
+			return "", fmt.Errorf("private key file could not be read: %w", err)
 		}
 		rsaPrivateKey, err := ParsePrivateKey(privateKeyBytes, []byte(privateKeyPassphrase))
 		if err != nil {
-			return "", fmt.Errorf("Private Key could not be parsed: %w", err)
+			return "", fmt.Errorf("private key could not be parsed: %w", err)
 		}
 		config.PrivateKey = rsaPrivateKey
 		config.Authenticator = gosnowflake.AuthTypeJwt
 	} else if privateKey != "" {
 		rsaPrivateKey, err := ParsePrivateKey([]byte(privateKey), []byte(privateKeyPassphrase))
 		if err != nil {
-			return "", fmt.Errorf("Private Key could not be parsed: %w", err)
+			return "", fmt.Errorf("private key could not be parsed: %w", err)
 		}
 		config.PrivateKey = rsaPrivateKey
 		config.Authenticator = gosnowflake.AuthTypeJwt
@@ -187,12 +187,12 @@ func DSN(ctx context.Context, account, user,
 func ReadPrivateKeyFile(privateKeyPath string) ([]byte, error) {
 	expandedPrivateKeyPath, err := homedir.Expand(privateKeyPath)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid Path to private key: %w", err)
+		return nil, fmt.Errorf("invalid path to private key: %w", err)
 	}
 
 	privateKeyBytes, err := os.ReadFile(expandedPrivateKeyPath)
 	if err != nil {
-		return nil, fmt.Errorf("Could not read private key: %w", err)
+		return nil, fmt.Errorf("could not read private key: %w", err)
 	}
 
 	if len(privateKeyBytes) == 0 {
@@ -205,24 +205,24 @@ func ReadPrivateKeyFile(privateKeyPath string) ([]byte, error) {
 func ParsePrivateKey(privateKeyBytes []byte, passhrase []byte) (*rsa.PrivateKey, error) {
 	privateKeyBlock, _ := pem.Decode(privateKeyBytes)
 	if privateKeyBlock == nil {
-		return nil, fmt.Errorf("Could not parse private key, key is not in PEM format")
+		return nil, fmt.Errorf("could not parse private key, key is not in PEM format")
 	}
 
 	if privateKeyBlock.Type == "ENCRYPTED PRIVATE KEY" {
 		if len(passhrase) == 0 {
-			return nil, fmt.Errorf("Private key requires a passphrase, but private_key_passphrase was not supplied")
+			return nil, fmt.Errorf("private key requires a passphrase, but private_key_passphrase was not supplied")
 		}
 		privateKey, err := pkcs8.ParsePKCS8PrivateKeyRSA(privateKeyBlock.Bytes, passhrase)
 		if err != nil {
 			return nil, fmt.Errorf(
-				"Could not parse encrypted private key with passphrase, only ciphers aes-128-cbc, aes-128-gcm, aes-192-cbc, aes-192-gcm, aes-256-cbc, aes-256-gcm, and des-ede3-cbc are supported: %w", err)
+				"could not parse encrypted private key with passphrase, only ciphers aes-128-cbc, aes-128-gcm, aes-192-cbc, aes-192-gcm, aes-256-cbc, aes-256-gcm, and des-ede3-cbc are supported: %w", err)
 		}
 		return privateKey, nil
 	}
 
 	privateKey, err := ssh.ParseRawPrivateKey(privateKeyBytes)
 	if err != nil {
-		return nil, fmt.Errorf("Could not parse private key: %w", err)
+		return nil, fmt.Errorf("could not parse private key: %w", err)
 	}
 
 	rsaPrivateKey, ok := privateKey.(*rsa.PrivateKey)
@@ -249,7 +249,7 @@ func GetOauthData(refreshToken, redirectUrl string) url.Values {
 func GetOauthRequest(dataContent io.Reader, endPoint, clientId, clientSecret string) (*http.Request, error) {
 	request, err := http.NewRequest("POST", endPoint, dataContent)
 	if err != nil {
-		return nil, fmt.Errorf("Request to the endpoint could not be completed: %w", err)
+		return nil, fmt.Errorf("request to the endpoint could not be completed: %w", err)
 	}
 	request.SetBasicAuth(clientId, clientSecret)
 	request.Header.Set("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
@@ -266,26 +266,26 @@ func GetOauthAccessToken(
 	client := &http.Client{}
 	request, err := GetOauthRequest(strings.NewReader(data.Encode()), endPoint, client_id, client_secret)
 	if err != nil {
-		return "", fmt.Errorf("Oauth request returned error: %w", err)
+		return "", fmt.Errorf("oauth request returned error: %w", err)
 	}
 
 	var result Result
 
 	response, err := client.Do(request)
 	if err != nil {
-		return "", fmt.Errorf("Response status returned error: %w", err)
+		return "", fmt.Errorf("response status returned error: %w", err)
 	}
 	if response.StatusCode != 200 {
-		return "", fmt.Errorf("Response status code: %s: %s", strconv.Itoa(response.StatusCode), http.StatusText(response.StatusCode))
+		return "", fmt.Errorf("response status code: %s: %s", strconv.Itoa(response.StatusCode), http.StatusText(response.StatusCode))
 	}
-	defer response.Body.Close()
+	defer func() { _ = response.Body.Close() }()
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
-		return "", fmt.Errorf("Response body was not able to be parsed: %w", err)
+		return "", fmt.Errorf("response body was not able to be parsed: %w", err)
 	}
 	err = json.Unmarshal(body, &result)
 	if err != nil {
-		return "", fmt.Errorf("Error parsing JSON from Snowflake: %w", err)
+		return "", fmt.Errorf("error parsing JSON from Snowflake: %w", err)
 	}
 	return result.AccessToken, nil
 }

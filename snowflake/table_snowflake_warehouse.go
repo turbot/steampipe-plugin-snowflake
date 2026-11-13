@@ -5,8 +5,8 @@ import (
 	"database/sql"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 //// TABLE DEFINITION
@@ -96,7 +96,7 @@ func listSnowflakeWarehouses(ctx context.Context, d *plugin.QueryData, _ *plugin
 		logger.Error("snowflake_warehouse.listSnowflakeWarehouses", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	dbs := []Warehouse{}
 

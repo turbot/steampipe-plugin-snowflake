@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	"github.com/snowflakedb/gosnowflake"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -106,7 +106,7 @@ func listSnowflakeUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 		logger.Error("snowflake_user.listSnowflakeUsers", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	for rows.Next() {
 		var Name sql.NullString
@@ -216,7 +216,7 @@ func DescribeUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 		plugin.Logger(ctx).Error("snowflake_user.DescribeUser", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	userProperties := map[string]string{}
 	for rows.Next() {

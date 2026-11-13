@@ -5,9 +5,9 @@ import (
 	"database/sql"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -74,7 +74,7 @@ func listSnowflakeResourceMonitors(ctx context.Context, d *plugin.QueryData, _ *
 		logger.Error("snowflake_resource_monitor.listSnowflakeResourceMonitors", "query.error", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	resourceMonitors := []ResourceMonitor{}
 
